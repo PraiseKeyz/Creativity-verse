@@ -1,0 +1,241 @@
+{
+  "services": [
+    {
+      "title": "Talent Matchmaking & Hiring",
+      "type": "brand",
+      "cta": "Start Matching Talent",
+      "overview": "Whether you're building a campaign, a digital product, or scaling your marketing—finding the right talent is mission-critical. With Creativity Verse, you're not just hiring freelancers — you're connecting with vetted, endorsed, top-tier creative professionals who are part of a thriving innovation ecosystem.",
+      "whoItsFor": [
+        "Startups and businesses needing short- or long-term creative support",
+        "Agencies scaling campaigns",
+        "Brands seeking reliable freelancers or hybrid creative teams"
+      ],
+      "howItWorks": [
+        "Submit a project brief or creative need",
+        "Get matched with 3–5 verified professionals",
+        "View their portfolios and proposals",
+        "Get guidance from our team (if needed)",
+        "Hire and collaborate confidently"
+      ],
+      "whatYouGet": [
+        "Verified, community-endorsed talents",
+        "Curated shortlist tailored to your brief",
+        "Portfolios, past works, rates & availability",
+        "Access to creative project managers (Pro Tier)",
+        "Optional NDAs & contracts handled"
+      ],
+      "optionalAddOns": [
+        "Talent Concierge: Ongoing staffing for high-volume brand projects",
+        "Talent onboarding + oversight by CV team"
+      ]
+    },
+    {
+      "title": "Brand Promotion & Sponsorship",
+      "type": "brand",
+      "cta": "Get Featured & Sponsored",
+      "overview": "Creativity Verse offers your brand direct access to an audience of engaged creatives, freelancers, and digital trendsetters. Perfect for innovative brands, tools, platforms, and campaigns looking to drive visibility and impact.",
+      "whoItsFor": [
+        "Tech brands, SaaS tools, and creative platforms",
+        "Educational products, design assets, AI tools",
+        "Brands targeting digital professionals & early adopters"
+      ],
+      "features": [
+        "Sponsored Posts (on social and platform)",
+        "Newsletter Features to CV Pro subscribers",
+        "Branded Challenges (drive UGC + community campaigns)",
+        "Digital Product Collaborations (giveaways, bundles)",
+        "Webinar/Workshop Sponsorship",
+        "Sponsored Briefs for creatives to tackle"
+      ],
+      "whatYouGet": [
+        "Design + copy crafted by our content team",
+        "Post-performance reports",
+        "Exposure across CV channels",
+        "Direct traffic & conversion links",
+        "Logo placements, mentions, and dedicated shoutouts"
+      ]
+    },
+    {
+      "title": "Creative Studio Services",
+      "type": "brand",
+      "cta": "Build With Our Creative Studio",
+      "overview": "Our core CV team works with brands to design, execute, and grow through powerful visuals, content, platforms, and strategy.",
+      "whoItsFor": [
+        "Visionary startups, creators, and growing businesses",
+        "Brands needing a creative department without hiring full-time",
+        "Teams launching new campaigns, platforms, or products"
+      ],
+      "services": [
+        "Brand Identity & Design",
+        "Social Media Management",
+        "Campaign Execution",
+        "Website & App UX/UI",
+        "Creative Strategy & Ideation"
+      ],
+      "engagementModels": ["Project-based", "Monthly retainers", "Campaign-focused sprints"],
+      "pastWork": [
+        "Platform launch campaigns",
+        "Brand makeovers",
+        "UGC-style ad design",
+        "Thought-leadership content and growth plans"
+      ]
+    },
+    {
+      "title": "Verified Talent Program",
+      "type": "individual",
+      "cta": "Apply for Talent Verification",
+      "overview": "The Verified Talent program helps creative professionals build credibility and get discovered by top brands and agencies.",
+      "keyBenefits": [
+        "Enhanced profile visibility",
+        "Verified badge for trust",
+        "Priority placement in talent recommendations",
+        "Access to exclusive referral programs and perks"
+      ],
+      "howItWorks": [
+        "Submit your application with portfolio and credentials",
+        "CV team reviews for quality/authenticity",
+        "Get verified badge and listed in Showcase directory",
+        "Receive priority exposure and offers"
+      ],
+      "whatYouGet": [
+        "Verified Badge",
+        "Public Listing in Showcase",
+        "Priority Recommendations",
+        "Referral & Promo Perks"
+      ],
+      "testimonials": [
+        {
+          "quote": "After getting verified, I received twice as many project inquiries and landed my first agency contract within a month.",
+          "author": "Jane D., Graphic Designer"
+        }
+      ],
+      "faq": [
+        {
+          "q": "Who can apply for verification?",
+          "a": "Any creative professional with a portfolio can apply — designers, writers, developers, artists, etc."
+        },
+        {
+          "q": "How long does the verification process take?",
+          "a": "Most applications are reviewed within 3–5 business days."
+        },
+        {
+          "q": "What if my application is not approved?",
+          "a": "We'll provide feedback so you can improve and reapply."
+        }
+      ]
+    },
+    {
+      "title": "Creativity Verse Pro",
+      "type": "individual",
+      "cta": "Subscribe to Creativity Verse Pro",
+      "overview": "Creativity Verse Pro gives you access to premium resources, community, and job opportunities to accelerate your creative career.",
+      "keyBenefits": [
+        "Weekly insider newsletters",
+        "Access to talent-only job board",
+        "AI-powered job alerts",
+        "Exclusive workshops & AMA sessions",
+        "Special discounts and beta product access",
+        "Mentorship access",
+        "Verified Pro badge",
+        "Networking and founder connections"
+      ],
+      "howItWorks": [
+        "Subscribe and set up profile",
+        "Unlock resources and job board access",
+        "Receive weekly newsletters and updates",
+        "Join workshops, AMAs, and mentorships",
+        "Enjoy discounts, early access, and priority support"
+      ],
+      "whatYouGet": [
+        "Premium content & curated insights",
+        "Exclusive job listings",
+        "Workshop access",
+        "Mentorship matching",
+        "Verified Pro badge",
+        "Discounts and product early access",
+        "Community perks and networking"
+      ],
+      "whoItsFor": [
+        "Freelancers and solo creators",
+        "Strategists and marketers",
+        "Designers, developers, writers",
+        "Builders seeking community and visibility"
+      ],
+      "testimonials": [
+        {
+          "quote": "Creativity Verse Pro gave me the tools and connections I needed to land my dream job and grow my freelance business.",
+          "author": "Alex T., UX Designer"
+        }
+      ]
+    },
+    {
+      "title": "Direct Mentorship",
+      "type": "individual",
+      "cta": "Get Mentored",
+      "overview": "Creativity Verse mentorship connects you with experienced professionals to help you grow, pivot, and execute with clarity.",
+      "howItWorks": [
+        "Fill out mentorship interest form",
+        "Get matched based on goals",
+        "Book your session (30–60 mins)",
+        "Get clarity, feedback, and a growth roadmap"
+      ],
+      "mentorshipAreas": [
+        "Brand Strategy & Marketing",
+        "Product & UX Design",
+        "Social Media Growth",
+        "Content Creation & Monetization",
+        "Tech Careers & Freelancing"
+      ],
+      "pricing": {
+        "oneTimeSession": "₦12,000 / $15",
+        "followUpSession": "₦8,500 / $10"
+      },
+      "testimonials": [
+        {
+          "quote": "My mentor helped me rewrite my service offer and I landed two clients within 3 weeks!",
+          "author": "Ada O., CV Pro Member"
+        },
+        {
+          "quote": "It wasn’t just advice — it was a shift in how I see my value.",
+          "author": "Dapo M., Product Designer"
+        }
+      ]
+    },
+    {
+      "title": "Resume & Portfolio Services",
+      "type": "individual",
+      "cta": "Build My Portfolio",
+      "overview": "Whether it's your resume or portfolio, our team helps craft a clear, compelling presentation of your work to attract better opportunities.",
+      "services": [
+        "Resume Overhaul",
+        "Portfolio Creation",
+        "Motion/Video portfolio add-on"
+      ],
+      "whatYouGet": [
+        "Personalized career narrative",
+        "Tailored layout optimized for visibility",
+        "Editable source files (Notion, Canva, PDF)",
+        "Optional feedback call"
+      ],
+      "bundleAddOns": [
+        "Resume",
+        "Portfolio",
+        "30-min feedback session",
+        "Talent Board showcase listing",
+        "Free CV Pro trial"
+      ],
+      "whoItsFor": [
+        "Emerging creatives needing structure",
+        "Experienced professionals needing clarity",
+        "Career switchers/freelancers seeking visibility"
+      ],
+      "pricing": {
+        "resumeOnly": "₦10,000 / $12",
+        "portfolioOnly": "₦15,000 / $17",
+        "fullBundle": "₦23,000 / $25",
+        "feedbackCall": "₦5,000 / $6",
+        "cvProDiscount": "15%"
+      }
+    }
+  ]
+}

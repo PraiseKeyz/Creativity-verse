@@ -1,0 +1,327 @@
+{
+    "posts": [
+        {
+            "id": 1,
+            "post": "Hi there! Excited to join this creative community.",
+            "postImage": "https://images.unsplash.com/photo-1465101178521-c1a6f3b6e74b?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "John",
+                "lastname": "Joe",
+                "isVerified": true,
+                "badges": {
+                    "topContributor": { "label": "Top Contributor", "icon": "🏆" },
+                    "verifiedExpert": { "label": "Verified Expert", "icon": "✅" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["UI/UX Design", "Web Development", "Content Strategy"]
+            },
+            "createdAt": "2023-10-01T12:00:00Z",
+            "likes": 10,
+            "comments": [
+                {
+                    "id": 1,
+                    "author": {
+                        "firstname": "Jane",
+                        "lastname": "Doe",
+                        "profilePicture": "https://images.unsplash.com/photo-1502685104226-7b8c2f0d3c4e?auto=format&fit=facearea&w=256&h=256&facepad=2"
+                    },
+                    "content": "Welcome John! Glad to have you here.",
+                    "likes": 2,
+                    "createdAt": "2023-10-01T12:05:00Z"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "post": "Does anyone have tips for improving portfolio presentations?",
+            "postImage": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Alice",
+                "lastname": "Smith",
+                "isVerified": false,
+                "badges": {
+                    "communityHelper": { "label": "Community Helper", "icon": "🤝" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Graphic Design", "Branding"]
+            },
+            "createdAt": "2023-10-02T09:30:00Z",
+            "likes": 7,
+            "comments": [
+                {
+                    "id": 1,
+                    "author": {
+                        "firstname": "Priya",
+                        "lastname": "Kumar",
+                        "profilePicture": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=256&h=256&facepad=2"
+                    },
+                    "content": "Try using more visuals and keep it concise!",
+                    "likes": 3,
+                    "createdAt": "2023-10-02T10:00:00Z"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "post": "Just finished a new illustration! Feedback appreciated.",
+            "postImage": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Carlos",
+                "lastname": "Mendez",
+                "isVerified": true,
+                "badges": {
+                    "creativeStar": { "label": "Creative Star", "icon": "🌟" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Illustration", "Digital Art"]
+            },
+            "createdAt": "2023-10-03T15:45:00Z",
+            "likes": 15,
+            "comments": [
+                {
+                    "id": 1,
+                    "author": {
+                        "firstname": "Emily",
+                        "lastname": "Wong",
+                        "profilePicture": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=256&h=256&facepad=2"
+                    },
+                    "content": "Amazing work! Love the colors.",
+                    "likes": 4,
+                    "createdAt": "2023-10-03T16:00:00Z"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "post": "Looking for collaborators for a new web app project.",
+            "postImage": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Priya",
+                "lastname": "Kumar",
+                "isVerified": true,
+                "badges": {
+                    "topContributor": { "label": "Top Contributor", "icon": "🏆" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Frontend Development", "React", "Team Leadership"]
+            },
+            "createdAt": "2023-10-04T11:20:00Z",
+            "likes": 12,
+            "comments": [
+                {
+                    "id": 1,
+                    "author": {
+                        "firstname": "Carlos",
+                        "lastname": "Mendez",
+                        "profilePicture": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=256&h=256&facepad=2"
+                    },
+                    "content": "I'm interested! DM me your idea.",
+                    "likes": 2,
+                    "createdAt": "2023-10-04T12:00:00Z"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "post": "What are your favorite tools for content creation?",
+            "postImage": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Emily",
+                "lastname": "Wong",
+                "isVerified": false,
+                "badges": {},
+                "profilePicture": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Content Writing", "SEO"]
+            },
+            "createdAt": "2023-10-05T08:10:00Z",
+            "likes": 5,
+            "comments": [
+                {
+                    "id": 1,
+                    "author": {
+                        "firstname": "Sophia",
+                        "lastname": "Martins",
+                        "profilePicture": "https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=facearea&w=256&h=256&facepad=2"
+                    },
+                    "content": "I love using Canva and Notion!",
+                    "likes": 2,
+                    "createdAt": "2023-10-05T09:00:00Z"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "post": "Shared my latest UI/UX case study! Would love your thoughts.",
+            "postImage": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "David",
+                "lastname": "Lee",
+                "isVerified": true,
+                "badges": {
+                    "verifiedExpert": { "label": "Verified Expert", "icon": "✅" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["UI/UX Design", "Prototyping"]
+            },
+            "createdAt": "2023-10-06T14:00:00Z",
+            "likes": 9,
+            "comments": []
+        },
+        {
+            "id": 7,
+            "post": "How do you stay motivated during creative blocks?",
+            "postImage": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Fatima",
+                "lastname": "Ahmed",
+                "isVerified": false,
+                "badges": {
+                    "communityHelper": { "label": "Community Helper", "icon": "🤝" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Writing", "Motivation"]
+            },
+            "createdAt": "2023-10-07T17:30:00Z",
+            "likes": 6,
+            "comments": []
+        },
+        {
+            "id": 8,
+            "post": "Check out my new animation reel! https://example.com/reel",
+            "postImage": "",
+            "author": {
+                "firstname": "Liam",
+                "lastname": "Nguyen",
+                "isVerified": true,
+                "badges": {
+                    "creativeStar": { "label": "Creative Star", "icon": "🌟" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Animation", "Motion Graphics"]
+            },
+            "createdAt": "2023-10-08T10:15:00Z",
+            "likes": 13,
+            "comments": []
+        },
+        {
+            "id": 9,
+            "post": "Any advice for landing freelance gigs? see my portfolio at https://example.com/portfolio",
+            "postImage": "https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Sophia",
+                "lastname": "Martins",
+                "isVerified": false,
+                "badges": {},
+                "profilePicture": "https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Freelancing", "Networking"]
+            },
+            "createdAt": "2023-10-09T13:40:00Z",
+            "likes": 4,
+            "comments": []
+        },
+        {
+            "id": 10,
+            "post": "Just published a new blog post on creative process!",
+            "postImage": "https://images.unsplash.com/photo-1519985176271-adb1088fa94c?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Musa",
+                "lastname": "Abdullah",
+                "isVerified": true,
+                "badges": {
+                    "topContributor": { "label": "Top Contributor", "icon": "🏆" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1519985176271-adb1088fa94c?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Blogging", "Creativity"]
+            },
+            "createdAt": "2023-10-10T16:25:00Z",
+            "likes": 11,
+            "comments": []
+        },
+        {
+            "id": 11,
+            "post": "What inspires your creative work?",
+            "postImage": "https://images.unsplash.com/photo-1517263904808-5dc0d6e1ad8b?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Olivia",
+                "lastname": "Brown",
+                "isVerified": false,
+                "badges": {},
+                "profilePicture": "https://images.unsplash.com/photo-1517263904808-5dc0d6e1ad8b?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Photography", "Storytelling"]
+            },
+            "createdAt": "2023-10-11T19:00:00Z",
+            "likes": 7,
+            "comments": []
+        },
+        {
+            "id": 12,
+            "post": "Shared a new branding project! Feedback welcome.",
+            "postImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Ethan",
+                "lastname": "Clark",
+                "isVerified": true,
+                "badges": {
+                    "verifiedExpert": { "label": "Verified Expert", "icon": "✅" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Branding", "Logo Design"]
+            },
+            "createdAt": "2023-10-12T11:50:00Z",
+            "likes": 8,
+            "comments": []
+        },
+        {
+            "id": 13,
+            "post": "How do you manage creative burnout?",
+            "postImage": "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Isabella",
+                "lastname": "Garcia",
+                "isVerified": false,
+                "badges": {
+                    "communityHelper": { "label": "Community Helper", "icon": "🤝" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Mental Health", "Creativity"]
+            },
+            "createdAt": "2023-10-13T14:35:00Z",
+            "likes": 6,
+            "comments": []
+        },
+        {
+            "id": 14,
+            "post": "Just launched my first podcast episode!",
+            "postImage": "https://images.unsplash.com/photo-1519340333755-c89213c1e2e9?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Noah",
+                "lastname": "Evans",
+                "isVerified": true,
+                "badges": {
+                    "creativeStar": { "label": "Creative Star", "icon": "🌟" }
+                },
+                "profilePicture": "https://images.unsplash.com/photo-1519340333755-c89213c1e2e9?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Podcasting", "Audio Editing"]
+            },
+            "createdAt": "2023-10-14T09:05:00Z",
+            "likes": 10,
+            "comments": []
+        },
+        {
+            "id": 15,
+            "post": "Any tips for building a personal brand online?",
+            "postImage": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80",
+            "author": {
+                "firstname": "Ava",
+                "lastname": "Wilson",
+                "isVerified": false,
+                "badges": {},
+                "profilePicture": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=256&h=256&facepad=2",
+                "skills": ["Personal Branding", "Social Media"]
+            },
+            "createdAt": "2023-10-15T18:20:00Z",
+            "likes": 5,
+            "comments": []
+        }
+    ]
+}
