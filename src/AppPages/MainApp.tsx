@@ -7,8 +7,10 @@ const MainApp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate('/verse/community');
-  }, []);
+    if (window.location.pathname === '/verse') {
+      navigate('/verse/community');
+    }
+  }, [navigate]);
 
   return (
     <div className="bg-[var(--color-text-dark)] min-h-screen ">

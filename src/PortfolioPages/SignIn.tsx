@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { useState, useContext } from "react";
 // import axios from 'axios';
 import {Link, useNavigate} from 'react-router-dom'
-import { FaGoogle} from "react-icons/fa";
 import { LoggedInContext } from "../Contexts/LoggedInState";
+import ForgotPassword from "../components/ForgotPassword";
 
 
 const SignIn = () => {
@@ -12,6 +12,7 @@ const SignIn = () => {
          password: ""
      });
  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+ const [showForgot, setShowForgot] = useState(false);
  const navigate = useNavigate();
  const loggedInContext = useContext(LoggedInContext);
 
@@ -70,9 +71,6 @@ const SignIn = () => {
          setErrors(prev => ({ ...prev, [name]: undefined })); // Clear error on change
      };
 
-     const handleGOAuth = () => {
-        //function to connect with google auth
-     }
  
      return (
          <div className="bg-[var(--color-text-dark)] min-h-screen">
@@ -149,6 +147,13 @@ const SignIn = () => {
                                              required
                                          />
                                          {errors.password && <p className="err-msg text-red-500 text-sm mt-1">{errors.password}</p>}
+                                         <button
+                                           type="button"
+                                           className="text-[var(--color-brand-orange)] text-sm mt-2 underline hover:text-[var(--color-brand-orange)]/80 transition-colors"
+                                           onClick={() => setShowForgot(true)}
+                                         >
+                                           Forgot Password?
+                                         </button>
                                      </div>
                                      <motion.button
                                          type="submit"
@@ -158,12 +163,6 @@ const SignIn = () => {
                                      >
                                          Login
                                      </motion.button>
-                                     <p className="text-white text-center my-4">Or Sign in using:</p>
-                                     <div className="flex items-center justify-center">
-                                        <button onClick={handleGOAuth} className="transition-colors text-[var(--color-surface-light)]/70 hover:text-[var(--color-brand-orange)] cursor-pointer">
-                                            <FaGoogle size={22} />
-                                        </button>
-                                     </div>
                                      <p className="text-white text-center my-4">Don't have an account? <Link className="text-[var(--color-brand-orange)]" to="/signup">Sign Up</Link></p>
                                  </div>
                              </motion.form>
@@ -171,6 +170,9 @@ const SignIn = () => {
                      </div>
                  </div>
              </section>
+             {showForgot && (
+               <ForgotPassword onClose={() => setShowForgot(false)} />
+             )}
          </div>
      );
 }

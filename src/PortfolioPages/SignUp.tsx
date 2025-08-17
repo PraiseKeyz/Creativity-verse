@@ -7,26 +7,28 @@ import { FaGoogle} from "react-icons/fa";
 
 const SignUp = () => {
  const [formData, setFormData] = useState({
-         last_name: "",
-         first_name: "",
+         lastname: "",
+         firstname: "",
          email: "",
          password: ""
      });
+ const [agreed, setAgreed] = useState(false);
  
      const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
  
      const handleSubmit = async (e: React.FormEvent) => {
          e.preventDefault();
+         if (!agreed) return; // Prevent submit if not agreed
          try {
-             const response = await axios.post(`${API_BASE_URL}/v1/auth/sign-up`, formData, {
+             const response = await axios.post(`${API_BASE_URL}/api/signup`, formData, {
                  headers: {
                      'Content-Type': 'application/json',
                  },
              });
              console.log(response.data);
              setFormData({
-                last_name: "",
-                first_name: "",
+                lastname: "",
+                firstname: "",
                 email: "",
                 password: ""
              })
@@ -95,12 +97,12 @@ const SignUp = () => {
                                  <div className="relative z-10">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                         <div>
-                                            <label htmlFor="last_name" className="block text-[var(--color-surface-light)] mb-2 font-medium">Last Name</label>
+                                            <label htmlFor="lastname" className="block text-[var(--color-surface-light)] mb-2 font-medium">Last Name</label>
                                             <input
                                                 type="text"
-                                                id="last_name"
-                                                name="last_name"
-                                                value={formData.last_name}
+                                                id="lastname"
+                                                name="lastname"
+                                                value={formData.lastname}
                                                 placeholder="John"
                                                 onChange={handleChange}
                                                 className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
@@ -108,12 +110,12 @@ const SignUp = () => {
                                             />
                                         </div>
                                         <div>
-                                            <label htmlFor="first_name" className="block text-[var(--color-surface-light)] mb-2 font-medium">First Name</label>
+                                            <label htmlFor="firstname" className="block text-[var(--color-surface-light)] mb-2 font-medium">First Name</label>
                                             <input
                                                 type="text"
-                                                id="first_name"
-                                                name="first_name"
-                                                value={formData.first_name}
+                                                id="firstname"
+                                                name="firstname"
+                                                value={formData.firstname}
                                                 placeholder="Doe"
                                                 onChange={handleChange}
                                                 className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
@@ -148,20 +150,28 @@ const SignUp = () => {
                                              required
                                          />
                                      </div>
+                                     <div className="flex items-center mb-6">
+                                       <input
+                                         type="checkbox"
+                                         id="agree"
+                                         checked={agreed}
+                                         onChange={e => setAgreed(e.target.checked)}
+                                         className="accent-[var(--color-brand-orange)] w-5 h-5 mr-2"
+                                         required
+                                       />
+                                       <label htmlFor="agree" className="text-[var(--color-surface-light)] text-sm">
+                                         I agree to the <a href="/terms" target="_blank" className="text-[var(--color-brand-orange)] underline">Terms & Conditions</a>
+                                       </label>
+                                     </div>
                                      <motion.button
                                          type="submit"
                                          whileHover={{ scale: 1.02 }}
                                          whileTap={{ scale: 0.98 }}
                                          className="w-full px-8 py-4 bg-gradient-to-r from-[var(--color-brand-orange)] to-[var(--color-brand-orange)]/80 text-[var(--color-text-dark)] rounded-lg font-semibold hover:from-[var(--color-brand-orange)]/90 hover:to-[var(--color-brand-orange)]/70 transition-all duration-300 shadow-lg shadow-[var(--color-brand-orange)]/20 cursor-pointer"
+                                         disabled={!agreed}
                                      >
                                          Sign Up
                                      </motion.button>
-                                     <p className="text-white text-center my-4">Or Sign in using:</p>
-                                     <div className="flex items-center justify-center">
-                                        <button onClick={handleGOAuth} className="transition-colors text-[var(--color-surface-light)]/70 hover:text-[var(--color-brand-orange)] cursor-pointer">
-                                            <FaGoogle size={22} />
-                                        </button>
-                                     </div>
                                      <p className="text-white text-center my-4">Already a creative? <Link className="text-[var(--color-brand-orange)]" to="/signin">Sign In</Link></p>
                                  </div>
                              </motion.form>
