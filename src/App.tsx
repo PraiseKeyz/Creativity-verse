@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'; // Import useLocation
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import Footer from './components/footer';
 import Header from './components/Header';
 import HomePage from './PortfolioPages/Home';
@@ -19,7 +19,7 @@ import BlogPost from './PortfolioPages/BlogPost';
 import NotFound from './PortfolioPages/NotFound';
 // import './App.css'
 import ScrollToTop from './components/ScrollToTop';
-import PopUp from './components/PopUp';
+// import PopUp from './components/PopUp';
 import SignUp from './PortfolioPages/SignUp';
 import SignIn from './PortfolioPages/SignIn';
 import UserProfile from './AppPages/UserProfile';
@@ -35,22 +35,25 @@ import Feed from './AppPages/Feed';
 import Settings from './AppPages/Settings';
 import HelpCenter from './AppPages/HelpCenter';
 import PrivacyPolicy from './AppPages/PrivacyPolicy';
+import ResetPassword from './PortfolioPages/ResetPassword';
+import EmailVerification from './PortfolioPages/EmailVerification';
+import EmailVerificationSuccess from './PortfolioPages/EmailVerificationSuccess';
 
 function App() {
-  const [showPopUp, setShowPopUp] = useState(false);
+  // const [showPopUp, setShowPopUp] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowPopUp(true);
-    }, 20000); // 20 seconds
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShowPopUp(true);
+  //   }, 20000); // 20 seconds
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   return (
     <LoggedInState>
       <Router>
         <ScrollToTop />
-        <PopUp show={showPopUp} onClose={() => setShowPopUp(false)} />
+        {/* <PopUp show={showPopUp} onClose={() => setShowPopUp(false)} /> */}
         <Body/>
       </Router>
     </LoggedInState>
@@ -78,6 +81,9 @@ function Body() {
     '/resources/blog-management',
     '/services/service/:id', // This will be matched differently
     '/resources/blogs/:id', // This will be matched differently 
+    '/reset-password',
+    '/verify-email',
+    '/email-verified'
   ].some(path => {
     if (path.includes(':')) {
       // Handle dynamic routes
@@ -107,6 +113,9 @@ function Body() {
         <Route path='/contact' element={<Contact />} />
         <Route path="/resources/blog-management" element={<BlogManagement />} />
         <Route path="/resources/blogs/:id" element={<BlogPost />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/verify-email" element={<EmailVerification />} />
+        <Route path="/email-verified" element={<EmailVerificationSuccess />} />
 
         {/* Protected routes */}
         <Route path='verse' element={isLoggedIn ? <MainApp /> : <Navigate to="/signin" />} >
