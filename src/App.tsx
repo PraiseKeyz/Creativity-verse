@@ -38,22 +38,15 @@ import PrivacyPolicy from './AppPages/PrivacyPolicy';
 import ResetPassword from './PortfolioPages/ResetPassword';
 import EmailVerification from './PortfolioPages/EmailVerification';
 import EmailVerificationSuccess from './PortfolioPages/EmailVerificationSuccess';
+import ForgotPassword from './PortfolioPages/ForgotPassword';
 
 function App() {
-  // const [showPopUp, setShowPopUp] = useState(false);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShowPopUp(true);
-  //   }, 20000); // 20 seconds
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   return (
     <LoggedInState>
       <Router>
         <ScrollToTop />
-        {/* <PopUp show={showPopUp} onClose={() => setShowPopUp(false)} /> */}
         <Body/>
       </Router>
     </LoggedInState>
@@ -82,6 +75,7 @@ function Body() {
     '/services/service/:id', // This will be matched differently
     '/resources/blogs/:id', // This will be matched differently 
     '/reset-password',
+    '/forgot-password',
     '/verify-email',
     '/email-verified'
   ].some(path => {
@@ -114,6 +108,7 @@ function Body() {
         <Route path="/resources/blog-management" element={<BlogManagement />} />
         <Route path="/resources/blogs/:id" element={<BlogPost />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-email" element={<EmailVerification />} />
         <Route path="/email-verified" element={<EmailVerificationSuccess />} />
 

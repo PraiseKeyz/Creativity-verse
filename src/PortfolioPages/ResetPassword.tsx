@@ -26,7 +26,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#0d0d0d] flex items-center justify-center px-4 font-sans">
+    <main className="min-h-[calc(100vh*0.5)] bg-[#0d0d0d] flex items-center justify-center px-4 font-sans">
       <div className="bg-[#1a1a1a] p-8 rounded-xl shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold text-white text-center">Reset Password</h1>
         <p className="text-gray-400 text-sm text-center mt-2">
@@ -69,7 +69,7 @@ const ResetPassword = () => {
 
             <button
               type="submit"
-              className="w-full bg-[var(--color-brand-orange)] hover:bg-black hover:border hover:border-[var(--color-brand-orange)] text-white py-2 rounded-md transition-colors"
+              className="w-full bg-gradient-to-r from-[var(--color-brand-orange)] to-[var(--color-brand-orange)]/80 text-[var(--color-text-dark)] py-2 rounded-lg font-semibold hover:from-[var(--color-brand-orange)]/90 hover:to-[var(--color-brand-orange)]/70 transition-all border border-[var(--color-brand-orange)]/30 shadow-lg active:scale-95 duration-100 cursor-pointer"
             >
               Reset Password
             </button>

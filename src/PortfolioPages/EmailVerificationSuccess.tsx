@@ -19,7 +19,7 @@ const EmailVerificationSuccess = () => {
   }, [verifying, navigate]);
 
   return (
-    <main className="min-h-screen bg-[#0d0d0d] flex items-center justify-center px-4 font-sans">
+    <main className="min-h-[calc(100vh*0.5)] bg-[#0d0d0d] flex items-center justify-center px-4 font-sans">
       <div className="bg-[#1a1a1a] p-8 rounded-xl shadow-md w-full max-w-md text-center">
         {verifying ? (
           <>
