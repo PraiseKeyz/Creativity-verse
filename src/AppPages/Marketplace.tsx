@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import ProductCard from "../components/ProductCard";
 
@@ -11,9 +12,13 @@ type Product = {
   rating: number;
   isFavorite?: boolean;
   category: string;
+  description?: string;
+  discountPrice?: number;
+  reviewsCount?: number;
+  stock?: number;
 };
 
-const mockProducts: Product[] = [
+export const mockProducts: Product[] = [
   {
     id: "1",
     name: "Wireless Headphones",
@@ -69,6 +74,7 @@ const Marketplace = () => {
   const [products, setProducts] = useState<Product[]>(mockProducts);
   const [sort, setSort] = useState<string>("default");
   const [filter, setFilter] = useState<string>("All");
+  const navigate = useNavigate();
 
   const handleSort = (option: string) => {
     setSort(option);
@@ -139,12 +145,14 @@ const Marketplace = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-scroll custom-scrollbar h-screen p-4 pb-52">
         {products.map((product, index) => (
           <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: index * 0.1  }}
+            key={product.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+            onClick={() => navigate(`/verse/product/${product.id}`, { state: { product } })}
+            style={{ cursor: "pointer" }}
           >
             <ProductCard
-              key={product.id}
               product={product}
               onAddToCart={(id) => console.log("Added to cart:", id)}
               onToggleFavorite={(id) => console.log("Toggled favorite:", id)}
@@ -152,6 +160,7 @@ const Marketplace = () => {
           </motion.div>
         ))}
       </div>
+      <Outlet />
     </div>
   );
 };

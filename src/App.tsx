@@ -39,6 +39,7 @@ import ResetPassword from './PortfolioPages/ResetPassword';
 import EmailVerification from './PortfolioPages/EmailVerification';
 import EmailVerificationSuccess from './PortfolioPages/EmailVerificationSuccess';
 import ForgotPassword from './PortfolioPages/ForgotPassword';
+import ProductPage from './AppPages/ProductPage';
 
 function App() {
 
@@ -119,6 +120,7 @@ function Body() {
           <Route path='community' element={isLoggedIn ? <Community /> : <Navigate to="/signin" />} />
           <Route path='contests' element={isLoggedIn ? <Contests /> : <Navigate to="/signin" />} />
           <Route path='marketplace' element={isLoggedIn ? <Marketplace /> : <Navigate to="/signin" />} />
+          <Route path='product/:id' element={isLoggedIn ? <ProductPage  /> : <Navigate to="/signin" />} />
           <Route path='referral' element={isLoggedIn ? <Referral /> : <Navigate to="/signin" />} />
           <Route path='feed' element={isLoggedIn ? <Feed /> : <Navigate to="/signin" />} />
           <Route path='settings' element={isLoggedIn ? <Settings /> : <Navigate to="/signin" />} />
