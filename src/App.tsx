@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'r
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useContext } from 'react';
-import Footer from './components/footer';
-import Header from './components/Header';
+import Footer from './components/PortfolioComponent/footer';
+import Header from './components/PortfolioComponent/Header';
 import HomePage from './PortfolioPages/Home';
 import About from './PortfolioPages/About';
 import Features from './PortfolioPages/Features';
@@ -18,7 +18,7 @@ import BlogManagement from './PortfolioPages/BlogManagement';
 import BlogPost from './PortfolioPages/BlogPost';
 import NotFound from './PortfolioPages/NotFound';
 // import './App.css'
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from './components/PortfolioComponent/ScrollToTop';
 // import PopUp from './components/PopUp';
 import SignUp from './PortfolioPages/SignUp';
 import SignIn from './PortfolioPages/SignIn';

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
-import LoadingSpin from "../components/LoadingSpin";
+import LoadingSpin from "../components/PortfolioComponent/LoadingSpin";
 
 const EmailVerificationSuccess = () => {
   const navigate = useNavigate();

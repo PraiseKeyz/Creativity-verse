@@ -23,7 +23,7 @@ function renderPostWithLinks(text: string) {
   });
 }
 import { FiChevronDown } from "react-icons/fi";
-import CommunityPost from "../components/CommunityPost";
+import CommunityPost from "../components/AppComponent/CommunityPost";
 
 const categories = ["Trending", "Latest"];
 

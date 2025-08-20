@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaStar, FaRegStar, FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/AppComponent/ProductCard";
 
 type Review = {
   id: number;

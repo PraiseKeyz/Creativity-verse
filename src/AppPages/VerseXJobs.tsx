@@ -1,6 +1,6 @@
-import JobCard from "../components/JobCard";
+import JobCard from "../components/AppComponent/JobCard";
 import { useEffect, useState } from "react";
-import LoadingSpin from "../components/LoadingSpin";
+import LoadingSpin from "../components/PortfolioComponent/LoadingSpin";
 
 const VerseXJobs = () => {
   const [jobs, setJobs] = useState<any[]>([]);

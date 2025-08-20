@@ -1,9 +1,9 @@
 import React from "react";
 import { FaBell, FaGift, FaCrown, FaSync, FaUsers } from "react-icons/fa";
 import { motion } from "framer-motion";
-import DiscountSlider from "../components/DiscountSlider";
-import StatCard from "../components/StatCard";
-import WebinarCard from "../components/WebinarCard";
+import DiscountSlider from "../components/AppComponent/DiscountSlider";
+import StatCard from "../components/AppComponent/StatCard";
+import WebinarCard from "../components/AppComponent/WebinarCard";
 
 const ProCommunity: React.FC = () => {
   return (

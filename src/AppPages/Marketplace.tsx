@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import ProductCard from "../components/ProductCard";
-import LoadingSpin from "../components/LoadingSpin";
+import ProductCard from "../components/AppComponent/ProductCard";
+import LoadingSpin from "../components/PortfolioComponent/LoadingSpin";
 
 type Product = {
   id: string;

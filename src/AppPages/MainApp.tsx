@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom"
-import Sidebar from "../components/Sidebar"
-import VerseNav from "../components/VerseNav"
+import Sidebar from "../components/AppComponent/Sidebar"
+import VerseNav from "../components/AppComponent/VerseNav"
 import { useEffect } from "react"
 
 const MainApp = () => {
