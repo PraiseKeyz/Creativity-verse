@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import logo from '../assets/logo2.png'
+import logo from '../../assets/logo2.png'
 import { useState } from "react";
 import { FaUser, FaShoppingCart, FaUserFriends, FaTrophy, FaCog, FaQuestionCircle, FaShieldAlt, FaLightbulb, FaDoorOpen, FaThLarge } from "react-icons/fa";
 

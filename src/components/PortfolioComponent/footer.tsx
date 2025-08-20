@@ -1,9 +1,9 @@
-import logo from '../assets/logo2.png'
-import fbIcon from "../assets/icon-facebook.svg";
-import IgIcon from "../assets/icon-instagram.svg";
-import WhatsappIcon from "../assets/whatsapp.svg";
-import LinkedinIcon from "../assets/linkedin.svg";
-import telegramIcon from "../assets/telegram.svg";
+import logo from '../../assets/logo2.png'
+import fbIcon from "../../assets/icon-facebook.svg";
+import IgIcon from "../../assets/icon-instagram.svg";
+import WhatsappIcon from "../../assets/whatsapp.svg";
+import LinkedinIcon from "../../assets/linkedin.svg";
+import telegramIcon from "../../assets/telegram.svg";
 
 const Footer = () => {
     return (
