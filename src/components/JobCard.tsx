@@ -84,7 +84,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
         </ul>
       </div>
 
-      {/* Application Link */}
+      {/* Application Link
       {job.applicationLink && (
         <div className="mt-3">
           <a
@@ -96,7 +96,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
             Apply via external link
           </a>
         </div>
-      )}
+      )} */}
 
       {/* Expand Button */}
       <button
@@ -116,7 +116,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
 
       {/* CTA */}
       <button className="mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white py-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
-        Apply now
+        <a href={job.applicationMethod == 'external' && job.applicationLink}>Apply now</a>
       </button>
     </motion.div>
   );

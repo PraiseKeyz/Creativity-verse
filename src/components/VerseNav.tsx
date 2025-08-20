@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { FaUsers, FaBriefcase} from "react-icons/fa"
+import { FaUsers, FaBriefcase, FaBriefcaseMedical} from "react-icons/fa"
 
 
 const VerseNav = () => {
@@ -16,6 +16,12 @@ const VerseNav = () => {
                 <li className="px-2 py-4 flex items-center justify-center gap-2">
                   <FaBriefcase className="text-xl" />
                   <span className="hidden md:block">Job Hub</span>
+                </li>
+            </NavLink>
+            <NavLink to="verse-x-jobs" className={({ isActive }) => `${isActive ? 'active' : ''} w-full`}>
+                <li className="px-2 py-4 flex items-center justify-center gap-2">
+                  <FaBriefcaseMedical className="text-xl" />
+                  <span className="hidden md:block">Verse X</span>
                 </li>
             </NavLink>
         </ul>

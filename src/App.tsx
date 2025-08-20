@@ -40,6 +40,7 @@ import EmailVerification from './PortfolioPages/EmailVerification';
 import EmailVerificationSuccess from './PortfolioPages/EmailVerificationSuccess';
 import ForgotPassword from './PortfolioPages/ForgotPassword';
 import ProductPage from './AppPages/ProductPage';
+import VerseXJobs from './AppPages/VerseXJobs';
 
 function App() {
 
@@ -117,6 +118,7 @@ function Body() {
         <Route path='verse' element={isLoggedIn ? <MainApp /> : <Navigate to="/signin" />} >
           <Route path='user-profile' element={isLoggedIn ? <UserProfile /> : <Navigate to="/signin" />} />
           <Route path='jobs' element={isLoggedIn ? <JobsListing /> : <Navigate to="/signin" />} />
+          <Route path='verse-x-jobs' element={isLoggedIn ? <VerseXJobs /> : <Navigate to="/signin" />} />
           <Route path='community' element={isLoggedIn ? <Community /> : <Navigate to="/signin" />} />
           <Route path='contests' element={isLoggedIn ? <Contests /> : <Navigate to="/signin" />} />
           <Route path='marketplace' element={isLoggedIn ? <Marketplace /> : <Navigate to="/signin" />} />
