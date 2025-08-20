@@ -173,11 +173,11 @@ const Header = () => {
                         <li><Link onClick={() => setIsMenuOpen(false)} to="/contact" className='text-[var(--color-surface-light)] text-xl hover:text-[var(--color-brand-orange)] transition-colors'>Contact</Link></li>
                     </ul>
                     <div className='mt-12 flex flex-col items-center gap-4'>
-                                <button className='px-8 py-3 text-lg text-[var(--color-surface-light)] hover:text-[var(--color-brand-orange)] transition-colors duration-300'>
-                                    Sign In
+                                <button onClick={() => setIsMenuOpen(false)} className='px-8 py-3 text-lg text-[var(--color-surface-light)] hover:text-[var(--color-brand-orange)] transition-colors duration-300'>
+                                    <Link  to='/signin'>Sign In</Link>
                                 </button>
-                                <button className='px-8 py-3 text-lg bg-[var(--color-brand-orange)] text-[var(--color-text-dark)] rounded-full hover:bg-[var(--color-brand-orange)]/90 transition-all duration-300'>
-                                    Sign Up
+                                <button onClick={() => setIsMenuOpen(false)} className='px-8 py-3 text-lg bg-[var(--color-brand-orange)] text-[var(--color-text-dark)] rounded-full hover:bg-[var(--color-brand-orange)]/90 transition-all duration-300'>
+                                    Sign <Link to='/signup'>Up</Link>
                                 </button>
                      </div>
                 </nav>

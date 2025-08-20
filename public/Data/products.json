@@ -1,0 +1,166 @@
+[
+  {
+    "id": 1,
+    "name": "UI Design Masterclass",
+    "description": "A comprehensive course on modern UI design principles and tools.",
+    "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+    "price": 49.99,
+    "oldPrice": 99.99,
+    "rating": 5,
+    "category": "Course",
+    "discountPrice": 39.99,
+    "reviewsCount": 120
+  },
+  {
+    "id": 2,
+    "name": "React Developer eBook",
+    "description": "An advanced eBook for mastering React.js and building scalable web apps.",
+    "image": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    "price": 19.99,
+    "rating": 4,
+    "category": "eBook",
+    "discountPrice": 14.99,
+    "reviewsCount": 85
+  },
+  {
+    "id": 3,
+    "name": "Freelancer Portfolio Template",
+    "description": "A modern, customizable portfolio template for freelancers.",
+    "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+    "price": 29.99,
+    "oldPrice": 39.99,
+    "rating": 4,
+    "category": "Template",
+    "discountPrice": 24.99,
+    "reviewsCount": 60
+  },
+  {
+    "id": 4,
+    "name": "Digital Marketing Toolkit",
+    "description": "A bundle of resources for digital marketers, including guides and templates.",
+    "image": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80",
+    "price": 59.99,
+    "rating": 5,
+    "category": "Toolkit",
+    "discountPrice": 49.99,
+    "reviewsCount": 95
+  },
+  {
+    "id": 5,
+    "name": "Python Automation Scripts",
+    "description": "A collection of Python scripts for automating daily tasks.",
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
+    "price": 24.99,
+    "rating": 4,
+    "category": "Scripts",
+    "discountPrice": 19.99,
+    "reviewsCount": 70
+  },
+  {
+    "id": 6,
+    "name": "WordPress Blog Theme",
+    "description": "A clean and responsive WordPress theme for bloggers.",
+    "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80",
+    "price": 34.99,
+    "oldPrice": 49.99,
+    "rating": 5,
+    "category": "Theme",
+    "discountPrice": 29.99,
+    "reviewsCount": 110
+  },
+  {
+    "id": 7,
+    "name": "SEO Audit Checklist",
+    "description": "A downloadable checklist for performing SEO audits.",
+    "image": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+    "price": 9.99,
+    "rating": 4,
+    "category": "Checklist",
+    "reviewsCount": 40
+  },
+  {
+    "id": 8,
+    "name": "Mobile App Wireframe Kit",
+    "description": "A set of wireframe templates for mobile app designers.",
+    "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
+    "price": 14.99,
+    "rating": 5,
+    "category": "Kit",
+    "discountPrice": 11.99,
+    "reviewsCount": 55
+  },
+  {
+    "id": 9,
+    "name": "Remote Work Productivity Guide",
+    "description": "A guide to boosting productivity while working remotely.",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
+    "price": 12.99,
+    "rating": 4,
+    "category": "Guide",
+    "reviewsCount": 30
+  },
+  {
+    "id": 10,
+    "name": "Social Media Content Calendar",
+    "description": "A digital calendar template for planning social media posts.",
+    "image": "https://images.unsplash.com/photo-1465101178521-c1a6f3b5f0a7?auto=format&fit=crop&w=400&q=80",
+    "price": 7.99,
+    "rating": 5,
+    "category": "Template",
+    "reviewsCount": 65
+  },
+  {
+    "id": 11,
+    "name": "JavaScript Snippets Library",
+    "description": "A library of reusable JavaScript code snippets for developers.",
+    "image": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    "price": 17.99,
+    "rating": 4,
+    "category": "Library",
+    "discountPrice": 13.99,
+    "reviewsCount": 50
+  },
+  {
+    "id": 12,
+    "name": "Freelance Contract Template",
+    "description": "A legal contract template for freelancers and clients.",
+    "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+    "price": 15.99,
+    "rating": 5,
+    "category": "Template",
+    "reviewsCount": 45
+  },
+  {
+    "id": 13,
+    "name": "Digital Illustration Brushes",
+    "description": "A set of custom brushes for digital illustrators.",
+    "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+    "price": 11.99,
+    "rating": 4,
+    "category": "Brushes",
+    "discountPrice": 8.99,
+    "reviewsCount": 35
+  },
+  {
+    "id": 14,
+    "name": "Video Editing Presets",
+    "description": "A pack of presets for popular video editing software.",
+    "image": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80",
+    "price": 21.99,
+    "oldPrice": 29.99,
+    "rating": 5,
+    "category": "Presets",
+    "discountPrice": 17.99,
+    "reviewsCount": 80
+  },
+  {
+    "id": 15,
+    "name": "Remote Team Collaboration Guide",
+    "description": "A guide to effective collaboration for remote teams.",
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
+    "price": 13.99,
+    "rating": 4,
+    "category": "Guide",
+    "reviewsCount": 25
+  }
+]

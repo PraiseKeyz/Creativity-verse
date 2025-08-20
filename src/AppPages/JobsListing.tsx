@@ -1,34 +1,31 @@
-import JobCard from "../components/JobCard"
+import JobCard from "../components/JobCard";
+import { useEffect, useState } from "react";
 
 const JobsListing = () => {
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  //assumed job schema
-  const job = {
-  id: "job_01",
-  title: "Product Designer",
-  company: "Ifeolu Ltd",
-  logoColor: "#00C853",
-  postedAt: "3 days ago",
-  description:
-    "We're looking for a Product Designer to lead intuitive, user-centered design solutions. Collaborate with cross-functional teams to deliver world-class UI/UX.",
-  tags: ["Remote", "Full-time"],
-  salary: "$120",
-  benefits: ["Remote Work", "Health Insurance"],
-  isRemote: true,
-  type: "Full-time",
-  saved: false,
-};
+  useEffect(() => {
+    // Simulate API call
+    setTimeout(() => {
+      fetch("/Data/joblisting.json")
+        .then((res) => res.json())
+        .then((data) => {
+          setJobs(data);
+          setLoading(false);
+        });
+    }, 1000);
+  }, []);
 
   return (
     <div className="text-white h-[100vh] overflow-y-scroll p-4 custom-scrollbar">
-      <JobCard job={job} />
-      <JobCard job={job} />
-      <JobCard job={job} />
-      <JobCard job={job} />
-      <JobCard job={job} />
-      <JobCard job={job} />
+      {loading ? (
+        <div className="text-center mt-20 text-lg">Loading jobs...</div>
+      ) : (
+        jobs.map((job) => <JobCard key={job.id} job={job} />)
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default JobsListing
+export default JobsListing;

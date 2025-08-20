@@ -3,18 +3,17 @@ import { motion } from "framer-motion";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 
 type Job = {
-  id: string;
+  id: number;
   title: string;
-  company: string;
-  logoColor: string; // a color for the dot icon
-  postedAt: string;
   description: string;
-  tags: string[];
-  salary: string;
-  benefits?: string[];
-  isRemote: boolean;
-  type: string;
-  saved?: boolean;
+  company: string;
+  employmentType: 'freelance' | 'remote' | 'full-time' | 'part-time' | 'contract';
+  skillsRequired: string[];
+  skillLevel: 'entry' | 'intermediate' | 'expert';
+  applicationMethod: 'internal' | 'external';
+  applicationLink?: string;
+  postedBy: string;
+  createdAt: string;
 };
 
 type JobCardProps = {
@@ -23,7 +22,7 @@ type JobCardProps = {
 
 const JobCard: React.FC<JobCardProps> = ({ job }) => {
   const [expanded, setExpanded] = useState(false);
-  const [isSaved, setIsSaved] = useState(job.saved || false);
+  const [isSaved, setIsSaved] = useState(false);
 
   const toggleExpanded = () => setExpanded(!expanded);
   const toggleSave = () => setIsSaved(!isSaved);
@@ -32,18 +31,14 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3}}
-
+      transition={{ duration: 0.3, delay: job.id * 0.1  }}
       className="border border-[var(--color-brand-orange)]/20 rounded-lg p-4 mb-6 text-white shadow-lg"
       style={{ fontFamily: "var(--font-primary)" }}
     >
       {/* Header */}
       <div className="flex justify-between items-start">
         <div className="flex items-center gap-2">
-          <div
-            className="w-4 h-4 rounded-full"
-            style={{ backgroundColor: job.logoColor }}
-          ></div>
+          <div className="w-4 h-4 rounded-full bg-[var(--color-brand-orange)]"></div>
           <h4 className="text-sm text-white/50 font-semibold">{job.company}</h4>
         </div>
         <button onClick={toggleSave}>
@@ -63,23 +58,45 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
         {expanded ? job.description : `${job.description.slice(0, 80)}...`}
       </p>
 
-      {/* Tags */}
-      <div className="flex gap-2 mt-3">
-        {job.isRemote && (
-          <span className="px-2 py-1 text-xs rounded bg-[var(--color-brand-orange)]/30 text-white/90">
-            Remote
-          </span>
-        )}
+      {/* Job Details */}
+      <div className="flex flex-wrap gap-2 mt-3">
         <span className="px-2 py-1 text-xs rounded bg-[var(--color-brand-orange)]/30 text-white/90">
-          {job.type}
+          {job.employmentType}
+        </span>
+        <span className="px-2 py-1 text-xs rounded bg-[var(--color-brand-orange)]/30 text-white/90">
+          {job.skillLevel}
+        </span>
+        <span className="px-2 py-1 text-xs rounded bg-[var(--color-brand-orange)]/30 text-white/90">
+          {job.applicationMethod}
+        </span>
+        <span className="px-2 py-1 text-xs rounded bg-[var(--color-brand-orange)]/30 text-white/90">
+          Posted: {new Date(job.createdAt).toLocaleDateString()}
         </span>
       </div>
 
-      {/* Salary */}
-      <div className="text-sm font-semibold mt-4">
-        {job.salary}
-        <span className="text-xs font-normal text-white/50 ml-2">/hr</span>
+      {/* Skills Required */}
+      <div className="mt-3">
+        <span className="font-semibold text-xs text-white/70">Skills Required:</span>
+        <ul className="flex flex-wrap gap-2 mt-1">
+          {job.skillsRequired.map((skill, idx) => (
+            <li key={idx} className="px-2 py-1 bg-gray-700 rounded text-xs">{skill}</li>
+          ))}
+        </ul>
       </div>
+
+      {/* Application Link */}
+      {job.applicationLink && (
+        <div className="mt-3">
+          <a
+            href={job.applicationLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-[var(--color-brand-orange)] underline"
+          >
+            Apply via external link
+          </a>
+        </div>
+      )}
 
       {/* Expand Button */}
       <button
@@ -90,19 +107,15 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
       </button>
 
       {/* Expanded Section */}
-      {expanded && job.benefits && (
+      {expanded && (
         <div className="mt-4">
-          <h4 className="font-medium text-sm mb-1">Benefits:</h4>
-          <ul className="list-disc pl-5 text-sm text-white/80">
-            {job.benefits.map((benefit, idx) => (
-              <li key={idx}>{benefit}</li>
-            ))}
-          </ul>
+          <h4 className="font-medium text-sm mb-1">Posted By:</h4>
+          <span className="text-xs text-white/80">{job.postedBy}</span>
         </div>
       )}
 
       {/* CTA */}
-      <button className="mt-5 w-full bg-[var(--color-brand-orange)] text-white py-2 rounded-md hover:bg-black hover:border hover:border-[var(--color-brand-orange)] transition-colors">
+      <button className="mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white py-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
         Apply now
       </button>
     </motion.div>
