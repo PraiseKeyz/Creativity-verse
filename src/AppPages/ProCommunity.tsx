@@ -8,7 +8,7 @@ import WebinarCard from "../components/WebinarCard";
 const ProCommunity: React.FC = () => {
   return (
     <main
-      className="overflow-y-scroll custom-scrollbar h-screen bg-[var(--color-text-dark)]"
+      className=" bg-[var(--color-text-dark)]"
       style={{ fontFamily: "var(--font-primary)" }}
     >
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4 p-4">

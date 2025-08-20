@@ -52,7 +52,7 @@ const Community = () => {
   }, [selected]);
 
   return (
-    <div className="text-white h-[100vh] overflow-y-scroll p-4 custom-scrollbar">
+    <div className="text-white mb-4 h-screen">
       <div className="relative w-48 mt-4">
         <button
           className="flex items-center w-full px-4 py-2 cursor-pointer focus:outline-none"

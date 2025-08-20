@@ -1,12 +1,18 @@
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { FaStar, FaRegStar, FaShoppingCart, FaHeart, FaRegHeart } from "react-icons/fa";
-import { useParams, useLocation } from "react-router-dom";
-import { mockProducts } from "./Marketplace";
+import { useLocation, useNavigate } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
 
-const ProductPage: React.FC = () => {
+type Review = {
+  id: number;
+  review: string;
+  postedBy: string;
+  createdAt: number;
+};
+
 type Product = {
-  id: string;
+  id: string ;
   name: string;
   image: string;
   price: number;
@@ -18,12 +24,21 @@ type Product = {
   discountPrice?: number;
   reviewsCount?: number;
   stock?: number;
+  reviews?: Review[];
 };
 
-  const { id } = useParams();
-  const location = useLocation();
+const ProductPage: React.FC = () => {
+  const location = useLocation();  
+  const [products, setProducts] = useState<Product[]>([]);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const product: Product | undefined = location.state?.product || mockProducts.find((p: Product) => p.id === id);
+  const product: Product | undefined = location.state?.product;
+
+    // Filter related products by category, excluding the current product
+    const relatedProducts = products.filter(
+      (p) => p.category === product?.category && p.id !== product?.id
+    );
 
   if (!product) {
     return (
@@ -36,16 +51,28 @@ type Product = {
     );
   }
 
+    useEffect(() => {
+      // Simulate API call
+      setTimeout(() => {
+        fetch("/Data/products.json")
+          .then((res) => res.json())
+          .then((data) => {
+            setProducts(data);
+            setLoading(false);
+          });
+      }, 1000);
+    }, []);
+
   return (
-    <main className="min-h-screen bg-[#181818] text-white font-sans">
+    <main className="h-screen overflow-y-scroll custom-scrollbar bg-[#181818] text-white font-sans">
       <section className="w-full max-w-6xl mx-auto py-12 px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Image */}
           <div className="relative flex flex-col items-center justify-center">
             <img
               src={product.image}
               alt={product.name}
-              className="rounded-2xl w-full max-w-md h-[400px] object-cover shadow-lg border border-gray-800 bg-[#232323]"
+              className="rounded-2xl w-full h-[400px] object-cover shadow-lg border border-gray-800 bg-[#232323]"
             />
             <button
               onClick={() => setIsWishlisted(!isWishlisted)}
@@ -64,7 +91,9 @@ type Product = {
           <div className="flex flex-col justify-between">
             <div>
               <h1 className="text-4xl font-bold mb-2 text-[var(--color-brand-orange)]">{product.name}</h1>
-              <p className="text-base text-gray-400 mb-2">Category: <span className="font-semibold text-white">{product.category}</span></p>
+              <p className="text-base text-gray-400 mb-2">
+                Category: <span className="font-semibold text-white">{product.category}</span>
+              </p>
               <div className="flex items-center gap-2 mb-4">
                 {[...Array(5)].map((_, i) =>
                   i < product.rating ? (
@@ -91,17 +120,13 @@ type Product = {
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-4 mt-6">
+            <div className="mt-6">
               <button
                 disabled={product.stock === 0}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-lg font-semibold transition-all shadow ${
-                  product.stock === 0
-                    ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-                    : "bg-black text-white border border-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange)]"
-                }`}
+                className={`w-full flex items-center justify-center gap-2 py-3 rounded-lg text-lg font-semibold transition-all shadow bg-black text-white border border-[var(--color-brand-orange)] hover:bg-[#1b1b1b] mb-4 cursor-pointer`}
               >
                 <FaShoppingCart size={20} />
-                {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
+                Add to cart
               </button>
               <button className="w-full bg-gradient-to-r from-[var(--color-brand-orange)] to-[var(--color-brand-orange)]/80 text-[var(--color-text-dark)] py-2 rounded-lg font-semibold hover:from-[var(--color-brand-orange)]/90 hover:to-[var(--color-brand-orange)]/70 transition-all border border-[var(--color-brand-orange)]/30 shadow-lg active:scale-95 duration-100 cursor-pointer">
                 Buy Now
@@ -109,6 +134,54 @@ type Product = {
             </div>
           </div>
         </div>
+
+        {/* Reviews Section */}
+        {product.reviews && product.reviews.length > 0 && (
+          <div className="rounded-xl shadow-md mt-8">
+            <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
+            <div className="space-y-4">
+              {product.reviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="bg-[#262626] p-4 rounded-lg border border-gray-700"
+                >
+                  <p className="text-gray-200 mb-2\">{review.review}</p>
+                  <div className="flex justify-between text-sm text-gray-500">
+                    <span>By {review.postedBy}</span>
+                    <span>
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+          {/* Related Products Section */}
+          {relatedProducts.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold mb-6 text-[var(--color-brand-orange)]">Related Products</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                {relatedProducts.map((rp, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    onClick={() => navigate(`/verse/product/${product.id}`, { state: { product } })}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <ProductCard
+                      product={rp}
+                      onAddToCart={(id) => console.log("Added to cart:", id)}
+                      onToggleFavorite={(id) => console.log("Toggled favorite:", id)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          )}
       </section>
     </main>
   );
