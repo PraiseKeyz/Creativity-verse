@@ -14,21 +14,16 @@ const MainApp = () => {
 
   return (
     <div className="bg-[var(--color-text-dark)] min-h-screen ">
+      <VerseNav />
       <div className="lg:container bg-[#1f1e1e] grid md:grid-cols-[270px_1fr] grid-cols-[1fr_6fr] mx-auto relative ">
-
         {/* Sidebar: left column, full height */}
         <div className="h-screen">
           <Sidebar />
         </div>
 
         {/* Main content: right column */}
-        <div className="flex flex-col h-screen overflow-y-scroll custom-scrollbar pb-4">
-          { <VerseNav />}
-
-          {/* Outlet below VerseNav */}
-          <div className="flex-1">
+        <div className="h-screen overflow-y-scroll custom-scrollbar pb-4">
             <Outlet />
-          </div>
         </div>
 
       </div>

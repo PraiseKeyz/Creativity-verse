@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import logo from '../../assets/logo2.png'
-import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { FaUser, FaShoppingCart, FaUserFriends, FaTrophy, FaCog, FaQuestionCircle, FaShieldAlt, FaLightbulb, FaDoorOpen, FaThLarge } from "react-icons/fa";
 
 const navLinks = [
   { to: "community", icon: <FaLightbulb className="text-xl" />, label: "The Verse" },
-  { to: "pro-community", icon: <FaThLarge className="text-xl" />, label: "Dashboard" },
+  { to: "dashboard", icon: <FaThLarge className="text-xl" />, label: "Dashboard" },
   { to: "user-profile", icon: <FaUser className="text-xl" />, label: "Profile" },
   { to: "marketplace", icon: <FaShoppingCart className="text-xl" />, label: "Market Place" },
   { to: "referral", icon: <FaUserFriends className="text-xl" />, label: "Referral" },
@@ -20,15 +18,11 @@ const bottomLinks = [
 ];
 
 const Sidebar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const location = useLocation();
-    const logoLink = location.pathname.startsWith('/verse') ? 'community' : '/';
+
 
   return (
     <div className="w-fit md:w-full h-screen p-4 shadow-lg border-r border-[var(--color-brand-orange)]/20 text-white flex flex-col items-start md:items-stretch">
-        <Link to={logoLink} className="">
-            <img src={logo} alt="Logo" className={`w-16 md:w-[7rem] h-16 md:h-[4.5rem] object-cover md:mb-8 transition-transform duration-300 ${isScrolled ? 'scale-90' : 'scale-100'}`} />
-        </Link>
+
         <div className="flex-grow flex flex-col justify-between text-sm">
             <ul>
               {navLinks.map(({ to, icon, label }, index) => (

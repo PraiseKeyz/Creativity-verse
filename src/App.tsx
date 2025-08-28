@@ -29,7 +29,6 @@ import Contests from './AppPages/Contests';
 import Marketplace from './AppPages/Marketplace';
 import Referral from './AppPages/Referral';
 import MainApp from './AppPages/MainApp';
-import ProCommunity from './AppPages/ProCommunity';
 import LoggedInState, { LoggedInContext } from './Contexts/LoggedInState';
 import Feed from './AppPages/Feed';
 import Settings from './AppPages/Settings';
@@ -41,6 +40,8 @@ import EmailVerificationSuccess from './PortfolioPages/EmailVerificationSuccess'
 import ForgotPassword from './PortfolioPages/ForgotPassword';
 import ProductPage from './AppPages/ProductPage';
 import VerseXJobs from './AppPages/VerseXJobs';
+import PricingPage from './PortfolioPages/PricingPage';
+import Dashboard from './AppPages/Dashboard';
 
 function App() {
 
@@ -60,6 +61,47 @@ function Body() {
   const loggedInContext = useContext(LoggedInContext);
   const isLoggedIn = loggedInContext?.isLoggedIn ?? false;
 
+
+  const dummyUsers = [
+  {
+    name: "John Doe",
+    profilePic: "https://randomuser.me/api/portraits/men/32.jpg",
+    plan: "free",
+    points: 45,
+    connections: 10,
+    profileViews: 3,
+    applications: 0,
+  },
+  {
+    name: "Sophia Martins",
+    profilePic: "https://randomuser.me/api/portraits/women/44.jpg",
+    plan: "rise",
+    points: 120,
+    connections: 34,
+    profileViews: 18,
+    applications: 5,
+  },
+  {
+    name: "David Johnson",
+    profilePic: "https://randomuser.me/api/portraits/men/65.jpg",
+    plan: "plus",
+    points: 420,
+    connections: 78,
+    profileViews: 54,
+    applications: 15,
+  },
+  {
+    name: "Amara Obi",
+    profilePic: "https://randomuser.me/api/portraits/women/68.jpg",
+    plan: "elite",
+    points: 980,
+    connections: 200,
+    profileViews: 143,
+    applications: 42,
+  },
+];
+
+
   // Check if the current path matches any of our defined routes
   const isValidRoute = [
     '/',
@@ -70,6 +112,7 @@ function Body() {
     '/signup',
     '/signin',
     '/store',
+    '/pricing',
     '/resources',
     '/resources/blogs',
     '/contact',
@@ -104,6 +147,7 @@ function Body() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/store' element={<Store />} />
+        <Route path='/pricing' element={<PricingPage />} />
         <Route path='/resources' element={<Resources />} />
         <Route path='/resources/blogs' element={<Blog />} />
         <Route path='/contact' element={<Contact />} />
@@ -116,6 +160,7 @@ function Body() {
 
         {/* Protected routes */}
         <Route path='verse' element={isLoggedIn ? <MainApp /> : <Navigate to="/signin" />} >
+          <Route path='dashboard' element={isLoggedIn ? <Dashboard user={dummyUsers[3]} /> : <Navigate to="/signin" />} />
           <Route path='user-profile' element={isLoggedIn ? <UserProfile /> : <Navigate to="/signin" />} />
           <Route path='jobs' element={isLoggedIn ? <JobsListing /> : <Navigate to="/signin" />} />
           <Route path='verse-x-jobs' element={isLoggedIn ? <VerseXJobs /> : <Navigate to="/signin" />} />
@@ -128,8 +173,6 @@ function Body() {
           <Route path='settings' element={isLoggedIn ? <Settings /> : <Navigate to="/signin" />} />
           <Route path='help-center' element={isLoggedIn ? <HelpCenter /> : <Navigate to="/signin" />} />
           <Route path='privacy-policy' element={isLoggedIn ? <PrivacyPolicy /> : <Navigate to="/signin" />} />
-          {/* Pro members routes */}
-          <Route path='pro-community' element={isLoggedIn ? <ProCommunity /> : <Navigate to="/signin" />} />
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
