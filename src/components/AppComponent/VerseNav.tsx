@@ -1,5 +1,5 @@
 import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
-import { FaUsers, FaBriefcase, FaBriefcaseMedical } from "react-icons/fa";
+import { FaUsers, FaBriefcase, FaBriefcaseMedical, FaPlusCircle } from "react-icons/fa";
 import logo from "../../assets/logo2.png";
 import UserMenu from "./UserMenu";
 
@@ -20,7 +20,7 @@ const VerseNav = () => {
   };
 
   return (
-    <div className="z-50 transition-all duration-300 text-white w-full h-fit shadow-lg border-b border-[var(--color-brand-orange)]/20 grid md:grid-cols-[270px_3fr_1fr] grid-cols-[1fr_3fr_1fr] items-center">
+    <div className="lg:container mx-auto z-50 transition-all duration-300 text-white w-full h-fit shadow-lg border-b border-[var(--color-brand-orange)]/20 grid md:grid-cols-[270px_1fr] grid-cols-[1fr_6fr] items-center">
       {/* Logo */}
       <Link to={logoLink} className="flex items-center px-4">
         <img
@@ -30,45 +30,65 @@ const VerseNav = () => {
         />
       </Link>
 
-      {/* NavLinks */}
-      <ul
-        id="dashboard-nav"
-        className="flex flex-row items-center justify-center gap-6 text-sm font-semibold w-full"
-      >
-        <NavLink
-          to="community"
-          className={({ isActive }) =>
-            `${isActive ? "active" : ""} flex items-center gap-2`
-          }
+      {/* NavLinks + Actions */}
+      <div className="flex items-center justify-between">
+        {/* NavLinks */}
+        <ul
+          id="dashboard-nav"
+          className="w-full flex flex-row items-center justify-center gap-6 text-sm font-semibold"
         >
-          <FaUsers className="text-lg" />
-          <span className="hidden md:inline">The Verse</span>
-        </NavLink>
+          <li>
+            <NavLink
+              to="community"
+              className={({ isActive }) =>
+                `${isActive ? "active" : ""} flex items-center gap-2 py-4 border-b-4 border-transparent rounded-sm`
+              }
+            >
+              <FaUsers className="text-lg" />
+              <span className="hidden md:inline">The Verse</span>
+            </NavLink>
+          </li>
 
-        <NavLink
-          to="jobs"
-          className={({ isActive }) =>
-            `${isActive ? "active" : ""} flex items-center gap-2`
-          }
-        >
-          <FaBriefcase className="text-lg" />
-          <span className="hidden md:inline">Job Hub</span>
-        </NavLink>
+          <li>
+            <NavLink
+              to="jobs"
+              className={({ isActive }) =>
+                `${isActive ? "active" : ""} flex items-center gap-2 py-4 border-b-4 border-transparent rounded-sm`
+              }
+            >
+              <FaBriefcase className="text-lg" />
+              <span className="hidden md:inline">Job Hub</span>
+            </NavLink>
+          </li>
 
-        <NavLink
-          to="verse-x-jobs"
-          className={({ isActive }) =>
-            `${isActive ? "active" : ""} flex items-center gap-2`
-          }
-        >
-          <FaBriefcaseMedical className="text-lg" />
-          <span className="hidden md:inline">Verse X</span>
-        </NavLink>
-      </ul>
+          <li>
+            <NavLink
+              to="verse-x-jobs"
+              className={({ isActive }) =>
+                `${isActive ? "active" : ""} flex items-center gap-2 py-4 border-b-4 border-transparent rounded-sm`
+              }
+            >
+              <FaBriefcaseMedical className="text-lg" />
+              <span className="hidden md:inline">Verse X</span>
+            </NavLink>
+          </li>
+        </ul>
 
-      {/* User Menu */}
-      <div className="flex justify-end px-4">
-        <UserMenu user={user} onLogout={handleLogout} />
+        {/* Right-side Actions */}
+        <div className="flex items-center gap-2 md:gap-4 pr-2">
+
+          {/* Create Post */}
+          <button
+            title="Create Post"
+            className="text-xl hover:text-[var(--color-brand-orange)] transition-colors"
+            onClick={() => alert("Open Create Post Modal")}
+          >
+            <FaPlusCircle />
+          </button>
+
+          {/* User Menu */}
+          <UserMenu user={user} onLogout={handleLogout} />
+        </div>
       </div>
     </div>
   );

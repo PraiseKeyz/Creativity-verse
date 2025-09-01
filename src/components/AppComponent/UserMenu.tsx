@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FaChevronDown, FaSignOutAlt, FaCog, FaQuestionCircle, FaMoon } from "react-icons/fa";
+import { FaChevronDown, FaSignOutAlt, FaCog, FaQuestionCircle, FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 type User = {
   name: string;
@@ -48,31 +49,48 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, onLogout }) => {
       {open && (
         <div className="absolute right-0 mt-2 w-64 bg-[#1e1e1e] border border-gray-700 rounded-lg shadow-lg z-20">
           {/* User info */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-700">
-            <img
-              src={user.avatar}
-              alt={user.name}
-              className="w-10 h-10 rounded-full object-cover border border-gray-600"
-            />
-            <div>
-              <p className="text-sm font-semibold text-white">{user.name}</p>
-              {user.secondaryProfile && (
-                <p className="text-xs text-gray-400">{user.secondaryProfile}</p>
-              )}
+          <div className="px-4 py-3 border-b border-gray-700">
+            <div className="flex items-center gap-3">
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="w-10 h-10 rounded-full object-cover border border-gray-600"
+              />
+              <div>
+                <p className="text-sm font-semibold text-white">{user.name}</p>
+                {user.secondaryProfile && (
+                  <p className="text-xs text-gray-400">{user.secondaryProfile}</p>
+                )}
+              </div>
             </div>
+            <Link onClick={() => setOpen(!open)} to='dashboard' className="block text-center mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white py-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
+              Dashboard
+            </Link>
           </div>
 
           {/* Menu Options */}
           <ul className="py-2 text-sm text-gray-300">
-            <li className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2">
-              <FaCog /> Settings & Privacy
-            </li>
-            <li className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2">
-              <FaQuestionCircle /> Help & Support
-            </li>
-            <li className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2">
-              <FaMoon /> Display & Accessibility
-            </li>
+            <Link onClick={() => setOpen(!open)} to="user-profile">
+              <li className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2">
+                <FaUser /> Profile
+              </li>
+            </Link>
+            <Link to="settings" onClick={() => setOpen(!open)}>
+              <li className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2">
+                <FaCog /> Settings & Privacy
+              </li>
+            </Link>
+            <Link to="help-center" onClick={() => setOpen(!open)}>
+              <li className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2">
+                <FaQuestionCircle /> Help & Support
+              </li>
+            </Link>
+            {/* <Link >
+              <li className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2">
+                <FaMoon /> Display & Accessibility
+              </li>
+            </Link> */}
+            {/* This would later be updated to toggle on and off light mode and dark mode */}
             <li
               className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2 text-red-400"
               onClick={onLogout}
