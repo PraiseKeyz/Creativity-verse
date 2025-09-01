@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import { Link, NavLink } from "react-router-dom";
 import {
   FaDoorOpen,
-  FaCog,
-  FaQuestionCircle,
   FaShieldAlt,
   FaPlusCircle,
   FaBell,
