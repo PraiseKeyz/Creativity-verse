@@ -39,8 +39,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
       {/* Toggle Button (mobile only) */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="absolute top-1/2 -translate-y-1/2 -right-10 md:hidden bg-[var(--color-brand-orange)] text-white p-2 rounded-full shadow-lg z-30"
-        style={{ display: 'block' }}
+        className="absolute top-1/2 -translate-y-1/2 -right-10 md:hidden bg-[var(--color-brand-orange)] text-white p-2 rounded-full shadow-lg z-30 "
       >
         {sidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
       </button>
@@ -62,7 +61,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
             {openDropdown === "explore" && (
               <div className="mt-2 space-y-1">
                 <DropdownItem to="marketplace" label="MarketPlace" />
-                <DropdownItem to="contest" label="Contest" />
+                <DropdownItem to="contests" label="Contest" />
                 <DropdownItem to="talents" label="Talents" />
               </div>
             )}

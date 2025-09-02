@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const MainApp = () => {
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (window.location.pathname === "/verse") {
