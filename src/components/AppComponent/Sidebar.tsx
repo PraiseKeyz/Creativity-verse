@@ -12,10 +12,11 @@ import {
   FaBriefcase,
   FaChevronDown,
   FaChevronRight,
+  FaChevronLeft,
   FaCompass,
 } from "react-icons/fa";
 
-const Sidebar = () => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSidebarOpen: (open: boolean) => void }) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const toggleDropdown = (menu: string) => {
@@ -34,7 +35,15 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="min-w-[16rem] h-screen p-4 shadow-lg border-r border-[var(--color-brand-orange)]/20 text-white flex flex-col items-stretch md:items-stretch bg-[#1a1a1a]">
+    <div className="min-w-[16rem] h-screen p-4 shadow-lg border-r border-[var(--color-brand-orange)]/20 text-white flex flex-col items-stretch md:items-stretch bg-[#1a1a1a] relative">
+      {/* Toggle Button (mobile only) */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="absolute top-1/2 -translate-y-1/2 -right-10 md:hidden bg-[var(--color-brand-orange)] text-white p-2 rounded-full shadow-lg z-30"
+        style={{ display: 'block' }}
+      >
+        {sidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
+      </button>
       <div className="flex-grow flex flex-col justify-between text-sm">
         <ul className="space-y-2">
 
@@ -195,5 +204,3 @@ const Sidebar = () => {
 export default Sidebar;
 
 
-// Move sidebar toggle button inside the main content area, positioned absolutely
-// Adjust z-index to ensure it appears above other elements
