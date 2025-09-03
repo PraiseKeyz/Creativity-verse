@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "../components/AppComponent/Sidebar";
 import VerseNav from "../components/AppComponent/VerseNav";
 import { useEffect, useState } from "react";
+import ChatBot from "../components/AppComponent/ChatBot";
 
 const MainApp = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const MainApp = () => {
 
   return (
     <div className="bg-[var(--color-text-dark)] min-h-screen relative">
+      <ChatBot />
       <VerseNav />
 
       <div className="lg:container bg-[#1f1e1e] grid md:grid-cols-[270px_1fr] grid-cols-1 mx-auto relative">

@@ -107,25 +107,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
             </NavLink>
           </motion.div>
 
-          {/* Lounges Dropdown */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.3 }}>
-            <button
-              onClick={() => toggleDropdown("lounges")}
-              className="flex items-center justify-between w-full shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800"
-            >
-              <span className="flex items-center gap-3">
+          {/* Lounges */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+            <NavLink to="elite-lounge" className={({ isActive }) => (isActive ? "active" : "")}>
+              <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
                 <FaLayerGroup className="text-xl" />
-                <span >Lounges</span>
-              </span>
-              {openDropdown === "lounges" ? <FaChevronDown /> : <FaChevronRight />}
-            </button>
-            {openDropdown === "lounges" && (
-              <div className="mt-2 space-y-1">
-                <DropdownItem to="lounges/cv-rise" label="CV Rise" />
-                <DropdownItem to="lounges/cv-elite" label="CV Elite" />
-                <DropdownItem to="lounges/cv-pro" label="CV Pro" />
-              </div>
-            )}
+                <span >Elite Lounge</span>
+              </li>
+            </NavLink>
           </motion.div>
 
           {/* Learn Dropdown */}

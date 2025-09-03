@@ -42,6 +42,7 @@ import ProductPage from './AppPages/ProductPage';
 import VerseXJobs from './AppPages/VerseXJobs';
 import PricingPage from './PortfolioPages/PricingPage';
 import Dashboard from './AppPages/Dashboard';
+import ChatRoomPage from './AppPages/SellerCenter/CvEliteLounge';
 
 function App() {
 
@@ -173,6 +174,7 @@ function Body() {
           <Route path='settings' element={isLoggedIn ? <Settings /> : <Navigate to="/signin" />} />
           <Route path='help-center' element={isLoggedIn ? <HelpCenter /> : <Navigate to="/signin" />} />
           <Route path='privacy-policy' element={isLoggedIn ? <PrivacyPolicy /> : <Navigate to="/signin" />} />
+          <Route path='elite-lounge' element={isLoggedIn ? <ChatRoomPage /> : <Navigate to="/signin" />} />
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
