@@ -59,7 +59,7 @@ const timeAgo = (ts: number) => {
   return `${d}d`;
 };
 
-const ChatRoomPage: React.FC = () => {
+const CvEliteLounge: React.FC = () => {
   const [rooms, setRooms] = useState<Room[]>(initialRooms);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [selectedRoomId, setSelectedRoomId] = useState<string>(initialRooms[0].id);
@@ -283,4 +283,4 @@ const ChatRoomPage: React.FC = () => {
   );
 };
 
-export default ChatRoomPage;
+export default CvEliteLounge;
