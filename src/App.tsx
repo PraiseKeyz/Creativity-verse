@@ -44,6 +44,13 @@ import PricingPage from './PortfolioPages/PricingPage';
 import Dashboard from './AppPages/Dashboard';
 import CvEliteLounge from './AppPages/CvEliteLounge';
 import SellerDashboard from './AppPages/SellerCenter/SellerDashboard';
+import CreateJob from './AppPages/SellerCenter/CreateJob';
+import CreateProducts from './AppPages/SellerCenter/CreateProducts';
+import EditJob from './AppPages/SellerCenter/EditJob';
+import EditProduct from './AppPages/SellerCenter/EditProduct';
+import ProductListing from './AppPages/SellerCenter/ProductListings';
+import AdListings from './AppPages/SellerCenter/AdsListings';
+import JobListings from './AppPages/SellerCenter/JobListings';
 
 function App() {
 
@@ -176,9 +183,14 @@ function Body() {
           <Route path='help-center' element={isLoggedIn ? <HelpCenter /> : <Navigate to="/signin" />} />
           <Route path='privacy-policy' element={isLoggedIn ? <PrivacyPolicy /> : <Navigate to="/signin" />} />
           <Route path='elite-lounge' element={isLoggedIn ? <CvEliteLounge /> : <Navigate to="/signin" />} />
-          <Route path='seller-center' element={isLoggedIn ? <SellerDashboard /> : <Navigate to="/signin" />} >
-            
-          </Route>
+          <Route path='seller-center' element={isLoggedIn ? <SellerDashboard /> : <Navigate to="/signin" />} />
+          <Route path='ads-listings' element={isLoggedIn ? <AdListings /> : <Navigate to="/signin" />} />
+          <Route path='create-job' element={isLoggedIn ? <CreateJob /> : <Navigate to="/signin" />} />
+          <Route path='edit-job' element={isLoggedIn ? <EditJob /> : <Navigate to="/signin" />} />
+          <Route path='job-listings' element={isLoggedIn ? <JobListings /> : <Navigate to="/signin" />} />
+          <Route path='list-product' element={isLoggedIn ? <CreateProducts /> : <Navigate to="/signin" />} />
+          <Route path='edit-product' element={isLoggedIn ? <EditProduct /> : <Navigate to="/signin" />} />
+          <Route path='product-listings' element={isLoggedIn ? <ProductListing /> : <Navigate to="/signin" />} />
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
