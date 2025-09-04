@@ -19,10 +19,10 @@ const MainApp = () => {
       <ChatBot />
       <VerseNav />
 
-      <div className="lg:container bg-[#1f1e1e] grid md:grid-cols-[270px_1fr] grid-cols-1 mx-auto relative">
+      <div className="lg:container h-[calc(100vh-73px)] bg-[#1f1e1e] grid md:grid-cols-[270px_1fr] grid-cols-1 mx-auto relative">
         {/* Sidebar */}
         <div
-          className={`h-screen transition-all duration-300 ${
+          className={`h-[calc(100vh-73px)] transition-all duration-300 ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 absolute md:static z-20`}
         >
@@ -30,7 +30,7 @@ const MainApp = () => {
         </div>
 
         {/* Main content */}
-        <div className="h-screen overflow-y-scroll custom-scrollbar pb-4">
+        <div className=" overflow-y-scroll custom-scrollbar pb-4">
           <Outlet />
         </div>
       </div>

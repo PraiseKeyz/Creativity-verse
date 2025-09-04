@@ -35,7 +35,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
   );
 
   return (
-    <div className="min-w-[16rem] h-screen p-4 shadow-lg border-r border-[var(--color-brand-orange)]/20 text-white flex flex-col items-stretch md:items-stretch bg-[#1a1a1a] relative">
+    <div className="min-w-[16rem] h-[calc(100vh-73px)] p-4 shadow-lg border-r border-[var(--color-brand-orange)]/20 text-white flex flex-col items-stretch md:items-stretch bg-[#1a1a1a] relative">
       {/* Toggle Button (mobile only) */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -132,7 +132,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
             {openDropdown === "learn" && (
               <div className="mt-2 space-y-1">
                 <DropdownItem to="learn/webinars" label="Webinars & Workshops" />
-                <DropdownItem to="learn/creo-ai" label="Creo AI" />
+                <DropdownItem to="creo-ai" label="Creo AI" />
                 <DropdownItem to="learn/resources" label="Resources" />
               </div>
             )}

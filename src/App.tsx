@@ -51,6 +51,13 @@ import EditProduct from './AppPages/SellerCenter/EditProduct';
 import ProductListing from './AppPages/SellerCenter/ProductListings';
 import AdListings from './AppPages/SellerCenter/AdsListings';
 import JobListings from './AppPages/SellerCenter/JobListings';
+import CreoAI from './AppPages/CreoAI';
+import Onboarding from './AppPages/SkillLens/Onboarding';
+import SkillLensInfo from './AppPages/SkillLens/SkillLensInfo';
+import TestPage from './AppPages/SkillLens/TestPage';
+import ResultPage from './AppPages/SkillLens/ResultPage';
+import TalentVerification from './PortfolioPages/TalentVerification';
+import Notifications from './AppPages/Notifications';
 
 function App() {
 
@@ -131,7 +138,8 @@ function Body() {
     '/reset-password',
     '/forgot-password',
     '/verify-email',
-    '/email-verified'
+    '/email-verified',
+    '/talent-verification'
   ].some(path => {
     if (path.includes(':')) {
       // Handle dynamic routes
@@ -166,10 +174,13 @@ function Body() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-email" element={<EmailVerification />} />
         <Route path="/email-verified" element={<EmailVerificationSuccess />} />
+        <Route path="/talent-verification" element={<TalentVerification />} />
 
         {/* Protected routes */}
         <Route path='verse' element={isLoggedIn ? <MainApp /> : <Navigate to="/signin" />} >
           <Route path='dashboard' element={isLoggedIn ? <Dashboard user={dummyUsers[3]} /> : <Navigate to="/signin" />} />
+          <Route path='creo-ai' element={isLoggedIn ? <CreoAI /> : <Navigate to="/signin" />} />
+          <Route path='notifications' element={isLoggedIn ? <Notifications /> : <Navigate to="/signin" />} />
           <Route path='user-profile' element={isLoggedIn ? <UserProfile /> : <Navigate to="/signin" />} />
           <Route path='jobs' element={isLoggedIn ? <JobsListing /> : <Navigate to="/signin" />} />
           <Route path='verse-x-jobs' element={isLoggedIn ? <VerseXJobs /> : <Navigate to="/signin" />} />
@@ -184,13 +195,17 @@ function Body() {
           <Route path='privacy-policy' element={isLoggedIn ? <PrivacyPolicy /> : <Navigate to="/signin" />} />
           <Route path='elite-lounge' element={isLoggedIn ? <CvEliteLounge /> : <Navigate to="/signin" />} />
           <Route path='seller-center' element={isLoggedIn ? <SellerDashboard /> : <Navigate to="/signin" />} />
-          <Route path='ads-listings' element={isLoggedIn ? <AdListings /> : <Navigate to="/signin" />} />
-          <Route path='create-job' element={isLoggedIn ? <CreateJob /> : <Navigate to="/signin" />} />
-          <Route path='edit-job' element={isLoggedIn ? <EditJob /> : <Navigate to="/signin" />} />
-          <Route path='job-listings' element={isLoggedIn ? <JobListings /> : <Navigate to="/signin" />} />
-          <Route path='list-product' element={isLoggedIn ? <CreateProducts /> : <Navigate to="/signin" />} />
-          <Route path='edit-product' element={isLoggedIn ? <EditProduct /> : <Navigate to="/signin" />} />
-          <Route path='product-listings' element={isLoggedIn ? <ProductListing /> : <Navigate to="/signin" />} />
+          <Route path='seller-center/ads-listings' element={isLoggedIn ? <AdListings /> : <Navigate to="/signin" />} />
+          <Route path='seller-center/create-job' element={isLoggedIn ? <CreateJob /> : <Navigate to="/signin" />} />
+          <Route path='seller-center/edit-job' element={isLoggedIn ? <EditJob /> : <Navigate to="/signin" />} />
+          <Route path='seller-center/job-listings' element={isLoggedIn ? <JobListings /> : <Navigate to="/signin" />} />
+          <Route path='seller-center/list-product' element={isLoggedIn ? <CreateProducts /> : <Navigate to="/signin" />} />
+          <Route path='seller-center/edit-product' element={isLoggedIn ? <EditProduct /> : <Navigate to="/signin" />} />
+          <Route path='seller-center/product-listings' element={isLoggedIn ? <ProductListing /> : <Navigate to="/signin" />} />
+          <Route path='skill-lens' element={isLoggedIn ? <SkillLensInfo /> : <Navigate to="/signin" />} />
+          <Route path='skill-lens/onboarding' element={isLoggedIn ? <Onboarding /> : <Navigate to="/signin" />} />
+          <Route path='skill-lens/test/:id' element={isLoggedIn ? <TestPage /> : <Navigate to="/signin" />} />
+          <Route path='skill-lens/result/:id' element={isLoggedIn ? <ResultPage /> : <Navigate to="/signin" />} />
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>

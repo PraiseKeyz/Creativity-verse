@@ -80,17 +80,17 @@ const SellerDashboard: React.FC = () => {
           {openDropdown && (
             <div className="absolute right-0 mt-2 w-40 bg-[#232323] border border-gray-700 rounded-lg shadow-lg z-10">
               <ul className="text-sm">
-                <Link to="/verse/list-product">
+                <Link to="list-product">
                   <li className="px-4 py-2 hover:bg-[var(--color-brand-orange)]/30 cursor-pointer">
                     Create Product
                   </li>
                 </Link>
-                <Link to="/verse/create-job">
+                <Link to="create-job">
                   <li className="px-4 py-2 hover:bg-[var(--color-brand-orange)]/30 cursor-pointer">
                     Create Job
                   </li>
                 </Link>
-                <Link to="/verse/create-ad">
+                <Link to="create-ad">
                   <li className="px-4 py-2 hover:bg-[var(--color-brand-orange)]/30 cursor-pointer">
                     Create Ad
                   </li>
@@ -173,7 +173,7 @@ const SellerDashboard: React.FC = () => {
               </div>
             ))}
           </div>
-          <Link to='/verse/product-listings' className="block mx-auto text-center mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white py-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
+          <Link to='product-listings' className="block mx-auto text-center mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white py-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
             See All
           </Link>
         </div>
@@ -193,7 +193,7 @@ const SellerDashboard: React.FC = () => {
               </div>
             ))}
           </div>
-          <Link to='/verse/job-listings' className="block mx-auto text-center mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white p-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
+          <Link to='job-listings' className="block mx-auto text-center mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white p-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
             See All
           </Link>
         </div>
@@ -212,7 +212,7 @@ const SellerDashboard: React.FC = () => {
               </div>
             ))}
           </div>
-          <Link to='/verse/ads-listings' className="block mx-auto text-center mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white p-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
+          <Link to='ads-listings' className="block mx-auto text-center mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white p-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
             See All
           </Link>
         </div>
