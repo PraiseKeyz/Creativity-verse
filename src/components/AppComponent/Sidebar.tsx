@@ -97,22 +97,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
             </NavLink>
           </motion.div>
 
-          {/* Refferal */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
-            <NavLink to="referral" className={({ isActive }) => (isActive ? "active" : "")}>
-              <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
-                <FaUsers className="text-xl" />
-                <span >Referral</span>
-              </li>
-            </NavLink>
-          </motion.div>
-
           {/* Lounges */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
             <NavLink to="elite-lounge" className={({ isActive }) => (isActive ? "active" : "")}>
               <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
                 <FaLayerGroup className="text-xl" />
                 <span >Elite Lounge</span>
+              </li>
+            </NavLink>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+            <NavLink to="seller-center" className={({ isActive }) => (isActive ? "active" : "")}>
+              <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
+                <FaLayerGroup className="text-xl" />
+                <span >Seller Center</span>
+              </li>
+            </NavLink>
+          </motion.div>
+          
+          {/* Refferal */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+            <NavLink to="referral" className={({ isActive }) => (isActive ? "active" : "")}>
+              <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
+                <FaUsers className="text-xl" />
+                <span >Referral</span>
               </li>
             </NavLink>
           </motion.div>

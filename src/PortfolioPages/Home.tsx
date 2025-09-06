@@ -10,6 +10,8 @@ const HomePage = () => {
             {/* Hero Section */} 
             <motion.section
                 initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
                 className="flex items-center min-h-[80vh] md:min-h-[40vh] lg:min-h-screen relative overflow-hidden"
             >
                 <div className="absolute inset-0 overflow-hidden">
