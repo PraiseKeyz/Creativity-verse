@@ -58,16 +58,19 @@ import TestPage from './AppPages/SkillLens/TestPage';
 import ResultPage from './AppPages/SkillLens/ResultPage';
 import TalentVerification from './PortfolioPages/TalentVerification';
 import Notifications from './AppPages/Notifications';
+import { UserProvider } from "./userContext";
 
 function App() {
 
 
   return (
     <LoggedInState>
+     <UserProvider>
       <Router>
         <ScrollToTop />
         <Body/>
       </Router>
+     </UserProvider>
     </LoggedInState>
   );
 }
