@@ -1,53 +1,89 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
 import {Link} from 'react-router-dom'
-import { FaGoogle} from "react-icons/fa";
 
+
+const countryList = [
+  "Nigeria", "Ghana", "Kenya", "South Africa", "United States", "United Kingdom", "Canada", "India", "Germany", "France", "Other"
+];
 
 const SignUp = () => {
- const [formData, setFormData] = useState({
-         lastname: "",
-         firstname: "",
-         email: "",
-         password: ""
-     });
- const [agreed, setAgreed] = useState(false);
- 
-     const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
- 
-     const handleSubmit = async (e: React.FormEvent) => {
-         e.preventDefault();
-         if (!agreed) return; // Prevent submit if not agreed
-         try {
-             const response = await axios.post(`${API_BASE_URL}/api/signup`, formData, {
-                 headers: {
-                     'Content-Type': 'application/json',
-                 },
-             });
-             console.log(response.data);
-             setFormData({
-                lastname: "",
-                firstname: "",
-                email: "",
-                password: ""
-             })
-         } catch (error) {
-             console.error("Error Creating Account", error);
-         }
-     };
- 
-     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-         const { name, value } = e.target;
-         setFormData(prev => ({
-             ...prev,
-             [name]: value
-         }));
-     };
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    phone: "",
+    country: "",
+    email: "",
+    password: ""
+  });
+  const [errors, setErrors] = useState<any>({});
+  const [agreed, setAgreed] = useState(false);
 
-     const handleGOAuth = () => {
-        //function to connect with google auth
-     }
+  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
+
+  useEffect(() => {
+    // Fetch country from IP
+    fetch("https://ipapi.co/json/")
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.country_name) {
+          setFormData(prev => ({ ...prev, country: data.country_name }));
+        }
+      });
+  }, []);
+
+  const validate = () => {
+    const newErrors: any = {};
+    if (!formData.first_name.trim()) newErrors.first_name = "First name is required";
+    if (!formData.last_name.trim()) newErrors.last_name = "Last name is required";
+    if (!formData.phone.trim()) newErrors.phone = "Phone is required";
+    else if (!/^\d{7,}$/.test(formData.phone.trim())) newErrors.phone = "Enter a valid phone number";
+    if (!formData.country) newErrors.country = "Country is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email.trim())) newErrors.email = "Enter a valid email";
+    if (!formData.password) newErrors.password = "Password is required";
+    else if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
+    if (!agreed) newErrors.agreed = "You must agree to the terms";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    console.log("Submitting", JSON.stringify(formData));
+    try {
+      const response = await axios.post(`${API_BASE_URL}/auth/sign-up`, JSON.stringify(formData), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response.data);
+      setFormData({
+        first_name: "",
+        last_name: "",
+        phone: "",
+        country: "",
+        email: "",
+        password: ""
+      });
+      setErrors({});
+    } catch (error) {
+      setErrors({ submit: "Failed to create account. Please try again." });
+      console.error("Error Creating Account", error);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    setErrors((prev: any) => ({ ...prev, [name]: undefined }));
+  };
+
  
      return (
          <div className="bg-[var(--color-text-dark)] min-h-screen">
@@ -97,31 +133,66 @@ const SignUp = () => {
                                  <div className="relative z-10">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                         <div>
-                                            <label htmlFor="lastname" className="block text-[var(--color-surface-light)] mb-2 font-medium">Last Name</label>
+                                            <label htmlFor="last_name" className="block text-[var(--color-surface-light)] mb-2 font-medium">Last Name</label>
                                             <input
                                                 type="text"
-                                                id="lastname"
-                                                name="lastname"
-                                                value={formData.lastname}
-                                                placeholder="John"
-                                                onChange={handleChange}
-                                                className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
-                                                required
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="firstname" className="block text-[var(--color-surface-light)] mb-2 font-medium">First Name</label>
-                                            <input
-                                                type="text"
-                                                id="firstname"
-                                                name="firstname"
-                                                value={formData.firstname}
+                                                id="last_name"
+                                                name="last_name"
+                                                value={formData.last_name}
                                                 placeholder="Doe"
                                                 onChange={handleChange}
                                                 className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
                                                 required
                                             />
+                                            {errors.last_name && <p className="text-red-500 text-xs mt-1">{errors.last_name}</p>}
                                         </div>
+                                        <div>
+                                            <label htmlFor="first_name" className="block text-[var(--color-surface-light)] mb-2 font-medium">First Name</label>
+                                            <input
+                                                type="text"
+                                                id="first_name"
+                                                name="first_name"
+                                                value={formData.first_name}
+                                                placeholder="John"
+                                                onChange={handleChange}
+                                                className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
+                                                required
+                                            />
+                                            {errors.first_name && <p className="text-red-500 text-xs mt-1">{errors.first_name}</p>}
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                      <div>
+                                        <label htmlFor="phone" className="block text-[var(--color-surface-light)] mb-2 font-medium">Phone</label>
+                                        <input
+                                          type="tel"
+                                          id="phone"
+                                          name="phone"
+                                          value={formData.phone}
+                                          placeholder="08012345678"
+                                          onChange={handleChange}
+                                          className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
+                                          required
+                                        />
+                                        {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                                      </div>
+                                      <div>
+                                        <label htmlFor="country" className="block text-[var(--color-surface-light)] mb-2 font-medium">Country</label>
+                                        <select
+                                          id="country"
+                                          name="country"
+                                          value={formData.country}
+                                          onChange={handleChange}
+                                          className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
+                                          required
+                                        >
+                                          <option value="">Select Country</option>
+                                          {countryList.map(c => (
+                                            <option key={c} value={c}>{c}</option>
+                                          ))}
+                                        </select>
+                                        {errors.country && <p className="text-red-500 text-xs mt-1">{errors.country}</p>}
+                                      </div>
                                     </div>
                                     <div>
                                         <label htmlFor="email" className="block text-[var(--color-surface-light)] mb-2 font-medium">Email</label>
@@ -135,6 +206,7 @@ const SignUp = () => {
                                             className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
                                             required
                                         />
+                                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                                     </div>
                                      <div className="mb-6">
                                          <label htmlFor="subject" className="block text-[var(--color-surface-light)] mb-2 font-medium">Password</label>
@@ -149,6 +221,7 @@ const SignUp = () => {
                                              className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
                                              required
                                          />
+                                         {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
                                      </div>
                                      <div className="flex items-center mb-6">
                                        <input
@@ -163,6 +236,7 @@ const SignUp = () => {
                                          I agree to the <a href="/terms" target="_blank" className="text-[var(--color-brand-orange)] underline">Terms & Conditions</a>
                                        </label>
                                      </div>
+                                     {errors.agreed && <p className="text-red-500 text-xs mb-2">{errors.agreed}</p>}
                                      <motion.button
                                          type="submit"
                                          whileHover={{ scale: 1.02 }}
@@ -172,6 +246,7 @@ const SignUp = () => {
                                      >
                                          Sign Up
                                      </motion.button>
+                                     {errors.submit && <p className="text-red-500 text-sm mb-2">{errors.submit}</p>}
                                      <p className="text-white text-center my-4">Already a creative? <Link className="text-[var(--color-brand-orange)]" to="/signin">Sign In</Link></p>
                                  </div>
                              </motion.form>

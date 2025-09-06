@@ -2,7 +2,7 @@ import JobCard from "../components/AppComponent/JobCard";
 import { useEffect, useState } from "react";
 import LoadingSpin from "../components/PortfolioComponent/LoadingSpin";
 
-const JobsListing = () => {
+const VerseXJobs = () => {
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,7 +14,7 @@ const JobsListing = () => {
       fetch("/Data/joblisting.json")
         .then((res) => res.json())
         .then((data) => {
-          setJobs(data.filter((job) => job.applicationMethod === "external"));
+          setJobs(data.filter((job) => job.applicationMethod === "internal"));
           setLoading(false);
         });
     }, 1000);
@@ -33,4 +33,8 @@ const JobsListing = () => {
     </div>
   );
 }
-export default JobsListing;
+
+export default VerseXJobs
+
+
+// This file is part of the Verse X Jobs page, which lists jobs that are internal to the Verse community. Currently, it fetches job data from a local JSON file and displays each job using the JobCard component. The jobs are filtered to only include those with an internal application method. Later on it'll be updated to fetch directly from the server, then we can remove the filter method.

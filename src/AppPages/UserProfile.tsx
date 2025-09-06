@@ -3,7 +3,7 @@ import { useEffect, useState, Suspense } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { PiCertificateFill } from "react-icons/pi";
 import { FiChevronDown } from "react-icons/fi";
-import CommunityPost from "../components/CommunityPost";
+import CommunityPost from "../components/AppComponent/CommunityPost";
 
 const categories = ["Trending", "Latest"];
 

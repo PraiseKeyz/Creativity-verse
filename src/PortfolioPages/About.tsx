@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import herosection from '../assets/herosection.jpg'
 import backImage from '../assets/about-herosection.png'
-import SkillsetSection from '../components/SkillSet';
+import SkillsetSection from '../components/AppComponent/SkillSet';
 
 const About = () => {
     return(

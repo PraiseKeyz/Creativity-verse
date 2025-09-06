@@ -1,0 +1,252 @@
+[
+  {
+    "id": 1,
+    "name": "UI Design Masterclass",
+    "description": "A comprehensive course on modern UI design principles and tools.",
+    "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+    "price": 49.99,
+    "oldPrice": 99.99,
+    "rating": 5,
+    "category": "Course",
+    "discountPrice": 39.99,
+    "reviews": [
+      {"id": 1, "review": "Excellent course, learned a lot!", "postedBy": "user_1", "createdAt": 1692540000000},
+      {"id": 2, "review": "Great UI tips and resources.", "postedBy": "user_2", "createdAt": 1692626400000},
+      {"id": 3, "review": "Well structured and easy to follow.", "postedBy": "user_3", "createdAt": 1692712800000},
+      {"id": 4, "review": "Loved the practical examples.", "postedBy": "user_4", "createdAt": 1692799200000}
+    ],
+    "reviewsCount": 4
+  },
+  {
+    "id": 2,
+    "name": "React Developer eBook",
+    "description": "An advanced eBook for mastering React.js and building scalable web apps.",
+    "image": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    "price": 19.99,
+    "rating": 4,
+    "category": "eBook",
+    "discountPrice": 14.99,
+    "reviews": [
+      {"id": 1, "review": "Very helpful for React beginners.", "postedBy": "user_5", "createdAt": 1692885600000},
+      {"id": 2, "review": "Advanced topics explained well.", "postedBy": "user_6", "createdAt": 1692972000000},
+      {"id": 3, "review": "Good code samples.", "postedBy": "user_7", "createdAt": 1693058400000}
+    ],
+    "reviewsCount": 3
+  },
+  {
+    "id": 3,
+    "name": "Freelancer Portfolio Template",
+    "description": "A modern, customizable portfolio template for freelancers.",
+    "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+    "price": 29.99,
+    "oldPrice": 39.99,
+    "rating": 4,
+    "category": "Template",
+    "discountPrice": 24.99,
+    "reviews": [
+      {"id": 1, "review": "Easy to customize.", "postedBy": "user_8", "createdAt": 1693144800000},
+      {"id": 2, "review": "Looks professional.", "postedBy": "user_9", "createdAt": 1693231200000},
+      {"id": 3, "review": "Helped me land more clients.", "postedBy": "user_10", "createdAt": 1693317600000},
+      {"id": 4, "review": "Responsive design is great.", "postedBy": "user_11", "createdAt": 1693404000000},
+      {"id": 5, "review": "Good documentation.", "postedBy": "user_12", "createdAt": 1693490400000}
+    ],
+    "reviewsCount": 5
+  },
+  {
+    "id": 4,
+    "name": "Digital Marketing Toolkit",
+    "description": "A bundle of resources for digital marketers, including guides and templates.",
+    "image": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80",
+    "price": 59.99,
+    "rating": 5,
+    "category": "Toolkit",
+    "discountPrice": 49.99,
+    "reviews": [
+      {"id": 1, "review": "Perfect for marketing beginners.", "postedBy": "user_13", "createdAt": 1693576800000},
+      {"id": 2, "review": "Templates saved me hours.", "postedBy": "user_14", "createdAt": 1693663200000},
+      {"id": 3, "review": "Comprehensive and up-to-date.", "postedBy": "user_15", "createdAt": 1693749600000}
+    ],
+    "reviewsCount": 3
+  },
+  {
+    "id": 5,
+    "name": "Python Automation Scripts",
+    "description": "A collection of Python scripts for automating daily tasks.",
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
+    "price": 24.99,
+    "rating": 4,
+    "category": "Scripts",
+    "discountPrice": 19.99,
+    "reviews": [
+      {"id": 1, "review": "Automated my workflow easily.", "postedBy": "user_16", "createdAt": 1693836000000},
+      {"id": 2, "review": "Useful scripts for daily tasks.", "postedBy": "user_17", "createdAt": 1693922400000},
+      {"id": 3, "review": "Good documentation and support.", "postedBy": "user_18", "createdAt": 1694008800000},
+      {"id": 4, "review": "Saved me a lot of time.", "postedBy": "user_19", "createdAt": 1694095200000}
+    ],
+    "reviewsCount": 4
+  },
+  {
+    "id": 6,
+    "name": "WordPress Blog Theme",
+    "description": "A clean and responsive WordPress theme for bloggers.",
+    "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80",
+    "price": 34.99,
+    "oldPrice": 49.99,
+    "rating": 5,
+    "category": "Theme",
+    "discountPrice": 29.99,
+    "reviews": [
+      {"id": 1, "review": "Beautiful theme!", "postedBy": "user_20", "createdAt": 1694181600000},
+      {"id": 2, "review": "Easy to install and customize.", "postedBy": "user_21", "createdAt": 1694268000000},
+      {"id": 3, "review": "Responsive and fast.", "postedBy": "user_22", "createdAt": 1694354400000},
+      {"id": 4, "review": "Great support from the creator.", "postedBy": "user_23", "createdAt": 1694440800000},
+      {"id": 5, "review": "Perfect for my blog.", "postedBy": "user_24", "createdAt": 1694527200000}
+    ],
+    "reviewsCount": 5
+  },
+  {
+    "id": 7,
+    "name": "SEO Audit Checklist",
+    "description": "A downloadable checklist for performing SEO audits.",
+    "image": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+    "price": 9.99,
+    "rating": 4,
+    "category": "Checklist",
+    "reviews": [
+      {"id": 1, "review": "Helped improve my site's SEO.", "postedBy": "user_25", "createdAt": 1694613600000},
+      {"id": 2, "review": "Easy to follow steps.", "postedBy": "user_26", "createdAt": 1694700000000},
+      {"id": 3, "review": "Great for beginners.", "postedBy": "user_27", "createdAt": 1694786400000}
+    ],
+    "reviewsCount": 3
+  },
+  {
+    "id": 8,
+    "name": "Mobile App Wireframe Kit",
+    "description": "A set of wireframe templates for mobile app designers.",
+    "image": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
+    "price": 14.99,
+    "rating": 5,
+    "category": "Kit",
+    "discountPrice": 11.99,
+    "reviews": [
+      {"id": 1, "review": "Wireframes are very useful.", "postedBy": "user_28", "createdAt": 1694872800000},
+      {"id": 2, "review": "Helped speed up my design process.", "postedBy": "user_29", "createdAt": 1694959200000},
+      {"id": 3, "review": "Good variety of templates.", "postedBy": "user_30", "createdAt": 1695045600000},
+      {"id": 4, "review": "Easy to edit.", "postedBy": "user_31", "createdAt": 1695132000000}
+    ],
+    "reviewsCount": 4
+  },
+  {
+    "id": 9,
+    "name": "Remote Work Productivity Guide",
+    "description": "A guide to boosting productivity while working remotely.",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
+    "price": 12.99,
+    "rating": 4,
+    "category": "Guide",
+    "reviews": [
+      {"id": 1, "review": "Improved my workflow.", "postedBy": "user_32", "createdAt": 1695218400000},
+      {"id": 2, "review": "Great tips for remote teams.", "postedBy": "user_33", "createdAt": 1695304800000},
+      {"id": 3, "review": "Easy to implement advice.", "postedBy": "user_34", "createdAt": 1695391200000}
+    ],
+    "reviewsCount": 3
+  },
+  {
+    "id": 10,
+    "name": "Social Media Content Calendar",
+    "description": "A digital calendar template for planning social media posts.",
+    "image": "https://images.unsplash.com/photo-1465101178521-c1a6f3b5f0a7?auto=format&fit=crop&w=400&q=80",
+    "price": 7.99,
+    "rating": 5,
+    "category": "Template",
+    "reviews": [
+      {"id": 1, "review": "Helped me stay organized.", "postedBy": "user_35", "createdAt": 1695477600000},
+      {"id": 2, "review": "Easy to use and customize.", "postedBy": "user_36", "createdAt": 1695564000000},
+      {"id": 3, "review": "Great for planning campaigns.", "postedBy": "user_37", "createdAt": 1695650400000},
+      {"id": 4, "review": "Saves a lot of time.", "postedBy": "user_38", "createdAt": 1695736800000}
+    ],
+    "reviewsCount": 4
+  },
+  {
+    "id": 11,
+    "name": "JavaScript Snippets Library",
+    "description": "A library of reusable JavaScript code snippets for developers.",
+    "image": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    "price": 17.99,
+    "rating": 4,
+    "category": "Library",
+    "discountPrice": 13.99,
+    "reviews": [
+      {"id": 1, "review": "Very useful snippets.", "postedBy": "user_39", "createdAt": 1695823200000},
+      {"id": 2, "review": "Saved me a lot of coding time.", "postedBy": "user_40", "createdAt": 1695909600000},
+      {"id": 3, "review": "Easy to integrate.", "postedBy": "user_41", "createdAt": 1695996000000}
+    ],
+    "reviewsCount": 3
+  },
+  {
+    "id": 12,
+    "name": "Freelance Contract Template",
+    "description": "A legal contract template for freelancers and clients.",
+    "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+    "price": 15.99,
+    "rating": 5,
+    "category": "Template",
+    "reviews": [
+      {"id": 1, "review": "Very professional template.", "postedBy": "user_42", "createdAt": 1696082400000},
+      {"id": 2, "review": "Easy to edit and use.", "postedBy": "user_43", "createdAt": 1696168800000},
+      {"id": 3, "review": "Helped me close deals faster.", "postedBy": "user_44", "createdAt": 1696255200000},
+      {"id": 4, "review": "Covers all legal bases.", "postedBy": "user_45", "createdAt": 1696341600000}
+    ],
+    "reviewsCount": 4
+  },
+  {
+    "id": 13,
+    "name": "Digital Illustration Brushes",
+    "description": "A set of custom brushes for digital illustrators.",
+    "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+    "price": 11.99,
+    "rating": 4,
+    "category": "Brushes",
+    "discountPrice": 8.99,
+    "reviews": [
+      {"id": 1, "review": "Brushes work perfectly.", "postedBy": "user_46", "createdAt": 1696428000000},
+      {"id": 2, "review": "Good variety for illustration.", "postedBy": "user_47", "createdAt": 1696514400000},
+      {"id": 3, "review": "Affordable and high quality.", "postedBy": "user_48", "createdAt": 1696600800000}
+    ],
+    "reviewsCount": 3
+  },
+  {
+    "id": 14,
+    "name": "Video Editing Presets",
+    "description": "A pack of presets for popular video editing software.",
+    "image": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80",
+    "price": 21.99,
+    "oldPrice": 29.99,
+    "rating": 5,
+    "category": "Presets",
+    "discountPrice": 17.99,
+    "reviews": [
+      {"id": 1, "review": "Presets are easy to use.", "postedBy": "user_49", "createdAt": 1696687200000},
+      {"id": 2, "review": "Improved my editing workflow.", "postedBy": "user_50", "createdAt": 1696773600000},
+      {"id": 3, "review": "Good value for money.", "postedBy": "user_51", "createdAt": 1696860000000},
+      {"id": 4, "review": "Works with all major software.", "postedBy": "user_52", "createdAt": 1696946400000},
+      {"id": 5, "review": "Highly recommend.", "postedBy": "user_53", "createdAt": 1697032800000}
+    ],
+    "reviewsCount": 5
+  },
+  {
+    "id": 15,
+    "name": "Remote Team Collaboration Guide",
+    "description": "A guide to effective collaboration for remote teams.",
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
+    "price": 13.99,
+    "rating": 4,
+    "category": "Guide",
+    "reviews": [
+      {"id": 1, "review": "Helped our team communicate better.", "postedBy": "user_54", "createdAt": 1697119200000},
+      {"id": 2, "review": "Great for remote work tips.", "postedBy": "user_55", "createdAt": 1697205600000},
+      {"id": 3, "review": "Easy to follow guide.", "postedBy": "user_56", "createdAt": 1697292000000}
+    ],
+    "reviewsCount": 3
+  }
+]

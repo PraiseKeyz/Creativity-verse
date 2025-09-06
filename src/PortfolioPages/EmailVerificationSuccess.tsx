@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
+import LoadingSpin from "../components/PortfolioComponent/LoadingSpin";
 
 const EmailVerificationSuccess = () => {
   const navigate = useNavigate();
@@ -19,31 +20,11 @@ const EmailVerificationSuccess = () => {
   }, [verifying, navigate]);
 
   return (
-    <main className="min-h-screen bg-[#0d0d0d] flex items-center justify-center px-4 font-sans">
+    <main className="min-h-[calc(100vh*0.5)] bg-[#0d0d0d] flex items-center justify-center px-4 font-sans">
       <div className="bg-[#1a1a1a] p-8 rounded-xl shadow-md w-full max-w-md text-center">
         {verifying ? (
           <>
-            <div className="flex justify-center mb-4">
-              <svg
-                className="animate-spin h-10 w-10 text-[var(--color-brand-orange)] mx-auto"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  fill="none"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                />
-              </svg>
-            </div>
+            <LoadingSpin />
             <h1 className="text-xl font-bold text-white mb-2">
               Please wait, your email is being verified...
             </h1>

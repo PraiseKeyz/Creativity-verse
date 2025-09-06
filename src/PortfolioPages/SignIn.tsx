@@ -3,7 +3,6 @@ import { useState, useContext } from "react";
 // import axios from 'axios';
 import {Link, useNavigate} from 'react-router-dom'
 import { LoggedInContext } from "../Contexts/LoggedInState";
-import ForgotPassword from "../components/ForgotPassword";
 
 
 const SignIn = () => {
@@ -12,7 +11,6 @@ const SignIn = () => {
          password: ""
      });
  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
- const [showForgot, setShowForgot] = useState(false);
  const navigate = useNavigate();
  const loggedInContext = useContext(LoggedInContext);
 
@@ -147,13 +145,12 @@ const SignIn = () => {
                                              required
                                          />
                                          {errors.password && <p className="err-msg text-red-500 text-sm mt-1">{errors.password}</p>}
-                                         <button
+                                         <Link to='/forgot-password'
                                            type="button"
                                            className="text-[var(--color-brand-orange)] text-sm mt-2 underline hover:text-[var(--color-brand-orange)]/80 transition-colors"
-                                           onClick={() => setShowForgot(true)}
                                          >
                                            Forgot Password?
-                                         </button>
+                                         </Link>
                                      </div>
                                      <motion.button
                                          type="submit"
@@ -170,9 +167,6 @@ const SignIn = () => {
                      </div>
                  </div>
              </section>
-             {showForgot && (
-               <ForgotPassword onClose={() => setShowForgot(false)} />
-             )}
          </div>
      );
 }

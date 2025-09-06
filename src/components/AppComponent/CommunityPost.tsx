@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaRegHeart, FaRegComment, FaRegShareSquare, FaRegBookmark } from "react-icons/fa";
-import userIcon from '../assets/user.svg'
+import userIcon from '../../assets/user.svg'
 
 type Badge = {
   label: string;

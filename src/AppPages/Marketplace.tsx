@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/AppComponent/ProductCard";
+import LoadingSpin from "../components/PortfolioComponent/LoadingSpin";
 
 type Product = {
   id: string;
@@ -11,64 +13,31 @@ type Product = {
   rating: number;
   isFavorite?: boolean;
   category: string;
+  description?: string;
+  discountPrice?: number;
+  reviewsCount?: number;
+  stock?: number;
 };
 
-const mockProducts: Product[] = [
-  {
-    id: "1",
-    name: "Wireless Headphones",
-    image: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=400&q=80",
-    price: 99.99,
-    oldPrice: 149.99,
-    rating: 4,
-    category: "Electronics",
-  },
-  {
-    id: "2",
-    name: "Smartwatch",
-    image: "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=400&q=80",
-    price: 199.99,
-    rating: 5,
-    category: "Electronics",
-  },
-  {
-    id: "3",
-    name: "Leather Backpack",
-    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-    price: 79.99,
-    rating: 4,
-    category: "Accessories",
-  },
-  {
-    id: "4",
-    name: "Casual Sneakers",
-    image: "https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80",
-    price: 59.99,
-    rating: 3,
-    category: "Fashion",
-  },
-  {
-    id: "5",
-    name: "Gaming Mouse",
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
-    price: 39.99,
-    rating: 4,
-    category: "Electronics",
-  },
-  {
-    id: "6",
-    name: "Sunglasses",
-    image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
-    price: 25.99,
-    rating: 5,
-    category: "Accessories",
-  },
-];
-
 const Marketplace = () => {
-  const [products, setProducts] = useState<Product[]>(mockProducts);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState<string>("default");
   const [filter, setFilter] = useState<string>("All");
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    // Simulate API call
+    setTimeout(() => {
+      fetch("/Data/products.json")
+        .then((res) => res.json())
+        .then((data) => {
+          setProducts(data);
+          setLoading(false);
+        });
+    }, 1000);
+  }, []);
 
   const handleSort = (option: string) => {
     setSort(option);
@@ -80,7 +49,7 @@ const Marketplace = () => {
     } else if (option === "rating") {
       sorted.sort((a, b) => b.rating - a.rating);
     } else {
-      sorted = [...mockProducts];
+      sorted = [...products];
     }
     setProducts(sorted);
   };
@@ -88,9 +57,9 @@ const Marketplace = () => {
   const handleFilter = (category: string) => {
     setFilter(category);
     if (category === "All") {
-      setProducts(mockProducts);
+      setProducts(products);
     } else {
-      setProducts(mockProducts.filter((p) => p.category === category));
+      setProducts(products.filter((p) => p.category === category));
     }
   };
 
@@ -137,20 +106,27 @@ const Marketplace = () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-scroll custom-scrollbar h-screen p-4 pb-52">
-        {products.map((product, index) => (
+        {loading ? (
+        <div>
+          <div className="text-center mt-20 text-lg text-white">Loading Products...</div>
+          <LoadingSpin />
+        </div>
+        ):(products.map((product, index) => (
           <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: index * 0.1  }}
+            key={product.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+            onClick={() => navigate(`/verse/product/${product.id}`, { state: { product } })}
+            style={{ cursor: "pointer" }}
           >
             <ProductCard
-              key={product.id}
               product={product}
               onAddToCart={(id) => console.log("Added to cart:", id)}
               onToggleFavorite={(id) => console.log("Toggled favorite:", id)}
             />
           </motion.div>
-        ))}
+        )))}
       </div>
     </div>
   );
