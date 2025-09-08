@@ -58,7 +58,7 @@ import TestPage from './AppPages/SkillLens/TestPage';
 import ResultPage from './AppPages/SkillLens/ResultPage';
 import TalentVerification from './PortfolioPages/TalentVerification';
 import Notifications from './AppPages/Notifications';
-import { UserProvider } from "./userContext";
+import { UserProvider } from "./Contexts/UserContext";
 
 function App() {
 
@@ -118,18 +118,29 @@ function Body() {
     profileViews: 143,
     applications: 42,
   },
-];
+] as const;
 
 
-  // Check if the current path matches any of our defined routes
+  // Authentication pages that should not show header/footer
+  const authPages = [
+    '/signup',
+    '/signin',
+    '/reset-password',
+    '/forgot-password',
+    '/verify-email',
+    '/email-verified'
+  ];
+
+  // Check if current path is an auth page
+  const isAuthPage = authPages.some(path => location.pathname === path);
+
+  // Check if the current path matches any of our defined routes (excluding auth pages)
   const isValidRoute = [
     '/',
     '/about',
     '/features',
     '/showcase',
     '/services',
-    '/signup',
-    '/signin',
     '/store',
     '/pricing',
     '/resources',
@@ -138,10 +149,6 @@ function Body() {
     '/resources/blog-management',
     '/services/service/:id', // This will be matched differently
     '/resources/blogs/:id', // This will be matched differently 
-    '/reset-password',
-    '/forgot-password',
-    '/verify-email',
-    '/email-verified',
     '/talent-verification'
   ].some(path => {
     if (path.includes(':')) {
@@ -156,7 +163,7 @@ function Body() {
 
   return (
     <>
-      {isValidRoute && <Header />}
+      {isValidRoute && !isAuthPage && <Header />}
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/about' element={<About />} />
@@ -179,6 +186,7 @@ function Body() {
         <Route path="/email-verified" element={<EmailVerificationSuccess />} />
         <Route path="/talent-verification" element={<TalentVerification />} />
 
+        
         {/* Protected routes */}
         <Route path='verse' element={isLoggedIn ? <MainApp /> : <Navigate to="/signin" />} >
           <Route path='dashboard' element={isLoggedIn ? <Dashboard user={dummyUsers[3]} /> : <Navigate to="/signin" />} />
@@ -212,7 +220,7 @@ function Body() {
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
-      { isValidRoute && <Footer />}
+      { isValidRoute && !isAuthPage && <Footer />}
     </>
   );
 }

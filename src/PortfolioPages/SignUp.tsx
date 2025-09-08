@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import { API_BASE_URL } from "../config/constants";
 
 
 const countryList = [
@@ -15,12 +16,13 @@ const SignUp = () => {
     phone: "",
     country: "",
     email: "",
-    password: ""
+    password: "",
+    referralCode: ""
   });
   const [errors, setErrors] = useState<any>({});
   const [agreed, setAgreed] = useState(false);
+  const navigate = useNavigate();
 
-  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
 
   useEffect(() => {
     // Fetch country from IP
@@ -37,13 +39,13 @@ const SignUp = () => {
     const newErrors: any = {};
     if (!formData.first_name.trim()) newErrors.first_name = "First name is required";
     if (!formData.last_name.trim()) newErrors.last_name = "Last name is required";
-    if (!formData.phone.trim()) newErrors.phone = "Phone is required";
-    else if (!/^\d{7,}$/.test(formData.phone.trim())) newErrors.phone = "Enter a valid phone number";
-    if (!formData.country) newErrors.country = "Country is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email.trim())) newErrors.email = "Enter a valid email";
     if (!formData.password) newErrors.password = "Password is required";
-    else if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
+    else if (formData.password.length < 8) newErrors.password = "Password must be at least 8 characters";
+    else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/.test(formData.password)) {
+      newErrors.password = "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character";
+    }
     if (!agreed) newErrors.agreed = "You must agree to the terms";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -52,9 +54,15 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    console.log("Submitting", JSON.stringify(formData));
+    
+    const payload = {
+      ...formData,
+      agree_terms: agreed
+    };
+    
+    console.log("Submitting", JSON.stringify(payload));
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/sign-up`, JSON.stringify(formData), {
+      const response = await axios.post(`${API_BASE_URL}/api/v1/auth/sign-up`, payload, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -66,9 +74,13 @@ const SignUp = () => {
         phone: "",
         country: "",
         email: "",
-        password: ""
+        password: "",
+        referralCode: ""
       });
       setErrors({});
+      if (response.data.status === "success") {
+        navigate('/verify-email');
+      }
     } catch (error) {
       setErrors({ submit: "Failed to create account. Please try again." });
       console.error("Error Creating Account", error);
@@ -92,13 +104,8 @@ const SignUp = () => {
                  initial={{ opacity: 0 }}
                  animate={{ opacity: 1 }}
                  transition={{ duration: 0.8 }}
-                 className="relative min-h-[60vh] flex items-center pt-8  overflow-hidden"
+                 className="relative min-h-[20vh] flex items-center pt-8  overflow-hidden"
              >
-                 {/* Background Effects */}
-                 <div className="absolute inset-0">
-                     <div className="absolute w-[150%] aspect-square top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-bl from-[var(--color-brand-orange)]/10 via-[var(--color-brand-orange)]/5 to-transparent rounded-full blur-3xl"></div>
-                 </div>
- 
                  <div className="container mx-auto px-4 relative z-10">
                      <div className="max-w-4xl mx-auto text-center">
                          <motion.h1
@@ -209,19 +216,31 @@ const SignUp = () => {
                                         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                                     </div>
                                      <div className="mb-6">
-                                         <label htmlFor="subject" className="block text-[var(--color-surface-light)] mb-2 font-medium">Password</label>
+                                         <label htmlFor="password" className="block text-[var(--color-surface-light)] mb-2 font-medium">Password</label>
                                          <input
                                              type="password"
                                              id="password"
                                              name="password"
                                              placeholder="********"
-                                             min={6}
+                                             min={8}
                                              value={formData.password}
                                              onChange={handleChange}
                                              className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
                                              required
                                          />
                                          {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+                                     </div>
+                                     <div className="mb-6">
+                                         <label htmlFor="referralCode" className="block text-[var(--color-surface-light)] mb-2 font-medium">Referral Code (Optional)</label>
+                                         <input
+                                             type="text"
+                                             id="referralCode"
+                                             name="referralCode"
+                                             placeholder="REF123456"
+                                             value={formData.referralCode}
+                                             onChange={handleChange}
+                                             className="w-full px-4 py-3 bg-[var(--color-text-dark)]/60 backdrop-blur-sm border border-[var(--color-brand-orange)]/20 rounded-lg text-[var(--color-surface-light)] focus:border-[var(--color-brand-orange)] focus:ring-2 focus:ring-[var(--color-brand-orange)]/20 focus:outline-none transition-all duration-300"
+                                         />
                                      </div>
                                      <div className="flex items-center mb-6">
                                        <input

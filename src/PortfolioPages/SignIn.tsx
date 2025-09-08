@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { useState, useContext } from "react";
-// import axios from 'axios';
+import axios from 'axios';
 import {Link, useNavigate} from 'react-router-dom'
 import { LoggedInContext } from "../Contexts/LoggedInState";
-
+import { API_BASE_URL } from "../config/constants";
 
 const SignIn = () => {
  const [formData, setFormData] = useState({
@@ -14,7 +14,6 @@ const SignIn = () => {
  const navigate = useNavigate();
  const loggedInContext = useContext(LoggedInContext);
 
-    //  const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
 
      const validate = () => {
         const newErrors: { email?: string; password?: string } = {};
@@ -29,35 +28,38 @@ const SignIn = () => {
         return Object.keys(newErrors).length === 0;
      };
 
-     const mockValidate = () => {
-        if (formData.email === 'cverse@mail.com' && formData.password === 'cvpassword') {
-          if (loggedInContext) loggedInContext.setIsLoggedIn(true);
-          navigate('/verse');
-          return true;
-        } else {
-          setErrors(prev => ({ ...prev, password: 'Invalid credentials.' }));
-          return false;
-        }
-     }
+    //  const mockValidate = () => {
+    //     if (formData.email === 'cverse@mail.com' && formData.password === 'cvpassword') {
+    //       if (loggedInContext) loggedInContext.setIsLoggedIn(true);
+    //       navigate('/verse');
+    //       return true;
+    //     } else {
+    //       setErrors(prev => ({ ...prev, password: 'Invalid credentials.' }));
+    //       return false;
+    //     }
+    //  }
 
      const handleSubmit = async (e: React.FormEvent) => {
          e.preventDefault();
          if (!validate()) return;
-         // try {
-         //     const response = await axios.post(`${API_BASE_URL}/api/signin`, formData, {
-         //         headers: {
-         //             'Content-Type': 'application/json',
-         //         },
-         //     });
-         //     console.log(response.data);
-         //     setFormData({
-         //         email: "",
-         //         password: ""
-         //     })
-         // } catch (error) {
-         //     console.error("Error Logging in", error);
-         // }
-         mockValidate();
+         try {
+             const response = await axios.post(`${API_BASE_URL}/api/v1/auth/sign-in`, formData, {
+                 headers: {
+                     'Content-Type': 'application/json',
+                 },
+             });
+             console.log(response.data);
+             setFormData({
+                 email: "",
+                 password: ""
+             })
+             if (response.data.status === "success") {
+              navigate('/verse/dashboard');
+             }
+         } catch (error) {
+             console.error("Error Logging in", error);
+         }
+         // mockValidate();
      };
 
      const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
