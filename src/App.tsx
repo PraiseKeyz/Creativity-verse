@@ -59,9 +59,10 @@ import ResultPage from './AppPages/SkillLens/ResultPage';
 import TalentVerification from './PortfolioPages/TalentVerification';
 import Notifications from './AppPages/Notifications';
 import { UserProvider } from "./Contexts/UserContext";
+import { useAuthStore } from './store/authStore';
 
 function App() {
-
+ 
 
   return (
     <LoggedInState>
@@ -80,7 +81,8 @@ function Body() {
   const loggedInContext = useContext(LoggedInContext);
   const isLoggedIn = loggedInContext?.isLoggedIn ?? false;
 
-
+ const { user } = useAuthStore();
+ 
   const dummyUsers = [
   {
     name: "John Doe",
@@ -189,7 +191,7 @@ function Body() {
         
         {/* Protected routes */}
         <Route path='verse' element={isLoggedIn ? <MainApp /> : <Navigate to="/signin" />} >
-          <Route path='dashboard' element={isLoggedIn ? <Dashboard user={dummyUsers[3]} /> : <Navigate to="/signin" />} />
+          <Route path='dashboard' element={isLoggedIn ? <Dashboard user={user} /> : <Navigate to="/signin" />} />
           <Route path='creo-ai' element={isLoggedIn ? <CreoAI /> : <Navigate to="/signin" />} />
           <Route path='notifications' element={isLoggedIn ? <Notifications /> : <Navigate to="/signin" />} />
           <Route path='user-profile' element={isLoggedIn ? <UserProfile /> : <Navigate to="/signin" />} />

@@ -1,9 +1,7 @@
 import { motion } from "framer-motion";
-import { useState, useContext } from "react";
-import axios from 'axios';
-import {Link, useNavigate} from 'react-router-dom'
-import { LoggedInContext } from "../Contexts/LoggedInState";
-import { API_BASE_URL } from "../config/constants";
+import { useState } from "react";
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthStore } from "../store/authStore";
 
 const SignIn = () => {
  const [formData, setFormData] = useState({
@@ -12,7 +10,7 @@ const SignIn = () => {
      });
  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
  const navigate = useNavigate();
- const loggedInContext = useContext(LoggedInContext);
+ const { login, isLoading, error: authError } = useAuthStore();
 
 
      const validate = () => {
@@ -28,38 +26,23 @@ const SignIn = () => {
         return Object.keys(newErrors).length === 0;
      };
 
-    //  const mockValidate = () => {
-    //     if (formData.email === 'cverse@mail.com' && formData.password === 'cvpassword') {
-    //       if (loggedInContext) loggedInContext.setIsLoggedIn(true);
-    //       navigate('/verse');
-    //       return true;
-    //     } else {
-    //       setErrors(prev => ({ ...prev, password: 'Invalid credentials.' }));
-    //       return false;
-    //     }
-    //  }
 
      const handleSubmit = async (e: React.FormEvent) => {
          e.preventDefault();
          if (!validate()) return;
-         try {
-             const response = await axios.post(`${API_BASE_URL}/api/v1/auth/sign-in`, formData, {
-                 headers: {
-                     'Content-Type': 'application/json',
-                 },
-             });
-             console.log(response.data);
+         
+         // Use the Zustand auth store login function
+         await login(formData.email, formData.password);
+         
+         // Check if login was successful by checking if there's no error
+         // The store will automatically set isLoggedIn to true on successful login
+         if (!authError) {
              setFormData({
                  email: "",
                  password: ""
-             })
-             if (response.data.status === "success") {
-              navigate('/verse/dashboard');
-             }
-         } catch (error) {
-             console.error("Error Logging in", error);
+             });
+             navigate('/verse/dashboard');
          }
-         // mockValidate();
      };
 
      const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -87,6 +70,11 @@ const SignIn = () => {
                  </div>
  
                  <div className="container mx-auto px-4 relative z-10">
+                     {authError && (
+                         <div className="max-w-md mx-auto mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+                             {authError}
+                         </div>
+                     )}
                      <div className="max-w-4xl mx-auto text-center">
                          <motion.h1
                              initial={{ opacity: 0, y: 20 }}
@@ -159,8 +147,9 @@ const SignIn = () => {
                                          whileHover={{ scale: 1.02 }}
                                          whileTap={{ scale: 0.98 }}
                                          className="w-full px-8 py-4 bg-gradient-to-r from-[var(--color-brand-orange)] to-[var(--color-brand-orange)]/80 text-[var(--color-text-dark)] rounded-lg font-semibold hover:from-[var(--color-brand-orange)]/90 hover:to-[var(--color-brand-orange)]/70 transition-all duration-300 shadow-lg shadow-[var(--color-brand-orange)]/20 cursor-pointer"
+                                         disabled={isLoading}
                                      >
-                                         Login
+                                         {isLoading ? 'Signing In...' : 'Login'}
                                      </motion.button>
                                      <p className="text-white text-center my-4">Don't have an account? <Link className="text-[var(--color-brand-orange)]" to="/signup">Sign Up</Link></p>
                                  </div>

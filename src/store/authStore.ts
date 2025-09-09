@@ -1,0 +1,257 @@
+import { create } from "zustand";
+import axios, { AxiosResponse } from "axios";
+import { API_BASE_URL } from "../config/constants";
+import {
+  ApiResponse,
+  LoginRequest,
+  RegisterRequest,
+  ConfirmEmailRequest,
+  AuthRes,
+  User,
+} from "./types/apiTypes";
+import { CookieStorage } from "./cookie/cookieStorage";
+
+type AuthState = {
+  user: User | null;
+  isLoggedIn: boolean;
+  isLoading: boolean;
+  error: string | null;
+
+  login: (email: string, password: string) => Promise<void>;
+  register: (payload: RegisterRequest) => Promise<ApiResponse<AuthRes>>;
+  confirmEmail: (payload: ConfirmEmailRequest) => Promise<ApiResponse<AuthRes>>;
+  forgotPassword: (email: string) => Promise<any>;
+  resetPassword: (token: string, new_password: string) => Promise<any>;
+  currentUser: () => Promise<User | null>;
+  logout: () => void;
+  clearError: () => void;
+};
+
+export const useAuthStore = create<AuthState>()(set => ({
+  user: null,
+  isLoggedIn: false,
+  token: null,
+  isLoading: false,
+  error: null,
+
+  login: async (email: string, password: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const loginData: LoginRequest = { email, password };
+      const response: AxiosResponse<ApiResponse<AuthRes>> = await axios.post(
+        `${API_BASE_URL}/api/v1/auth/sign-in`,
+        loginData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      //@ts-ignore
+      const apiResponse = response.data;
+      if (apiResponse.status === "success") {
+        set({
+          isLoggedIn: true,
+          isLoading: false,
+        });
+        CookieStorage.setItem("auth_token", apiResponse.payload.access_token);
+      } else {
+        set({
+          error: apiResponse.message || "Login failed",
+          isLoading: false,
+        });
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      set({
+        error:
+          error instanceof Error
+            ? error.message
+            : "An error occurred during login",
+        isLoading: false,
+      });
+    }
+  },
+
+  register: async (payload: RegisterRequest): Promise<ApiResponse<AuthRes>> => {
+    set({ isLoading: true, error: null });
+    try {
+      const response: AxiosResponse<ApiResponse<AuthRes>> = await axios.post(
+        `${API_BASE_URL}/api/v1/auth/sign-up`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      //@ts-ignore
+      const apiResponse = response.data;
+      if (apiResponse.status === "success") {
+        set({
+          user: apiResponse.payload,
+          isLoggedIn: true,
+          isLoading: false,
+        });
+      } else {
+        set({
+          error: apiResponse.message || "Registration failed",
+          isLoading: false,
+        });
+      }
+      return apiResponse;
+    } catch (error: any) {
+      console.error("Registration error:", error);
+      set({
+        error:
+          error instanceof Error
+            ? error.message
+            : "An error occurred during registration",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  confirmEmail: async (
+    payload: ConfirmEmailRequest
+  ): Promise<ApiResponse<AuthRes>> => {
+    set({ isLoading: true, error: null });
+    try {
+      const response: AxiosResponse<ApiResponse<AuthRes>> = await axios.post(
+        `${API_BASE_URL}/api/v1/auth/confirm-email`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      //@ts-ignore
+      const apiResponse = response.data;
+      if (apiResponse.status === "success") {
+        set({
+          user: apiResponse.payload,
+          isLoggedIn: true,
+          isLoading: false,
+        });
+      } else {
+        set({
+          error: apiResponse.message || "Email confirmation failed",
+          isLoading: false,
+        });
+      }
+      return apiResponse;
+    } catch (error: any) {
+      console.error("Email confirmation error:", error);
+      set({
+        error:
+          error instanceof Error
+            ? error.message
+            : "An error occurred during email confirmation",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  forgotPassword: async (email: string): Promise<ApiResponse<void>> => {
+    set({ isLoading: true, error: null });
+    try {
+      const response: AxiosResponse<ApiResponse<void>> = await axios.post(
+        `${API_BASE_URL}/api/v1/auth/request-password-reset`,
+        { email },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      //@ts-ignore
+      const apiResponse = response.data;
+      if (apiResponse.status === "success") {
+        set({ isLoading: false });
+      } else {
+        set({
+          error: apiResponse.message || "Forgot password failed",
+          isLoading: false,
+        });
+      }
+      return apiResponse;
+    } catch (error: any) {
+      console.error("Forgot password error:", error);
+      set({
+        error:
+          error instanceof Error
+            ? error.message
+            : "An error occurred during forgot password",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  resetPassword: async (token: string, new_password: string): Promise<void> => {
+    set({ isLoading: true, error: null });
+    try {
+      const response: AxiosResponse<ApiResponse<void>> = await axios.post(
+        `${API_BASE_URL}/api/v1/auth/reset-password`,
+        { token, new_password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      //@ts-ignore
+      const apiResponse = response.data;
+      if (apiResponse.status === "success") {
+        set({ isLoading: false });
+      } else {
+        set({
+          error: apiResponse.message || "Reset password failed",
+          isLoading: false,
+        });
+      }
+    } catch (error: any) {
+      console.error("Reset password error:", error);
+      set({
+        error:
+          error instanceof Error
+            ? error.message
+            : "An error occurred during reset password",
+        isLoading: false,
+      });
+    }
+  },
+
+  currentUser: async (): Promise<User | null> => {
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/api/v1/auth/current-user`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${CookieStorage.getItem("auth_token")}`,
+          },
+        }
+      );
+      //@ts-ignore
+      const apiResponse = response.data;
+      if (apiResponse.status == "success") {
+        set({ user: apiResponse.payload, isLoggedIn: true });
+      }
+      return apiResponse.payload;
+    } catch (error) {
+      console.error("Error fetching current user:", error);
+      return null;
+    }
+  },
+
+  logout: () => {
+    set({ user: null, isLoggedIn: false });
+    CookieStorage.removeItem("auth_token");
+  },
+
+  clearError: () => set({ error: null }),
+}));

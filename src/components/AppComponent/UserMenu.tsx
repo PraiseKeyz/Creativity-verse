@@ -1,15 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaChevronDown, FaSignOutAlt, FaCog, FaQuestionCircle, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { User } from "../../store/types/apiTypes";
 
-type User = {
-  name: string;
-  avatar: string;
-  secondaryProfile?: string;
-};
+
 
 type UserMenuProps = {
-  user: User;
+  user?: User | null;
   onLogout: () => void;
 };
 
@@ -38,8 +35,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, onLogout }) => {
         className="flex items-center focus:outline-none"
       >
         <img
-          src={user.avatar}
-          alt={user.name}
+          src={user?.info?.avatar || "https://via.placeholder.com/150"}
+          alt={user?.first_name || "User Avatar"}
           className="w-9 h-9 rounded-full border-2 border-[var(--color-brand-orange)] cursor-pointer"
         />
         <FaChevronDown className="ml-1 text-gray-400 text-sm" />
@@ -52,14 +49,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, onLogout }) => {
           <div className="px-4 py-3 border-b border-gray-700">
             <div className="flex items-center gap-3">
               <img
-                src={user.avatar}
-                alt={user.name}
+                src={user?.info?.avatar}
+                alt={user?.first_name || "User Avatar"}
                 className="w-10 h-10 rounded-full object-cover border border-gray-600"
               />
               <div>
-                <p className="text-sm font-semibold text-white">{user.name}</p>
-                {user.secondaryProfile && (
-                  <p className="text-xs text-gray-400">{user.secondaryProfile}</p>
+                <p className="text-sm font-semibold text-white">{user?.full_name}</p>
+                {user?.first_name && (
+                  <p className="text-xs text-gray-400">{user.first_name}</p>
                 )}
               </div>
             </div>

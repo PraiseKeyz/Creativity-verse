@@ -1,21 +1,31 @@
 import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
-import { FaUsers, FaBriefcase, FaBriefcaseMedical, FaPlusCircle } from "react-icons/fa";
+import {
+  FaUsers,
+  FaBriefcase,
+  FaBriefcaseMedical,
+  FaPlusCircle,
+} from "react-icons/fa";
 import logo from "../../assets/logo2.png";
 import UserMenu from "./UserMenu";
+import { useAuthStore } from "../../store/authStore";
+import { useEffect } from "react";
 
 const VerseNav = () => {
   const location = useLocation();
   const logoLink = location.pathname.startsWith("/verse") ? "community" : "/";
   const navigate = useNavigate();
+  const { user, logout } = useAuthStore();
 
-  // sample user data
-  const user = {
-    name: "Edet John",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-    secondaryProfile: "Cyberohn",
-  };
+
+  // // sample user data
+  // const user = {
+  //   name: "Edet John",
+  //   avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+  //   secondaryProfile: "Cyberohn",
+  // };
 
   const handleLogout = () => {
+    logout();
     navigate("/signin");
   };
 
@@ -41,7 +51,9 @@ const VerseNav = () => {
             <NavLink
               to="community"
               className={({ isActive }) =>
-                `${isActive ? "active" : ""} flex items-center gap-2 py-4 border-b-4 border-transparent rounded-sm`
+                `${
+                  isActive ? "active" : ""
+                } flex items-center gap-2 py-4 border-b-4 border-transparent rounded-sm`
               }
             >
               <FaUsers className="text-lg" />
@@ -53,7 +65,9 @@ const VerseNav = () => {
             <NavLink
               to="jobs"
               className={({ isActive }) =>
-                `${isActive ? "active" : ""} flex items-center gap-2 py-4 border-b-4 border-transparent rounded-sm`
+                `${
+                  isActive ? "active" : ""
+                } flex items-center gap-2 py-4 border-b-4 border-transparent rounded-sm`
               }
             >
               <FaBriefcase className="text-lg" />
@@ -65,7 +79,9 @@ const VerseNav = () => {
             <NavLink
               to="verse-x-jobs"
               className={({ isActive }) =>
-                `${isActive ? "active" : ""} flex items-center gap-2 py-4 border-b-4 border-transparent rounded-sm`
+                `${
+                  isActive ? "active" : ""
+                } flex items-center gap-2 py-4 border-b-4 border-transparent rounded-sm`
               }
             >
               <FaBriefcaseMedical className="text-lg" />
@@ -76,7 +92,6 @@ const VerseNav = () => {
 
         {/* Right-side Actions */}
         <div className="flex items-center gap-2 md:gap-4 pr-2">
-
           {/* Create Post */}
           <button
             title="Create Post"

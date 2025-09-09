@@ -3,23 +3,27 @@ import { FaCheck, FaRobot, FaTrophy } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
+//@ts-ignore
 import "swiper/css";
+//@ts-ignore
 import "swiper/css/pagination";
 import DashboardStatCard from "../components/AppComponent/DashboardStatCard";
 
-type User = {
-  name: string;
-  profilePic?: string;
-  plan: "free" | "rise" | "plus" | "elite";
-  points: number;
-  connections: number;
-  profileViews: number;
-  applications: number;
-};
+// type User = {
+//   name: string;
+//   profilePic?: string;
+//   plan: "free" | "rise" | "plus" | "elite";
+//   points: number;
+//   connections: number;
+//   profileViews: number;
+//   applications: number;
+// };
+
+import { User } from "../store/types/apiTypes";
 
 
 
-const Dashboard: React.FC<{ user: User }> = ({ user }) => {
+const Dashboard: React.FC<{ user: User | null }> = ({ user }) => {
   const [jobs, setJobs] = React.useState<any[]>([]);
   React.useEffect(() => {
     fetch("/Data/joblisting.json")
@@ -119,7 +123,7 @@ const Dashboard: React.FC<{ user: User }> = ({ user }) => {
       <section className="mb-10">
         <div className="flex items-center gap-4">
           <div>
-            <h1 className="text-2xl font-bold">Welcome back, {user.name} 👋</h1>
+            <h1 className="text-2xl font-bold">Welcome back, {user?.full_name} 👋</h1>
             <p className="text-gray-400">Ready to create something big today?</p>
           </div>
         </div>
@@ -127,27 +131,27 @@ const Dashboard: React.FC<{ user: User }> = ({ user }) => {
         {/* Quick Stat Bar */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
           <DashboardStatCard
-            value={user.points}
+            value={49}
             label="Verse Points"
             color="bg-[var(--color-brand-orange)] text-white"
             subLabel="Activity up by 12% this month"
           />
           <DashboardStatCard
-            value={user.connections}
+            value={user?.following?.length || 0}
             label="Connections"
             color="bg-white text-black"
             subLabel="+5 new connections"
             textColor="text-black"
           />
           <DashboardStatCard
-            value={user.profileViews}
+            value={9}
             label="Profile Views"
             color="bg-white text-black"
             subLabel="Trending this week"
             textColor="text-black"
           />
           <DashboardStatCard
-            value={user.applications}
+            value={10}
             label="Applications"
             color="bg-white text-black"
             subLabel="2 new jobs applied"

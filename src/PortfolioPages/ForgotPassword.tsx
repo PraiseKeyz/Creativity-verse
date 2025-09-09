@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import { useAuthStore } from "../store/authStore";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+const { forgotPassword } = useAuthStore();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
       // simulate API call
-      setSubmitted(true);
+      const response = await forgotPassword(email);
+      if (response.status === "success") {
+        setSubmitted(true);
+      }
     }
   };
 

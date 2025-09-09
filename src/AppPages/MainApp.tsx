@@ -3,16 +3,24 @@ import Sidebar from "../components/AppComponent/Sidebar";
 import VerseNav from "../components/AppComponent/VerseNav";
 import { useEffect, useState } from "react";
 import ChatBot from "../components/AppComponent/ChatBot";
+import { useAuthStore } from "../store/authStore";
 
 const MainApp = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { currentUser } = useAuthStore();
 
   useEffect(() => {
     if (window.location.pathname === "/verse") {
       navigate("/verse/community");
     }
-  }, [navigate]);
+
+    const fetchCurrentUser = async () => {
+      await currentUser();
+    };
+
+    fetchCurrentUser();
+  }, [navigate, currentUser]);
 
   return (
     <div className="bg-[var(--color-text-dark)] min-h-screen relative">
