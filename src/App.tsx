@@ -67,6 +67,8 @@ import SavedJobs from './AppPages/SavedJobs';
 import CreatePost from './AppPages/CreatePost';
 import AddProject from './AppPages/AddProject';
 import Portfolio from './AppPages/Portfolio';
+import PostDetail from './AppPages/PostDetail';
+import Webinars from './AppPages/Webinars';
 
 function App() {
  
@@ -170,6 +172,7 @@ function Body() {
           <Route path='dashboard' element={isLoggedIn ? <Dashboard user={user} /> : <Navigate to="/signin" />} />
           <Route path='creo-ai' element={isLoggedIn ? <CreoAI /> : <Navigate to="/signin" />} /> 
           <Route path='create/post' element={isLoggedIn ? <CreatePost user={sampleUser} /> : <Navigate to="/signin" />} /> 
+          <Route path='community/post-id' element={isLoggedIn ? <PostDetail  /> : <Navigate to="/signin" />} /> 
           <Route path='create/project' element={isLoggedIn ? <AddProject user={sampleUser} /> : <Navigate to="/signin" />} /> 
           <Route path='notifications' element={isLoggedIn ? <Notifications /> : <Navigate to="/signin" />} />
           <Route path='user-profile' element={isLoggedIn ? <UserProfile /> : <Navigate to="/signin" />} />
@@ -180,6 +183,7 @@ function Body() {
           <Route path='verse-x-jobs' element={isLoggedIn ? <VerseXJobs /> : <Navigate to="/signin" />} />
           <Route path='community' element={isLoggedIn ? <Community /> : <Navigate to="/signin" />} />
           <Route path='contests' element={isLoggedIn ? <Contests /> : <Navigate to="/signin" />} />
+          <Route path='webinars' element={isLoggedIn ? <Webinars /> : <Navigate to="/signin" />} />
           <Route path='marketplace' element={isLoggedIn ? <Marketplace /> : <Navigate to="/signin" />} />
           <Route path='talents' element={isLoggedIn ? <Talents /> : <Navigate to="/signin" />} />
           <Route path='product/:id' element={isLoggedIn ? <ProductPage  /> : <Navigate to="/signin" />} />

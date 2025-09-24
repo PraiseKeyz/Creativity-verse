@@ -140,7 +140,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
             </button>
             {openDropdown === "learn" && (
               <div className="mt-2 space-y-1">
-                <DropdownItem to="" label="Webinars & Workshops" />
+                <DropdownItem to="webinars" label="Webinars & Workshops" />
                 <DropdownItem to="creo-ai" label="Creo AI" />
               </div>
             )}
