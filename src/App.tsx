@@ -60,6 +60,13 @@ import TalentVerification from './PortfolioPages/TalentVerification';
 import Notifications from './AppPages/Notifications';
 import { UserProvider } from "./Contexts/UserContext";
 import { useAuthStore } from './store/authStore';
+import UserApplications from './AppPages/UserApplications';
+import JobDetails from './AppPages/JobDetails';
+import Talents from './AppPages/Talents';
+import SavedJobs from './AppPages/SavedJobs';
+import CreatePost from './AppPages/CreatePost';
+import AddProject from './AppPages/AddProject';
+import Portfolio from './AppPages/Portfolio';
 
 function App() {
  
@@ -83,44 +90,13 @@ function Body() {
 
  const { user } = useAuthStore();
  
-  const dummyUsers = [
-  {
-    name: "John Doe",
-    profilePic: "https://randomuser.me/api/portraits/men/32.jpg",
-    plan: "free",
-    points: 45,
-    connections: 10,
-    profileViews: 3,
-    applications: 0,
-  },
-  {
-    name: "Sophia Martins",
-    profilePic: "https://randomuser.me/api/portraits/women/44.jpg",
-    plan: "rise",
-    points: 120,
-    connections: 34,
-    profileViews: 18,
-    applications: 5,
-  },
-  {
-    name: "David Johnson",
-    profilePic: "https://randomuser.me/api/portraits/men/65.jpg",
-    plan: "plus",
-    points: 420,
-    connections: 78,
-    profileViews: 54,
-    applications: 15,
-  },
-  {
-    name: "Amara Obi",
-    profilePic: "https://randomuser.me/api/portraits/women/68.jpg",
-    plan: "elite",
-    points: 980,
-    connections: 200,
-    profileViews: 143,
-    applications: 42,
-  },
-] as const;
+  const sampleUser = {
+  id: "u1",
+  firstname: "Edet",
+  lastname: "John",
+  avatar: "https://i.pravatar.cc/150?img=32", // mock avatar image
+};
+
 
 
   // Authentication pages that should not show header/footer
@@ -192,14 +168,20 @@ function Body() {
         {/* Protected routes */}
         <Route path='verse' element={isLoggedIn ? <MainApp /> : <Navigate to="/signin" />} >
           <Route path='dashboard' element={isLoggedIn ? <Dashboard user={user} /> : <Navigate to="/signin" />} />
-          <Route path='creo-ai' element={isLoggedIn ? <CreoAI /> : <Navigate to="/signin" />} />
+          <Route path='creo-ai' element={isLoggedIn ? <CreoAI /> : <Navigate to="/signin" />} /> 
+          <Route path='create/post' element={isLoggedIn ? <CreatePost user={sampleUser} /> : <Navigate to="/signin" />} /> 
+          <Route path='create/project' element={isLoggedIn ? <AddProject user={sampleUser} /> : <Navigate to="/signin" />} /> 
           <Route path='notifications' element={isLoggedIn ? <Notifications /> : <Navigate to="/signin" />} />
           <Route path='user-profile' element={isLoggedIn ? <UserProfile /> : <Navigate to="/signin" />} />
+          <Route path='portfolio' element={isLoggedIn ? <Portfolio /> : <Navigate to="/signin" />} />
           <Route path='jobs' element={isLoggedIn ? <JobsListing /> : <Navigate to="/signin" />} />
+          <Route path='jobs/saved' element={isLoggedIn ? <SavedJobs /> : <Navigate to="/signin" />} />
+          <Route path='jobs/:id' element={isLoggedIn ? <JobDetails /> : <Navigate to="/signin" />} />
           <Route path='verse-x-jobs' element={isLoggedIn ? <VerseXJobs /> : <Navigate to="/signin" />} />
           <Route path='community' element={isLoggedIn ? <Community /> : <Navigate to="/signin" />} />
           <Route path='contests' element={isLoggedIn ? <Contests /> : <Navigate to="/signin" />} />
           <Route path='marketplace' element={isLoggedIn ? <Marketplace /> : <Navigate to="/signin" />} />
+          <Route path='talents' element={isLoggedIn ? <Talents /> : <Navigate to="/signin" />} />
           <Route path='product/:id' element={isLoggedIn ? <ProductPage  /> : <Navigate to="/signin" />} />
           <Route path='referral' element={isLoggedIn ? <Referral /> : <Navigate to="/signin" />} />
           <Route path='feed' element={isLoggedIn ? <Feed /> : <Navigate to="/signin" />} />
@@ -207,6 +189,8 @@ function Body() {
           <Route path='help-center' element={isLoggedIn ? <HelpCenter /> : <Navigate to="/signin" />} />
           <Route path='privacy-policy' element={isLoggedIn ? <PrivacyPolicy /> : <Navigate to="/signin" />} />
           <Route path='elite-lounge' element={isLoggedIn ? <CvEliteLounge /> : <Navigate to="/signin" />} />
+          <Route path='my-applications' element={isLoggedIn ? <UserApplications /> : <Navigate to="/signin" />} />
+          <Route path='my-applications/:id' element={isLoggedIn ? <JobDetails /> : <Navigate to="/signin" />} />
           <Route path='seller-center' element={isLoggedIn ? <SellerDashboard /> : <Navigate to="/signin" />} />
           <Route path='seller-center/ads-listings' element={isLoggedIn ? <AdListings /> : <Navigate to="/signin" />} />
           <Route path='seller-center/create-job' element={isLoggedIn ? <CreateJob /> : <Navigate to="/signin" />} />

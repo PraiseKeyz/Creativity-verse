@@ -2,8 +2,22 @@ import JobCard from "../components/AppComponent/JobCard";
 import { useEffect, useState } from "react";
 import LoadingSpin from "../components/PortfolioComponent/LoadingSpin";
 
+type Job = {
+  id: string;
+  title: string;
+  description: string;
+  company: string;
+  employmentType: 'freelance' | 'remote' | 'full-time' | 'part-time' | 'contract';
+  skillsRequired: string[];
+  skillLevel: 'entry' | 'intermediate' | 'expert';
+  applicationMethod: 'internal' | 'external';
+  applicationLink?: string;
+  postedBy: string;
+  createdAt: string;
+};
+
 const JobsListing = () => {
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
 
 
@@ -28,7 +42,7 @@ const JobsListing = () => {
           <LoadingSpin />
         </div>
       ) : (
-        jobs.map((job) => <JobCard key={job.id} job={job} />)
+        jobs.map((job, index) => <JobCard key={job.id} job={job} index={index} />)
       )}
     </div>
   );

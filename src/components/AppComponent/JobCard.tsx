@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 type Job = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   company: string;
@@ -18,20 +19,27 @@ type Job = {
 
 type JobCardProps = {
   job: Job;
+  index: number;
 };
 
-const JobCard: React.FC<JobCardProps> = ({ job }) => {
+const JobCard: React.FC<JobCardProps> = ({ job, index }) => {
+  const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   const toggleExpanded = () => setExpanded(!expanded);
   const toggleSave = () => setIsSaved(!isSaved);
 
+    const handleView = (id: string) => {
+    // replace with real route if you have one
+    navigate(`/verse/my-applications/${id}`, { state: { applicationId: id } });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: job.id * 0.1  }}
+      transition={{ duration: 0.3, delay: (index+1) * 0.1  }}
       className="border border-[var(--color-brand-orange)]/20 rounded-lg p-4 mb-6 text-white shadow-lg"
       style={{ fontFamily: "var(--font-primary)" }}
     >
@@ -115,8 +123,8 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
       )}
 
       {/* CTA */}
-      <button className="mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white py-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
-        <a href={job.applicationMethod == 'external' && job.applicationLink}>Apply now</a>
+      <button onClick={() => handleView(job.id)} className="mt-5 w-full bg-[var(--color-brand-orange)]/80 text-white py-2 rounded-md transition-colors hover:bg-[var(--color-brand-orange)] active:scale-95 duration-100 cursor-pointer">
+        Apply now
       </button>
     </motion.div>
   );
