@@ -24,6 +24,7 @@ import SignUp from './PortfolioPages/SignUp';
 import SignIn from './PortfolioPages/SignIn';
 import UserProfile from './AppPages/UserProfile';
 import JobsListing from './AppPages/JobsListing';
+import UnderDevelopment from './AppPages/UnderDevelopment';
 import Community from './AppPages/Community';
 import Contests from './AppPages/Contests';
 import Marketplace from './AppPages/Marketplace';
@@ -89,6 +90,7 @@ function Body() {
   const location = useLocation();
   const loggedInContext = useContext(LoggedInContext);
   const isLoggedIn = loggedInContext?.isLoggedIn ?? false;
+  const UNDER_DEV = import.meta.env.VITE_UNDER_DEV === 'true';
 
  const { user } = useAuthStore();
  
@@ -140,6 +142,21 @@ function Body() {
   });
 
 
+
+  // Under-development gate: allow only Jobs Listing and auth pages when enabled
+  if (UNDER_DEV) {
+    const allowedPaths = new Set<string>([
+      '/verse/jobs'
+    ]);
+
+    if (!allowedPaths.has(location.pathname)) {
+      return (
+        <>
+          <UnderDevelopment />
+        </>
+      );
+    }
+  }
 
   return (
     <>
