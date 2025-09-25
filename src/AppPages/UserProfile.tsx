@@ -157,7 +157,7 @@ const UserProfile = () => {
                 <div className="text-center text-gray-400">Loading posts...</div>
               ) : posts && posts.length > 0 ? (
                 posts.map((post, index) => (
-                  <CommunityPost key={post.id} author={post.author} postImage={post.postImage} likes={post.likes} commentsCount={post.comments.length} time={post.createdAt} index={index}>
+                  <CommunityPost key={post.id} postId={post.id} author={post.author} postImage={post.postImage} likes={post.likes} commentsCount={post.comments.length} time={post.createdAt} index={index}>
                     {renderPostWithLinks(post.post)}
                   </CommunityPost>
                 ))

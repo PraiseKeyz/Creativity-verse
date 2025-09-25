@@ -28,7 +28,7 @@ const JobsListing = () => {
       fetch("/Data/joblisting.json")
         .then((res) => res.json())
         .then((data) => {
-          setJobs(data.filter((job) => job.applicationMethod === "external"));
+          setJobs(data.filter((job : Job) => job.applicationMethod === "external"));
           setLoading(false);
         });
     }, 1000);
