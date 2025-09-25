@@ -11,7 +11,7 @@ const JobsListing = () => {
   const pageSize = 10;
 
   useEffect(() => {
-    const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+    const API_BASE = import.meta.env.VITE_APP_BASE_URL || '';
     const URL = `${API_BASE}/api/v1/jobs/rssfeed`;
 
     fetchRssFeed(URL)
