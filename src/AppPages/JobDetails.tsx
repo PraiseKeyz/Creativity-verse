@@ -64,17 +64,19 @@ const JobDetails: React.FC = () => {
           // ignore and fallback to local JSON
         }
 
-        // Fallback to local JSON
-        fetch("/Data/joblisting.json")
-          .then(res => res.json())
-          .then(jobs => {
-            const found = jobs.find(
-              (j: Job) => j.id === id || (j as any)._id === id
-            );
-            if (found) setJob(found);
-            setLoading(false);
-          })
-          .catch(() => setLoading(false));
+        // Fallback: try the job store (loads from API) and then check stored jobs
+        try {
+          await useJobStore.getState().getJobs();
+          const storeJobs = useJobStore.getState().jobs as Job[];
+          const found = storeJobs.find(
+            j => j.id === id || (j as any)._id === id
+          );
+          if (found) setJob(found);
+        } catch (err) {
+          // ignore — we couldn't load from backend
+        } finally {
+          setLoading(false);
+        }
       };
 
       fetchJob();

@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaBookmark, FaRegBookmark, FaExternalLinkAlt } from "react-icons/fa";
-
+import useJobStore from "../store/job.store";
 
 type Job = {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   company: string;
@@ -26,6 +26,8 @@ const SavedJobs: React.FC = () => {
   const navigate = useNavigate();
   const [savedIds, setSavedIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const allJobs = useJobStore(s => s.jobs);
+  const getJobs = useJobStore(s => s.getJobs);
   const [jobs, setJobs] = useState<Job[]>([]);
 
   // load saved ids from localStorage
@@ -35,21 +37,29 @@ const SavedJobs: React.FC = () => {
     setSavedIds(ids);
   }, []);
 
-
-    useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      fetch("/Data/joblisting.json")
-        .then((res) => res.json())
-        .then((data) => {
-          setJobs(data.filter((j: Job) => savedIds.includes(j.id)));
-          setLoading(false);
-        });
-    }, 1000);
+  useEffect(() => {
+    // load from job store
+    (async () => {
+      try {
+        await getJobs();
+        // normalize id from store jobs which may have `_id` or `id`
+        setJobs(
+          (allJobs || []).filter((j: any) => {
+            const jid: string = (j.id as string) || (j._id as string) || "";
+            return savedIds.includes(jid);
+          }) as Job[]
+        );
+      } catch (e) {
+        // if store load fails, gracefully fall back to empty list
+        setJobs([]);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
   const removeSaved = (jobId: string) => {
-    const updated = savedIds.filter((id) => id !== jobId);
+    const updated = savedIds.filter(id => id !== jobId);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     setSavedIds(updated);
   };
@@ -105,7 +115,8 @@ const SavedJobs: React.FC = () => {
             <FaRegBookmark className="mx-auto text-4xl text-gray-400 mb-4" />
             <h2 className="text-xl font-semibold mb-2">No saved jobs yet</h2>
             <p className="text-gray-400 mb-4">
-              Save jobs to find them quickly later. Browse the Job Hub to get started.
+              Save jobs to find them quickly later. Browse the Job Hub to get
+              started.
             </p>
             <div className="flex justify-center">
               <button
@@ -118,7 +129,7 @@ const SavedJobs: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            {jobs.map((job) => (
+            {jobs.map(job => (
               <article
                 key={job.id}
                 className="bg-[#232323] p-4 rounded-xl border border-gray-700 flex flex-col md:flex-row md:items-center gap-4"
@@ -132,7 +143,7 @@ const SavedJobs: React.FC = () => {
                           {job.company}
                         </span>
                         <span className="mx-2">•</span>
-                        <span>{ job.employmentType}</span>
+                        <span>{job.employmentType}</span>
                       </div>
                     </div>
 
@@ -147,7 +158,7 @@ const SavedJobs: React.FC = () => {
                   </div>
 
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {job.skillsRequired.slice(0, 6).map((s) => (
+                    {job.skillsRequired.slice(0, 6).map(s => (
                       <span
                         key={s}
                         className="px-2 py-1 text-xs rounded-full bg-[var(--color-brand-orange)]/20 text-[var(--color-brand-orange)]"
@@ -169,7 +180,11 @@ const SavedJobs: React.FC = () => {
                   <button
                     onClick={() => handleApply(job)}
                     className="px-4 py-2 rounded-md bg-[var(--color-brand-orange)] text-black font-semibold text-sm flex items-center gap-2"
-                    title={job.applicationMethod === "external" ? "Apply externally" : "Apply"}
+                    title={
+                      job.applicationMethod === "external"
+                        ? "Apply externally"
+                        : "Apply"
+                    }
                   >
                     {job.applicationMethod === "external" ? (
                       <>
@@ -181,7 +196,7 @@ const SavedJobs: React.FC = () => {
                   </button>
 
                   <button
-                    onClick={() => removeSaved(job.id)}
+                    onClick={() => job.id && removeSaved(job.id)}
                     className="px-3 py-2 rounded-md bg-[#1a1a1a] border border-gray-600 text-sm hover:bg-red-700/5 hover:border-red-700 transition"
                     title="Remove saved"
                   >

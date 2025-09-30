@@ -22,18 +22,24 @@ import DashboardStatCard from "../components/AppComponent/DashboardStatCard";
 
 import { User } from "../store/types/apiTypes";
 import { useAuthStore } from "../store/authStore";
+import useJobStore from "../store/job.store";
+import useContestStore from "../store/contest.store";
 
 const Dashboard: React.FC<{ user: User | null }> = ({ user }) => {
   // Protect this route: only allow authenticated users
   const { isLoggedIn, token } = useAuthStore();
   const isAuth = !!isLoggedIn || !!token;
   if (!isAuth) return <Navigate to="/signin" replace />;
-  const [jobs, setJobs] = React.useState<any[]>([]);
+  // use job store instead of local mock data
+  const jobs = useJobStore(s => s.jobs);
+  const getJobs = useJobStore(s => s.getJobs);
+  const contests = useContestStore(s => s.contests);
+  const getContests = useContestStore(s => s.getContests);
+
   React.useEffect(() => {
-    fetch("/Data/joblisting.json")
-      .then(res => res.json())
-      .then(data => setJobs(data));
-  }, []);
+    getJobs().catch(e => console.error("Dashboard getJobs error:", e));
+    getContests().catch(e => console.error("Dashboard getContests error:", e));
+  }, [getJobs]);
   // const navigate = useNavigate();
 
   const challenges = [
@@ -67,53 +73,7 @@ const Dashboard: React.FC<{ user: User | null }> = ({ user }) => {
     },
   ];
 
-  const mockContests = [
-    {
-      id: "c1",
-      title: "UI Design Sprint",
-      cover:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-      description:
-        "Design a mobile banking dashboard with a strong focus on usability.",
-      prizePool: 1500,
-      entryFee: 0,
-      participants: 142,
-      maxParticipants: 300,
-      deadline: new Date(Date.now() + 1000 * 60 * 60 * 36).toISOString(), // 36h
-      status: "live",
-      tags: ["Design", "UX", "Free"],
-    },
-    {
-      id: "c2",
-      title: "Full‑stack Hack Challenge",
-      cover:
-        "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop",
-      description:
-        "Ship a production-ready MVP in 48 hours. Any stack. Surprise brief.",
-      prizePool: 5000,
-      entryFee: 25,
-      participants: 87,
-      maxParticipants: 120,
-      deadline: new Date(Date.now() + 1000 * 60 * 60 * 72).toISOString(), // 72h
-      status: "upcoming",
-      tags: ["Hackathon", "Web", "Paid"],
-    },
-    {
-      id: "c3",
-      title: "Motion Graphics Throwdown",
-      cover:
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop",
-      description:
-        "Create a 10s punchy animation for a fintech brand. Storyboard included.",
-      prizePool: 2000,
-      entryFee: 10,
-      participants: 160,
-      maxParticipants: 160,
-      deadline: new Date(Date.now() - 1000 * 60 * 60 * 10).toISOString(), // past
-      status: "ended",
-      tags: ["Motion", "After Effects", "Paid"],
-    },
-  ];
+  // contests are loaded from the contest store
 
   const [products, setProducts] = React.useState<any[]>([]);
 
@@ -353,7 +313,7 @@ const Dashboard: React.FC<{ user: User | null }> = ({ user }) => {
           pagination={{ clickable: true }}
           loop
         >
-          {mockContests.slice(0, 4).map(contest => (
+          {(contests || []).slice(0, 4).map((contest: any) => (
             <SwiperSlide key={contest.id} className="!w-full">
               <div className="w-full bg-[#232323] border border-gray-700 rounded-2xl p-4 shadow-md hover:shadow-lg transition flex items-start gap-4 cursor-pointer">
                 <img
