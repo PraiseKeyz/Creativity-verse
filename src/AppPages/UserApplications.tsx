@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaSearch, FaExternalLinkAlt, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useJobStore } from "../store/job.store";
 
 type Application = {
   id: string;
@@ -20,149 +21,7 @@ type Application = {
   status: "pending" | "reviewed" | "interview" | "hired" | "rejected";
   coverLetterSnippet?: string;
 };
-
-const MOCK_APPLICATIONS: Application[] = [
-  {
-    id: "j1",
-    title: "Frontend Developer",
-    description: "Build and maintain user interfaces for web applications.",
-    company: "TechNova",
-    employmentType: "remote",
-    salary: "$1,200 - $1,800 / month",
-    schedule: "Full-time",
-    skillsRequired: ["React", "JavaScript", "CSS", "HTML"],
-    skillLevel: "intermediate",
-    applicationMethod: "external",
-    applicationLink: "https://technova.com/careers/frontend",
-    postedBy: "64e1a1f2c1a4b2d3e4f5a6b7",
-    createdAt: "2025-08-01T10:00:00Z",
-    appliedAt: '2025-08-01T10:00:00Z',
-    status: "pending" ,
-    coverLetterSnippet: "I am excited to apply for the Frontend Developer position at TechNova. With over 3 years of experience in React and modern web technologies, I am confident in my ability to contribute effectively to your team..."
-  },
-  {
-    id: "j2",
-    title: "Backend Engineer",
-    description: "Design and develop APIs, databases, and backend services.",
-    company: "CloudBase",
-    employmentType: "hybrid",
-    salary: "$2,000 - $3,000 / month",
-    schedule: "Full-time",
-    skillsRequired: ["Node.js", "Express", "MongoDB", "REST APIs"],
-    skillLevel: "advanced",
-    applicationMethod: "internal",
-    postedBy: "64e1a1f2c1a4b2d3e4f5a6b8",
-    createdAt: "2025-08-05T09:00:00Z",
-    appliedAt: '2025-08-01T10:00:00Z',
-    status: "reviewed" ,
-    coverLetterSnippet: "I am excited to apply for the Frontend Developer position at TechNova. With over 3 years of experience in React and modern web technologies, I am confident in my ability to contribute effectively to your team..."
-  },
-  {
-    id: "j2",
-    title: "Backend Engineer",
-    description: "Design and develop APIs, databases, and backend services.",
-    company: "CloudBase",
-    employmentType: "hybrid",
-    salary: "$2,000 - $3,000 / month",
-    schedule: "Full-time",
-    skillsRequired: ["Node.js", "Express", "MongoDB", "REST APIs"],
-    skillLevel: "advanced",
-    applicationMethod: "internal",
-    postedBy: "64e1a1f2c1a4b2d3e4f5a6b8",
-    createdAt: "2025-08-05T09:00:00Z",
-    appliedAt: '2025-08-01T10:00:00Z',
-    status: "reviewed" ,
-    coverLetterSnippet: "I am excited to apply for the Frontend Developer position at TechNova. With over 3 years of experience in React and modern web technologies, I am confident in my ability to contribute effectively to your team..."
-  },
-  {
-    id: "j4",
-    title: "Data Analyst",
-    description: "Analyze datasets and provide insights for business decisions.",
-    company: "DataWorks",
-    employmentType: "remote",
-    salary: "$900 - $1,200 / month",
-    schedule: "Part-time",
-    skillsRequired: ["SQL", "Python", "Tableau", "Statistics"],
-    skillLevel: "beginner",
-    applicationMethod: "internal",
-    postedBy: "64e1a1f2c1a4b2d3e4f5a6c0",
-    createdAt: "2025-08-12T11:15:00Z",
-    appliedAt: '2025-08-01T10:00:00Z',
-    status: "interview" ,
-    coverLetterSnippet: "I am excited to apply for the Frontend Developer position at TechNova. With over 3 years of experience in React and modern web technologies, I am confident in my ability to contribute effectively to your team..."
-  },
-  {
-    id: "j5",
-    title: "Mobile Developer",
-    description: "Develop and maintain cross-platform mobile applications.",
-    company: "AppVerse",
-    employmentType: "hybrid",
-    salary: "$1,500 - $2,200 / month",
-    schedule: "Full-time",
-    skillsRequired: ["React Native", "JavaScript", "TypeScript"],
-    skillLevel: "intermediate",
-    applicationMethod: "external",
-    applicationLink: "https://appverse.dev/careers/mobile",
-    postedBy: "64e1a1f2c1a4b2d3e4f5a6c1",
-    createdAt: "2025-08-15T16:00:00Z",
-    appliedAt: '2025-08-01T10:00:00Z',
-    status: "interview" ,
-    coverLetterSnippet: "I am excited to apply for the Frontend Developer position at TechNova. With over 3 years of experience in React and modern web technologies, I am confident in my ability to contribute effectively to your team..."
-  },
-  {
-    id: "j5",
-    title: "Mobile Developer",
-    description: "Develop and maintain cross-platform mobile applications.",
-    company: "AppVerse",
-    employmentType: "hybrid",
-    salary: "$1,500 - $2,200 / month",
-    schedule: "Full-time",
-    skillsRequired: ["React Native", "JavaScript", "TypeScript"],
-    skillLevel: "intermediate",
-    applicationMethod: "external",
-    applicationLink: "https://appverse.dev/careers/mobile",
-    postedBy: "64e1a1f2c1a4b2d3e4f5a6c1",
-    createdAt: "2025-08-15T16:00:00Z",
-    appliedAt: '2025-08-01T10:00:00Z',
-    status: "hired" ,
-    coverLetterSnippet: "I am excited to apply for the Frontend Developer position at TechNova. With over 3 years of experience in React and modern web technologies, I am confident in my ability to contribute effectively to your team..."
-  },
-  {
-    id: "j7",
-    title: "Product Manager",
-    description: "Lead product strategy and coordinate cross-functional teams.",
-    company: "InnovateX",
-    employmentType: "remote",
-    salary: "$2,500 - $3,500 / month",
-    schedule: "Full-time",
-    skillsRequired: ["Agile", "Scrum", "Communication", "Leadership"],
-    skillLevel: "intermediate",
-    applicationMethod: "external",
-    applicationLink: "https://innovatex.com/careers/pm",
-    postedBy: "64e1a1f2c1a4b2d3e4f5a6c3",
-    createdAt: "2025-08-20T10:30:00Z",
-    appliedAt: '2025-08-01T10:00:00Z',
-    status: "hired" ,
-    coverLetterSnippet: "I am excited to apply for the Frontend Developer position at TechNova. With over 3 years of experience in React and modern web technologies, I am confident in my ability to contribute effectively to your team..."
-  },
-  {
-    id: "j8",
-    title: "Content Writer",
-    description: "Write SEO-friendly blogs, articles, and website copy.",
-    company: "WordCraft",
-    employmentType: "remote",
-    salary: "₦80,000 - ₦120,000",
-    schedule: "Contract",
-    skillsRequired: ["SEO", "Content Writing", "Research", "Editing"],
-    skillLevel: "beginner",
-    applicationMethod: "internal",
-    postedBy: "64e1a1f2c1a4b2d3e4f5a6c4",
-    createdAt: "2025-08-25T13:20:00Z",
-    appliedAt: '2025-08-01T10:00:00Z',
-    status: "rejected" ,
-    coverLetterSnippet: "I am excited to apply for the Frontend Developer position at TechNova. With over 3 years of experience in React and modern web technologies, I am confident in my ability to contribute effectively to your team..."
-  },
-];
+// ...existing code...
 
 const statusLabel = (s: Application["status"]) => {
   switch (s) {
@@ -185,16 +44,57 @@ const PAGE_SIZE = 6;
 
 const UserApplications: React.FC = () => {
   const navigate = useNavigate();
-  const [applications, setApplications] = useState<Application[]>(
-    MOCK_APPLICATIONS
-  );
+  const [applications, setApplications] = useState<Application[]>([]);
+  const getAppliedJobs = useJobStore(s => s.getAppliedJobs);
+  const isLoading = useJobStore(s => s.isLoading);
+  const error = useJobStore(s => s.error);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"all" | Application["status"]>("all");
   const [page, setPage] = useState(1);
 
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      try {
+        const res = await getAppliedJobs();
+        if (res.status === "success") {
+          const jobs = res.payload.jobs || [];
+          // Map backend Job -> Application UI shape
+          const apps: Application[] = jobs.map((j: any) => ({
+            id: j._id || j.id || "",
+            title: j.title || "Untitled",
+            description: j.description || "",
+            company: j.company || j.postedBy?.name || "Unknown",
+            employmentType: (j.employmentType as any) || "remote",
+            salary: j.salary || "",
+            schedule: j.schedule || "Full-time",
+            skillsRequired: j.skillsRequired || [],
+            skillLevel: (j.skillLevel as any) || "intermediate",
+            applicationMethod: j.applicationMethod || "internal",
+            applicationLink: j.applicationLink,
+            postedBy: j.postedBy || "",
+            createdAt: j.createdAt || new Date().toISOString(),
+            appliedAt: j.appliedAt || new Date().toISOString(),
+            status: (j.status as any) || "pending",
+            coverLetterSnippet: j.coverLetterSnippet || "",
+          }));
+
+          if (mounted) setApplications(apps);
+        }
+      } catch (err) {
+        // error handled in store; keep UI quiet and allow manual retry later
+      }
+    };
+
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, [getAppliedJobs]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return applications.filter((a) => {
+    return applications.filter(a => {
       if (filter !== "all" && a.status !== filter) return false;
       if (!q) return true;
       return (
@@ -214,13 +114,13 @@ const UserApplications: React.FC = () => {
   };
 
   const handleWithdraw = (id: string) => {
-    const app = applications.find((a) => a.id === id);
+    const app = applications.find(a => a.id === id);
     if (!app) return;
     const confirmed = confirm(
       `Withdraw application for "${app.title}" at ${app.company}?`
     );
     if (!confirmed) return;
-    setApplications((prev) => prev.filter((p) => p.id !== id));
+    setApplications(prev => prev.filter(p => p.id !== id));
   };
 
   const handleMarkRead = (id: string) => {
@@ -245,7 +145,7 @@ const UserApplications: React.FC = () => {
             <div className="relative">
               <input
                 value={query}
-                onChange={(e) => {
+                onChange={e => {
                   setQuery(e.target.value);
                   setPage(1);
                 }}
@@ -257,7 +157,7 @@ const UserApplications: React.FC = () => {
 
             <select
               value={filter}
-              onChange={(e) => {
+              onChange={e => {
                 setFilter(e.target.value as any);
                 setPage(1);
               }}
@@ -275,13 +175,23 @@ const UserApplications: React.FC = () => {
 
         {/* List */}
         <div className="space-y-3">
-          {pageItems.length === 0 ? (
+          {error && (
+            <div className="p-4 rounded-md bg-red-900/10 border border-red-700 text-red-300">
+              {error}
+            </div>
+          )}
+
+          {isLoading ? (
+            <div className="p-8 bg-[#232323] rounded-xl border border-gray-700 text-center text-gray-400">
+              Loading your applications...
+            </div>
+          ) : pageItems.length === 0 ? (
             <div className="p-8 bg-[#232323] rounded-xl border border-gray-700 text-center text-gray-400">
               No applications found. Try changing filters or submit new
               applications.
             </div>
           ) : (
-            pageItems.map((app) => {
+            pageItems.map(app => {
               const s = statusLabel(app.status);
               return (
                 <div
@@ -290,13 +200,15 @@ const UserApplications: React.FC = () => {
                 >
                   <div className="flex gap-4 items-start md:items-center flex-1">
                     <div className="w-12 h-12 rounded-md bg-[#1a1a1a] border border-gray-700 flex-shrink-0 flex items-center justify-center text-[var(--color-brand-orange)] font-bold">
-                      {app.company.charAt(0).toUpperCase()}
+                      {app.company?.charAt?.(0)?.toUpperCase() || "?"}
                     </div>
 
                     <div>
                       <div className="flex items-center gap-3">
                         <h3 className="text-lg font-semibold">{app.title}</h3>
-                        <span className={`px-2 py-1 rounded-full text-xs ${s.color}`}>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs ${s.color}`}
+                        >
                           {s.text}
                         </span>
                       </div>
@@ -319,7 +231,8 @@ const UserApplications: React.FC = () => {
                       onClick={() => handleView(app.id)}
                       className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#1f1f1f] border border-gray-700 hover:border-[var(--color-brand-orange)] transition"
                     >
-                      <FaExternalLinkAlt /> <span className="text-sm">View</span>
+                      <FaExternalLinkAlt />{" "}
+                      <span className="text-sm">View</span>
                     </button>
                     <button
                       onClick={() => handleWithdraw(app.id)}
@@ -343,7 +256,7 @@ const UserApplications: React.FC = () => {
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
               className="px-3 py-1 rounded-md bg-[#232323] border border-gray-700 disabled:opacity-50"
             >
@@ -353,7 +266,7 @@ const UserApplications: React.FC = () => {
               {page} / {totalPages}
             </div>
             <button
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
               className="px-3 py-1 rounded-md bg-[#232323] border border-gray-700 disabled:opacity-50"
             >

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios, { AxiosResponse } from "axios";
+import apiClient from "../services/api";
 import { API_BASE_URL } from "../config/constants";
 import {
   ApiResponse,
@@ -16,6 +17,7 @@ type AuthState = {
   isLoggedIn: boolean;
   isLoading: boolean;
   error: string | null;
+  token?: string | null;
 
   login: (email: string, password: string) => Promise<void>;
   register: (payload: RegisterRequest) => Promise<ApiResponse<AuthRes>>;
@@ -30,7 +32,8 @@ type AuthState = {
 export const useAuthStore = create<AuthState>()(set => ({
   user: null,
   isLoggedIn: false,
-  token: null,
+  // initialize token from cookie so refreshes/refreshing pages keep auth
+  token: CookieStorage.getItem("auth_token"),
   isLoading: false,
   error: null,
 
@@ -50,11 +53,24 @@ export const useAuthStore = create<AuthState>()(set => ({
       //@ts-ignore
       const apiResponse = response.data;
       if (apiResponse.status === "success") {
+        const token = (apiResponse.payload as any).access_token;
         set({
           isLoggedIn: true,
           isLoading: false,
+          token,
         });
-        CookieStorage.setItem("auth_token", apiResponse.payload.access_token);
+        //@ts-ignore store token in cookie for persistence
+        CookieStorage.setItem("auth_token", token);
+        if (import.meta.env.DEV) {
+          try {
+            const masked =
+              typeof token === "string"
+                ? `${token.slice(0, 6)}...${token.slice(-4)}`
+                : String(token);
+            // eslint-disable-next-line no-console
+            console.debug(`[authStore] login token set: ${masked}`);
+          } catch (e) {}
+        }
       } else {
         set({
           error: apiResponse.message || "Login failed",
@@ -89,6 +105,7 @@ export const useAuthStore = create<AuthState>()(set => ({
       const apiResponse = response.data;
       if (apiResponse.status === "success") {
         set({
+          //@ts-ignore
           user: apiResponse.payload,
           isLoggedIn: true,
           isLoading: false,
@@ -131,6 +148,7 @@ export const useAuthStore = create<AuthState>()(set => ({
       const apiResponse = response.data;
       if (apiResponse.status === "success") {
         set({
+          //@ts-ignore
           user: apiResponse.payload,
           isLoggedIn: true,
           isLoading: false,
@@ -227,14 +245,9 @@ export const useAuthStore = create<AuthState>()(set => ({
 
   currentUser: async (): Promise<User | null> => {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}/api/v1/auth/current-user`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${CookieStorage.getItem("auth_token")}`,
-          },
-        }
+      // Use apiClient so the interceptor sets the Authorization header
+      const response: AxiosResponse<any> = await apiClient.get(
+        `/api/v1/auth/current-user`
       );
       //@ts-ignore
       const apiResponse = response.data;
@@ -249,7 +262,7 @@ export const useAuthStore = create<AuthState>()(set => ({
   },
 
   logout: () => {
-    set({ user: null, isLoggedIn: false });
+    set({ user: null, isLoggedIn: false, token: null });
     CookieStorage.removeItem("auth_token");
   },
 

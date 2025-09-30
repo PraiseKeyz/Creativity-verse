@@ -7,9 +7,16 @@ export const CookieStorage = {
   },
 
   setItem: (key: string, value: any) => {
-    Cookies.set(key, JSON.stringify(value), { expires: 7, secure: true });
+    // Only mark cookie as secure in production so it works on localhost (http)
+    const opts: Cookies.CookieAttributes = {
+      expires: 7,
+      secure: !!import.meta.env.PROD,
+      sameSite: "lax",
+      path: "/",
+    };
+    Cookies.set(key, JSON.stringify(value), opts);
   },
   removeItem: (key: string) => {
-    Cookies.remove(key);
+    Cookies.remove(key, { path: "/" });
   },
 };

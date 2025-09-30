@@ -1,6 +1,7 @@
 // src/pages/career/JobDetails.tsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import useJobStore from "../store/job.store";
 import {
   FaArrowLeft,
   FaMapMarkerAlt,
@@ -50,14 +51,33 @@ const JobDetails: React.FC = () => {
       return;
     }
     if (id) {
-      fetch("/Data/joblisting.json")
-        .then((res) => res.json())
-        .then((jobs) => {
-          const found = jobs.find((j: Job) => j.id === id);
-          if (found) setJob(found);
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
+      // Try API first
+      const fetchJob = async () => {
+        try {
+          const resp = await useJobStore.getState().getJobById(id as string);
+          if (resp?.status === "success" && resp.payload?.job) {
+            setJob(resp.payload.job as Job);
+            setLoading(false);
+            return;
+          }
+        } catch (e) {
+          // ignore and fallback to local JSON
+        }
+
+        // Fallback to local JSON
+        fetch("/Data/joblisting.json")
+          .then(res => res.json())
+          .then(jobs => {
+            const found = jobs.find(
+              (j: Job) => j.id === id || (j as any)._id === id
+            );
+            if (found) setJob(found);
+            setLoading(false);
+          })
+          .catch(() => setLoading(false));
+      };
+
+      fetchJob();
     }
   }, [id, job]);
 
@@ -82,18 +102,38 @@ const JobDetails: React.FC = () => {
     e.preventDefault();
     if (!job) return;
 
-    const raw = localStorage.getItem(storageKey);
-    const appliedJobs: string[] = raw ? JSON.parse(raw) : [];
-    if (!appliedJobs.includes(job.id)) {
-      appliedJobs.push(job.id);
-      localStorage.setItem(storageKey, JSON.stringify(appliedJobs));
-    }
-    setApplied(true);
-    setShowModal(false);
-    setCoverLetter("");
-    setCvFile(null);
+    const submit = async () => {
+      try {
+        // Build payload: prefer FormData to support file upload
+        const form = new FormData();
+        form.append("coverLetter", coverLetter || "");
+        if (cvFile) form.append("cv", cvFile);
 
-    alert("Application submitted with Cover Letter & CV ✅");
+        const resp = await useJobStore.getState().applyJob(job.id, form);
+        if (resp?.status === "success") {
+          // mark as applied locally (persist)
+          const raw = localStorage.getItem(storageKey);
+          const appliedJobs: string[] = raw ? JSON.parse(raw) : [];
+          if (!appliedJobs.includes(job.id)) {
+            appliedJobs.push(job.id);
+            localStorage.setItem(storageKey, JSON.stringify(appliedJobs));
+          }
+          setApplied(true);
+          setShowModal(false);
+          setCoverLetter("");
+          setCvFile(null);
+          alert("Application submitted with Cover Letter & CV ✅");
+        } else {
+          alert(resp?.message || "Failed to submit application");
+        }
+      } catch (err: any) {
+        // show error
+        const msg = err?.response?.data?.message || err?.message || String(err);
+        alert("Failed to apply: " + msg);
+      }
+    };
+
+    submit();
   };
 
   const handleWithdraw = () => {
@@ -107,7 +147,7 @@ const JobDetails: React.FC = () => {
     );
     if (!confirmed) return;
 
-    const updated = appliedJobs.filter((jid) => jid !== job.id);
+    const updated = appliedJobs.filter(jid => jid !== job.id);
     localStorage.setItem(storageKey, JSON.stringify(updated));
     setApplied(false);
     alert("Application withdrawn.");
@@ -290,7 +330,7 @@ const JobDetails: React.FC = () => {
               <label className="block text-sm mb-1">Cover Letter</label>
               <textarea
                 value={coverLetter}
-                onChange={(e) => setCoverLetter(e.target.value)}
+                onChange={e => setCoverLetter(e.target.value)}
                 required
                 rows={4}
                 className="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-gray-600 outline-none"
@@ -301,7 +341,7 @@ const JobDetails: React.FC = () => {
               <input
                 type="file"
                 accept=".pdf,.doc,.docx"
-                onChange={(e) => setCvFile(e.target.files?.[0] || null)}
+                onChange={e => setCvFile(e.target.files?.[0] || null)}
                 required
                 className="text-sm"
               />
