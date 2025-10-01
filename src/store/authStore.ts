@@ -41,15 +41,12 @@ export const useAuthStore = create<AuthState>()(set => ({
     set({ isLoading: true, error: null });
     try {
       const loginData: LoginRequest = { email, password };
-      const response: AxiosResponse<ApiResponse<AuthRes>> = await apiClient.post(
-        `${API_BASE_URL}/api/v1/auth/sign-in`,
-        loginData,
-        {
+      const response: AxiosResponse<ApiResponse<AuthRes>> =
+        await apiClient.post(`${API_BASE_URL}/api/v1/auth/sign-in`, loginData, {
           headers: {
             "Content-Type": "application/json",
           },
-        }
-      );
+        });
       //@ts-ignore
       const apiResponse = response.data;
       if (apiResponse.status === "success") {
@@ -104,10 +101,13 @@ export const useAuthStore = create<AuthState>()(set => ({
       //@ts-ignore
       const apiResponse = response.data;
       if (apiResponse.status === "success") {
+        // After sign-up we should NOT mark the user as fully authenticated yet
+        // because they still need to verify their email. Keep them signed out
+        // so public-only routes (like /verify-email) are reachable.
         set({
           //@ts-ignore
           user: apiResponse.payload,
-          isLoggedIn: true,
+          isLoggedIn: false,
           isLoading: false,
         });
       } else {
@@ -147,12 +147,35 @@ export const useAuthStore = create<AuthState>()(set => ({
       //@ts-ignore
       const apiResponse = response.data;
       if (apiResponse.status === "success") {
+        // If the backend returned an access token on confirmation, save it and
+        // mark the user as logged in. This performs the 'auto-login after
+        // email confirmation' flow while keeping initial registration
+        // unauthenticated.
+        const payloadData: any = apiResponse.payload || {};
+        const token = payloadData?.access_token || payloadData?.token || null;
+
         set({
           //@ts-ignore
           user: apiResponse.payload,
-          isLoggedIn: true,
+          isLoggedIn: !!token,
           isLoading: false,
+          token: token,
         });
+
+        if (token) {
+          // persist token in cookie for session persistence
+          CookieStorage.setItem("auth_token", token);
+          if (import.meta.env.DEV) {
+            try {
+              const masked =
+                typeof token === "string"
+                  ? `${token.slice(0, 6)}...${token.slice(-4)}`
+                  : String(token);
+              // eslint-disable-next-line no-console
+              console.debug(`[authStore] confirmEmail token set: ${masked}`);
+            } catch (e) {}
+          }
+        }
       } else {
         set({
           error: apiResponse.message || "Email confirmation failed",

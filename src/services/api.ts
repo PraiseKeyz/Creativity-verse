@@ -25,7 +25,8 @@ function makeCacheKey(config: AxiosRequestConfig) {
   const url = String(config.url || "");
   const params = config.params ? JSON.stringify(config.params) : "";
   // include Authorization header fingerprint to avoid leaking other users' cached data
-  const auth = (config.headers && (config.headers as any)["Authorization"]) || "";
+  const auth =
+    (config.headers && (config.headers as any)["Authorization"]) || "";
   return `${url}|params:${params}|auth:${auth}`;
 }
 
@@ -44,7 +45,8 @@ apiClient.request = async function (config: AxiosRequestConfig) {
     const method = (config.method || "get").toString().toLowerCase();
 
     // allow callers to opt-out of cache via header or config flag
-    const noCacheHeader = config.headers && (config.headers as any)["x-cache"] === "false";
+    const noCacheHeader =
+      config.headers && (config.headers as any)["x-cache"] === "false";
     const skipCacheFlag = (config as any).skipCache === true;
 
     if (method === "get" && !noCacheHeader && !skipCacheFlag) {
@@ -61,7 +63,12 @@ apiClient.request = async function (config: AxiosRequestConfig) {
     const res = await _originalRequest(config as any);
 
     // cache GET responses (successful)
-    if (String((config.method || "get")).toLowerCase() === "get" && res && res.status >= 200 && res.status < 300) {
+    if (
+      String(config.method || "get").toLowerCase() === "get" &&
+      res &&
+      res.status >= 200 &&
+      res.status < 300
+    ) {
       const ttl = (config as any).cacheTtlMs || DEFAULT_TTL;
       const key = makeCacheKey(config);
       _cache.set(key, { expiresAt: Date.now() + ttl, response: res });
