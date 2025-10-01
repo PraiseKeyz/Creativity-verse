@@ -1,5 +1,7 @@
 // src/components/CreatePost.tsx
 import React, { useRef, useState } from "react";
+import { useSocialStore } from "../store/socialStore";
+import { useUserStore } from "../store/userStore";
 import {
   FaTimes,
   FaUserFriends,
@@ -45,12 +47,20 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
 
   const canPost = text.trim().length > 0 || attachments.length > 0;
 
+  // Prefer backend-provided full name and avatar from userStore; fall back to prop
+  const profile = useUserStore(state => state.profile);
+  const resolvedFullName =
+    profile?.fullName ||
+    (profile as any)?.full_name ||
+    `${user.firstname} ${user.lastname}`;
+  const resolvedAvatar = profile?.avatar || user.avatar || undefined;
+
   const handleFiles = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
 
     const arr = Array.from(files).slice(0, 6 - attachments.length); // limit to 6
     const previews: Attachment[] = await Promise.all(
-      arr.map(async (file) => {
+      arr.map(async file => {
         const isGif = file.type.includes("gif");
         const dataUrl = await fileToDataURL(file);
         return {
@@ -61,7 +71,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
         } as Attachment;
       })
     );
-    setAttachments((prev) => [...prev, ...previews]);
+    setAttachments(prev => [...prev, ...previews]);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -74,7 +84,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
     });
 
   const removeAttachment = (id: string) => {
-    setAttachments((prev) => prev.filter((a) => a.id !== id));
+    setAttachments(prev => prev.filter(a => a.id !== id));
   };
 
   const handleSubmit = (e?: React.FormEvent) => {
@@ -87,7 +97,20 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
       location,
     };
     if (onSubmit) onSubmit(payload);
-    else console.log("CreatePost payload:", payload);
+    else {
+      // Use social store createPost
+      const createPost = useSocialStore.getState().createPost;
+      // Map local payload to API payload
+      const apiPayload = {
+        content: text.trim(),
+        type: "question", // default to question per user's example; could be dynamic
+        category: "tech",
+        attachments: attachments.map(a => ({ url: a.url, type: a.type })),
+      };
+      createPost(apiPayload).catch((err: unknown) => {
+        console.error("Failed to create feed post:", err);
+      });
+    }
 
     // reset
     setText("");
@@ -117,20 +140,18 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
         {/* user row */}
         <div className="flex items-start gap-3">
           <img
-            src={user.avatar}
-            alt={`${user.firstname} ${user.lastname}`}
+            src={resolvedAvatar}
+            alt={resolvedFullName}
             className="w-12 h-12 rounded-full object-cover border-2 border-gray-800"
           />
           <div className="flex-1">
             <div className="flex items-center gap-3">
               <div>
-                <div className="font-semibold">
-                  {user.firstname} {user.lastname}
-                </div>
+                <div className="font-semibold">{resolvedFullName}</div>
                 <button
                   type="button"
                   className="mt-1 text-xs text-gray-300 inline-flex items-center gap-2 px-2 py-1 bg-[#1a1a1a] rounded-md"
-                  onClick={() => setShowAudience((s) => !s)}
+                  onClick={() => setShowAudience(s => !s)}
                   aria-expanded={showAudience}
                 >
                   <FaUserFriends />{" "}
@@ -146,7 +167,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
                 {/* audience dropdown */}
                 {showAudience && (
                   <div className="mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md p-2 w-44 shadow-lg absolute z-30">
-                    {(["public", "friends", "only-me"] as const).map((opt) => (
+                    {(["public", "friends", "only-me"] as const).map(opt => (
                       <button
                         key={opt}
                         className={`w-full text-left px-2 py-1 rounded ${
@@ -174,7 +195,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
             {/* textarea */}
             <textarea
               value={text}
-              onChange={(e) => setText(e.target.value)}
+              onChange={e => setText(e.target.value)}
               placeholder={`What's on your mind, ${user.firstname}?`}
               rows={4}
               className="mt-3 w-full resize-none bg-transparent border border-dashed border-gray-700 rounded-md px-4 py-3 placeholder-gray-400 outline-none focus:border-[var(--color-brand-orange)]"
@@ -183,7 +204,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
             {/* previews */}
             {attachments.length > 0 && (
               <div className="mt-3 grid grid-cols-3 gap-2">
-                {attachments.map((a) => (
+                {attachments.map(a => (
                   <div
                     key={a.id}
                     className="relative rounded-md overflow-hidden bg-[#111]"
@@ -218,7 +239,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
               multiple
               accept="image/*,image/gif"
               className="hidden"
-              onChange={(e) => handleFiles(e.target.files)}
+              onChange={e => handleFiles(e.target.files)}
             />
 
             <button
@@ -232,7 +253,6 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
           </div>
 
           <div className="flex items-center gap-3">
-
             <button
               type="submit"
               disabled={!canPost}

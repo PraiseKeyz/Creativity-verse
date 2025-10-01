@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   FaCrown,
@@ -9,7 +9,7 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 
-type ContestStatus = "live" | "upcoming" | "ended";
+type ContestStatus = "live" | "upcoming" | "ended" | string;
 
 type Contest = {
   id: string;
@@ -24,69 +24,7 @@ type Contest = {
   status: ContestStatus;
   tags: string[];
 };
-
-const mockContests: Contest[] = [
-  {
-    id: "c1",
-    title: "UI Design Sprint",
-    cover:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-    description:
-      "Design a mobile banking dashboard with a strong focus on usability.",
-    prizePool: 1500,
-    entryFee: 0,
-    participants: 142,
-    maxParticipants: 300,
-    deadline: new Date(Date.now() + 1000 * 60 * 60 * 36).toISOString(), // 36h
-    status: "live",
-    tags: ["Design", "UX", "Free"],
-  },
-  {
-    id: "c2",
-    title: "Full‑stack Hack Challenge",
-    cover:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop",
-    description:
-      "Ship a production-ready MVP in 48 hours. Any stack. Surprise brief.",
-    prizePool: 5000,
-    entryFee: 25,
-    participants: 87,
-    maxParticipants: 120,
-    deadline: new Date(Date.now() + 1000 * 60 * 60 * 72).toISOString(), // 72h
-    status: "upcoming",
-    tags: ["Hackathon", "Web", "Paid"],
-  },
-  {
-    id: "c3",
-    title: "Motion Graphics Throwdown",
-    cover:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop",
-    description:
-      "Create a 10s punchy animation for a fintech brand. Storyboard included.",
-    prizePool: 2000,
-    entryFee: 10,
-    participants: 160,
-    maxParticipants: 160,
-    deadline: new Date(Date.now() - 1000 * 60 * 60 * 10).toISOString(), // past
-    status: "ended",
-    tags: ["Motion", "After Effects", "Paid"],
-  },
-  {
-    id: "c4",
-    title: "No-Code MVP Weekend",
-    cover:
-      "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1200&auto=format&fit=crop",
-    description:
-      "Build and launch a working MVP using only no-code tools in 48 hours.",
-    prizePool: 1000,
-    entryFee: 0,
-    participants: 45,
-    maxParticipants: 200,
-    deadline: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5).toISOString(), // 5d
-    status: "upcoming",
-    tags: ["No-code", "Startup", "Free"],
-  },
-];
+import useContestStore from "../store/contest.store";
 
 type SortKey = "default" | "prize" | "deadline" | "popularity";
 
@@ -97,27 +35,36 @@ const ContestPage: React.FC = () => {
   const [activeTag, setActiveTag] = useState<string>("All");
   const [sortBy, setSortBy] = useState<SortKey>("default");
   const [query, setQuery] = useState("");
+  // contest store
+  const {
+    contests: storeContests,
+    isLoading,
+    error,
+    getContests,
+  } = useContestStore();
 
-  const tags = useMemo(
-    () => ["All", ...Array.from(new Set(mockContests.flatMap((c) => c.tags)))],
-    []
-  );
+  // derive tags from fetched contests
+  const tags = useMemo(() => {
+    const all = storeContests.flatMap(c => c.tags || []);
+    return ["All", ...Array.from(new Set(all))];
+  }, [storeContests]);
 
+  // filtered & sorted list
   const contests = useMemo(() => {
-    let list = [...mockContests];
+    let list = [...storeContests];
 
     if (statusFilter !== "all") {
-      list = list.filter((c) => c.status === statusFilter);
+      list = list.filter(c => c.status === statusFilter);
     }
 
     if (activeTag !== "All") {
-      list = list.filter((c) => c.tags.includes(activeTag));
+      list = list.filter(c => c.tags.includes(activeTag));
     }
 
     if (query.trim()) {
       const q = query.toLowerCase();
       list = list.filter(
-        (c) =>
+        c =>
           c.title.toLowerCase().includes(q) ||
           c.description.toLowerCase().includes(q)
       );
@@ -141,7 +88,14 @@ const ContestPage: React.FC = () => {
     }
 
     return list;
-  }, [statusFilter, activeTag, sortBy, query]);
+  }, [storeContests, statusFilter, activeTag, sortBy, query]);
+
+  // fetch contests once on mount (do client-side tag filtering)
+  useEffect(() => {
+    getContests().catch(() => {
+      /* errors are handled in store */
+    });
+  }, []);
 
   return (
     <main
@@ -165,13 +119,13 @@ const ContestPage: React.FC = () => {
             type="text"
             placeholder="Search contests…"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={e => setQuery(e.target.value)}
             className="bg-white rounded-lg px-3 py-2 text-sm border border-gray-200"
           />
 
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as SortKey)}
+            onChange={e => setSortBy(e.target.value as SortKey)}
             className="bg-white rounded-lg px-3 py-2 text-sm border border-gray-200"
           >
             <option value="default">Sort by</option>
@@ -183,8 +137,8 @@ const ContestPage: React.FC = () => {
 
         {/* Status filter */}
         <section className="flex flex-wrap gap-2">
-          {(["all", "live", "upcoming", "ended"] as const).map((s) => (
-          <button
+          {(["all", "live", "upcoming", "ended"] as const).map(s => (
+            <button
               key={s}
               onClick={() => setStatusFilter(s)}
               className={`px-3 py-1.5 rounded-full text-sm border ${
@@ -193,16 +147,14 @@ const ContestPage: React.FC = () => {
                   : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
               }`}
             >
-              {s === "all"
-                ? "All"
-                : s.charAt(0).toUpperCase() + s.slice(1)}
+              {s === "all" ? "All" : s.charAt(0).toUpperCase() + s.slice(1)}
             </button>
           ))}
         </section>
 
         {/* Tag pills */}
         <section className="flex flex-wrap gap-2">
-          {tags.map((t) => (
+          {tags.map(t => (
             <button
               key={t}
               onClick={() => setActiveTag(t)}
@@ -226,10 +178,10 @@ const ContestPage: React.FC = () => {
           )}
 
           {contests.map((contest, index) => (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1  }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
               <ContestCard key={contest.id} contest={contest} />
             </motion.div>
@@ -249,8 +201,7 @@ const ContestCard: React.FC<{ contest: Contest }> = ({ contest }) => {
   const ended = contest.status === "ended";
 
   const timeLeft = getTimeRemainingString(contest.deadline);
-  const progress =
-    (contest.participants / contest.maxParticipants) * 100;
+  const progress = (contest.participants / contest.maxParticipants) * 100;
 
   const badgeStyles: Record<ContestStatus, string> = {
     live: "bg-green-100 text-green-700",
@@ -267,7 +218,9 @@ const ContestCard: React.FC<{ contest: Contest }> = ({ contest }) => {
           className="w-full h-44 object-cover"
         />
         <span
-          className={`absolute top-3 left-3 px-2 py-0.5 rounded-full text-xs font-medium ${badgeStyles[contest.status]}`}
+          className={`absolute top-3 left-3 px-2 py-0.5 rounded-full text-xs font-medium ${
+            badgeStyles[contest.status]
+          }`}
         >
           {contest.status.toUpperCase()}
         </span>
@@ -279,9 +232,7 @@ const ContestCard: React.FC<{ contest: Contest }> = ({ contest }) => {
       </div>
 
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="text-lg font-semibold text-white">
-          {contest.title}
-        </h3>
+        <h3 className="text-lg font-semibold text-white">{contest.title}</h3>
 
         <p className="text-sm text-gray-500 mt-1 line-clamp-2">
           {contest.description}
@@ -289,7 +240,7 @@ const ContestCard: React.FC<{ contest: Contest }> = ({ contest }) => {
 
         {/* Tags */}
         <div className="flex flex-wrap gap-1.5 mt-3">
-          {contest.tags.map((tag) => (
+          {contest.tags.map(tag => (
             <span
               key={tag}
               className="text-xs bg-[var(--color-brand-orange)]/20 text-[var(--color-brand-orange)] px-2 py-0.5 rounded"

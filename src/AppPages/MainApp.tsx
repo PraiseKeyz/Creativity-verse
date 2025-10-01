@@ -4,6 +4,38 @@ import VerseNav from "../components/AppComponent/VerseNav";
 import { useEffect, useState } from "react";
 import ChatBot from "../components/AppComponent/ChatBot";
 import { useAuthStore } from "../store/authStore";
+import { CookieStorage } from "../store/cookie/cookieStorage";
+
+// Migrate token from localStorage to cookie (if an auth flow wrote it to localStorage)
+function migrateTokenFromLocalStorage() {
+  try {
+    const possible =
+      localStorage.getItem("access_token") ||
+      localStorage.getItem("auth_token");
+    if (possible) {
+      try {
+        // try parse in case it's JSON
+        const parsed = JSON.parse(possible);
+        if (typeof parsed === "string") {
+          CookieStorage.setItem("auth_token", parsed);
+          if (import.meta.env.DEV)
+            console.debug("[migrate] moved token from localStorage to cookie");
+        } else {
+          // if it's an object, leave as-is (not a token)
+        }
+      } catch (e) {
+        // not JSON, assume raw string token
+        CookieStorage.setItem("auth_token", possible);
+        if (import.meta.env.DEV)
+          console.debug(
+            "[migrate] moved raw token from localStorage to cookie"
+          );
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+}
 
 const MainApp = () => {
   const navigate = useNavigate();
@@ -14,6 +46,9 @@ const MainApp = () => {
     if (window.location.pathname === "/verse") {
       navigate("/verse/community");
     }
+
+    // Migrate idiosyncratic tokens saved to localStorage by other flows into cookie
+    migrateTokenFromLocalStorage();
 
     const fetchCurrentUser = async () => {
       await currentUser();
