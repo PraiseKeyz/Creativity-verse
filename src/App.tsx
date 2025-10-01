@@ -69,6 +69,7 @@ import AddProject from './AppPages/AddProject';
 import Portfolio from './AppPages/Portfolio';
 import PostDetail from './AppPages/PostDetail';
 import Webinars from './AppPages/Webinars';
+import PartnerPage from './PortfolioPages/PartnerPage';
 
 function App() {
  
@@ -121,6 +122,7 @@ function Body() {
     '/features',
     '/showcase',
     '/services',
+    '/partner',
     '/store',
     '/pricing',
     '/resources',
@@ -149,6 +151,7 @@ function Body() {
         <Route path='/about' element={<About />} />
         <Route path='/features' element={<Features />} />
         <Route path='/showcase' element={<Showcase />} />
+        <Route path='/partner' element={<PartnerPage />} />
         <Route path='/services' element={<Services />} />
         <Route path='/services/service/:id' element={<ServiceDetail />} />
         <Route path='/signup' element={<SignUp />} />
