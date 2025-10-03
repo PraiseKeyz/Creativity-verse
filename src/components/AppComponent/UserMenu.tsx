@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaChevronDown, FaSignOutAlt, FaCog, FaQuestionCircle, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { User } from "../../store/types/apiTypes";
+import { FaCartShopping } from "react-icons/fa6";
 
 
 
@@ -67,6 +68,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, onLogout }) => {
 
           {/* Menu Options */}
           <ul className="py-2 text-sm text-gray-300">
+            <Link onClick={() => setOpen(!open)} to="user-cart">
+              <li className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2">
+                <FaCartShopping /> Cart
+              </li>
+            </Link>
             <Link onClick={() => setOpen(!open)} to="user-profile">
               <li className="px-4 py-2 hover:bg-gray-800 cursor-pointer flex items-center gap-2">
                 <FaUser /> Profile

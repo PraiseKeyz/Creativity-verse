@@ -42,7 +42,7 @@ const Notifications: React.FC = () => {
 
   return (
     <main className="min-h-screen bg-[#181818] text-white font-sans px-6 py-12">
-      <section className="max-w-3xl mx-auto">
+      <section className="mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold flex items-center gap-2">

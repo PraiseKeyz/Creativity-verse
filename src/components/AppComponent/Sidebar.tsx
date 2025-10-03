@@ -140,9 +140,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
             </button>
             {openDropdown === "learn" && (
               <div className="mt-2 space-y-1">
-                <DropdownItem to="learn/webinars" label="Webinars & Workshops" />
+                <DropdownItem to="webinars" label="Webinars & Workshops" />
                 <DropdownItem to="creo-ai" label="Creo AI" />
-                <DropdownItem to="learn/resources" label="Resources" />
               </div>
             )}
           </motion.div>
@@ -161,38 +160,35 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
             </button>
             {openDropdown === "career" && (
               <div className="mt-2 space-y-1">
-                <DropdownItem to="career/applications" label="My Applications" />
-                <DropdownItem to="career/saved" label="Saved Opportunities" />
-                <DropdownItem to="career/submissions" label="My Submissions" />
-                <DropdownItem to="career/portfolio" label="Portfolio" />
-                <DropdownItem to="career/orders" label="My Orders" />
+                <DropdownItem to="my-applications" label="My Applications" />
+                <DropdownItem to="portfolio" label="Portfolio" />
+              </div>
+            )}
+          </motion.div>
+
+          {/* Saved items Dropdown */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.5 }}>
+            <button
+              onClick={() => toggleDropdown("saved")}
+              className="flex items-center justify-between w-full shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800"
+            >
+              <span className="flex items-center gap-3">
+                <FaBriefcase className="text-xl" />
+                <span >Saved</span>
+              </span>
+              {openDropdown === "saved" ? <FaChevronDown /> : <FaChevronRight />}
+            </button>
+            {openDropdown === "saved" && (
+              <div className="mt-2 space-y-1">
+                <DropdownItem to="jobs/saved" label="Saved Opportunities" />
+                <DropdownItem to="product/saved" label="Saved Products" />
+                <DropdownItem to="post/saved" label="Saved Posts" />
               </div>
             )}
           </motion.div>
         </ul>
 
-        {/* Bottom Links */}
-        <ul className="">
-
-          <Link to="privacy-policy">
-            <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 mb-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
-              <FaShieldAlt className="text-xl" />
-              <span >Privacy Policy</span>
-            </li>
-          </Link>
-
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.6 }}
-            className="block w-full"
-          >
-            <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
-              <FaDoorOpen className="text-xl" />
-              <span >Log Out</span>
-            </li>
-          </motion.button>
-        </ul>
+        
       </div>
     </div>
   );
