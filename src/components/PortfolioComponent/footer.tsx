@@ -65,6 +65,7 @@ const Footer = () => {
                             © 2025 Creativity Verse. All rights reserved.
                         </p>
                         <div className="flex gap-6">
+                            <a href="/legals" className="text-[var(--color-surface-light)]/70 hover:text-[var(--color-brand-orange)] text-sm">Legal</a>
                             <a href="#" className="text-[var(--color-surface-light)]/70 hover:text-[var(--color-brand-orange)] text-sm">Privacy Policy</a>
                             <a href="#" className="text-[var(--color-surface-light)]/70 hover:text-[var(--color-brand-orange)] text-sm">Terms of Service</a>
                         </div>

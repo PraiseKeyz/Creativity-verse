@@ -16,6 +16,7 @@ import Blog from './PortfolioPages/Blog';
 import Contact from './PortfolioPages/Contact';
 import BlogManagement from './PortfolioPages/BlogManagement';
 import BlogPost from './PortfolioPages/BlogPost';
+import LegalPage from './PortfolioPages/LegalPages';
 import NotFound from './PortfolioPages/NotFound';
 // import './App.css'
 import ScrollToTop from './components/PortfolioComponent/ScrollToTop';
@@ -187,6 +188,7 @@ function Body() {
         <Route path="/verify-email" element={<EmailVerification />} />
         <Route path="/email-verified" element={<EmailVerificationSuccess />} />
         <Route path="/talent-verification" element={<TalentVerification />} />
+        <Route path="/legals" element={<LegalPage />} />
 
         
         {/* Protected routes */}
