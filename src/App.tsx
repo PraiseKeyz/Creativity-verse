@@ -7,22 +7,25 @@ import {
 } from "react-router-dom"; // Import useLocation
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useContext } from "react";
-import Footer from "./components/PortfolioComponent/footer";
-import Header from "./components/PortfolioComponent/Header";
-import HomePage from "./PortfolioPages/Home";
-import About from "./PortfolioPages/About";
-import Features from "./PortfolioPages/Features";
-import Showcase from "./PortfolioPages/Showcase";
-import Services from "./PortfolioPages/Services";
-import ServiceDetail from "./PortfolioPages/ServiceDetail";
-import Store from "./PortfolioPages/Store";
-import Resources from "./PortfolioPages/Resources";
-import Blog from "./PortfolioPages/Blog";
-import Contact from "./PortfolioPages/Contact";
-import BlogManagement from "./PortfolioPages/BlogManagement";
-import BlogPost from "./PortfolioPages/BlogPost";
-import NotFound from "./PortfolioPages/NotFound";
+
+import { useContext } from 'react';
+import Footer from './components/PortfolioComponent/footer';
+import Header from './components/PortfolioComponent/Header';
+import HomePage from './PortfolioPages/Home';
+import About from './PortfolioPages/About';
+import Features from './PortfolioPages/Features';
+import Showcase from './PortfolioPages/Showcase';
+import Services from './PortfolioPages/Services';
+import ServiceDetail from './PortfolioPages/ServiceDetail';
+import Store from './PortfolioPages/Store';
+import Resources from './PortfolioPages/Resources';
+import Blog from './PortfolioPages/Blog';
+import Contact from './PortfolioPages/Contact';
+import BlogManagement from './PortfolioPages/BlogManagement';
+import BlogPost from './PortfolioPages/BlogPost';
+import LegalPage from './PortfolioPages/LegalPages';
+import NotFound from './PortfolioPages/NotFound';
+
 // import './App.css'
 import ScrollToTop from "./components/PortfolioComponent/ScrollToTop";
 // import PopUp from './components/PopUp';
@@ -170,6 +173,29 @@ function Body() {
     <>
       {isValidRoute && !isAuthPage && <Header />}
       <Routes>
+
+        <Route path='/' element={<HomePage />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/features' element={<Features />} />
+        <Route path='/showcase' element={<Showcase />} />
+        <Route path='/services' element={<Services />} />
+        <Route path='/services/service/:id' element={<ServiceDetail />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/signin' element={<SignIn />} />
+        <Route path='/store' element={<Store />} />
+        <Route path='/pricing' element={<PricingPage />} />
+        <Route path='/resources' element={<Resources />} />
+        <Route path='/resources/blogs' element={<Blog />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path="/resources/blog-management" element={<BlogManagement />} />
+        <Route path="/resources/blogs/:id" element={<BlogPost />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-email" element={<EmailVerification />} />
+        <Route path="/email-verified" element={<EmailVerificationSuccess />} />
+        <Route path="/talent-verification" element={<TalentVerification />} />
+        <Route path="/legals" element={<LegalPage />} />
+
         {/* PublicOnly wrapper component */}
         {/* Redirects authenticated users to /verse/dashboard */}
         {/**
@@ -347,6 +373,7 @@ function Body() {
             </PublicOnly>
           }
         />
+
 
         {/* Protected routes */}
         <Route

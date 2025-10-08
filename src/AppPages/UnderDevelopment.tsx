@@ -5,13 +5,13 @@ const UnderDevelopment: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center px-4 text-center bg-black">
             <div className="max-w-2xl w-full p-6">
                 <h1 className="text-2xl sm:text-3xl font-semibold text-white">We&rsquo;re building something awesome</h1>
-                <p className="text-white/70 mt-3">This site is currently under development. For now, only the Jobs Listing page is accessible.</p>
+                <p className="text-white/70 mt-3">This site is currently under development. Join our waitlist to be the first to know when we launch.</p>
                 <div className="mt-6">
                     <a
-                        href="/verse/jobs"
+                        href="https://www.waitlist.mycreativityverse.com"
                         className="inline-block px-5 py-2 rounded bg-[var(--color-brand-orange)] hover:bg-[var(--color-brand-orange)]/90 text-white"
                     >
-                        Go to Jobs Listing
+                        Join Waitlist
                     </a>
                 </div>
             </div>
