@@ -391,16 +391,6 @@ function Body() {
             element={isLoggedIn ? <CreoAI /> : <Navigate to="/signin" />}
           />
           <Route
-            path="create/post"
-            element={
-              isLoggedIn ? (
-                <CreatePost user={sampleUser} />
-              ) : (
-                <Navigate to="/signin" />
-              )
-            }
-          />
-          <Route
             path="community/post-id"
             element={isLoggedIn ? <PostDetail /> : <Navigate to="/signin" />}
           />

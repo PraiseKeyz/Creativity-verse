@@ -6,34 +6,15 @@ import { PiCertificateFill } from "react-icons/pi";
 import { FiChevronDown } from "react-icons/fi";
 import CommunityPost from "../components/AppComponent/CommunityPost";
 import EditProfile from "../components/Profile/EditProfile";
+import ProjectCard from "../components/AppComponent/ProjectCard";
 
-const categories = ["Trending", "Latest"];
 
-function renderPostWithLinks(text: string) {
-  if (!text) return null;
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const parts = text.split(urlRegex);
-  return parts.map((part, i) => {
-    if (urlRegex.test(part)) {
-      return (
-        <a
-          key={i}
-          href={part}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline text-[var(--color-brand-orange)] break-all hover:opacity-80"
-        >
-          {part}
-        </a>
-      );
-    }
-    return <span key={i}>{part}</span>;
-  });
-}
+
 
 const UserProfile = () => {
   const store = useUserStore();
   const profile = store.profile;
+  
 
   console.log("User profile data:", profile);
   // Prefer backend-provided full name when available, otherwise derive from bio
@@ -49,6 +30,22 @@ const UserProfile = () => {
       }
       return "Creativity Verse";
     })();
+    
+      const handleEdit = (id: string) => {
+    // hook: navigate to edit page or open modal
+    alert(`Open editor for ${id} — wire to your edit flow.`);
+  };
+
+    const handleDelete = (id: string) => {
+    const confirmed = confirm("Delete this project? This action cannot be undone.");
+    if (!confirmed) return;
+    setProjects((prev) => prev.filter((p) => p.id !== id));
+  };
+
+    const handleView = (p: Project) => {
+    // hook: navigate to project page
+    window.open(p.projectLink ?? "#", "_blank");
+  };
 
   const author = {
     full_name: resolvedFullName,
@@ -66,30 +63,71 @@ const UserProfile = () => {
   console.log("Author data:", author.full_name);
 
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(categories[0]);
   const [editing, setEditing] = useState(false);
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const { fetchProfile } = useUserStore();
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch("/Data/communityPost.json");
-        const data = await response.json();
-        setPosts(data.posts || []);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-        setPosts([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPosts();
-    // fetch user profile once
-    fetchProfile().catch(() => {});
-  }, [selected]);
+  type Project = {
+  id: string;
+  title: string;
+  shortDescription: string;
+  cover?: string; // image url
+  tags: string[];
+  skills: string[];
+  projectLink?: string;
+  visibility: "public" | "portfolio" | "private";
+  createdAt: string; // ISO string
+};
+
+
+const MOCK_PROJECTS: Project[] = [
+  {
+    id: "p1",
+    title: "Portfolio Website Redesign",
+    shortDescription: "Complete redesign with improved performance and accessibility.",
+    cover: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+    tags: ["web", "design"],
+    skills: ["React", "Tailwind", "Figma"],
+    projectLink: "https://example.com/portfolio-redesign",
+    visibility: "public",
+    createdAt: "2025-06-12T10:00:00.000Z",
+  },
+  {
+    id: "p2",
+    title: "Brand Identity Pack",
+    shortDescription: "Logo, brand guidelines and illustration set for a fintech startup.",
+    cover: "https://images.unsplash.com/photo-1493119508027-2b584f234d6c?auto=format&fit=crop&w=1200&q=80",
+    tags: ["branding", "illustration"],
+    skills: ["Illustrator", "Photoshop"],
+    visibility: "portfolio",
+    createdAt: "2025-07-01T08:30:00.000Z",
+  },
+  {
+    id: "p3",
+    title: "Mobile App — Health Tracker",
+    shortDescription: "End-to-end MVP with onboarding, analytics and premium features.",
+    cover: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80",
+    tags: ["mobile", "ui-ux"],
+    skills: ["Figma", "React Native", "UX Research"],
+    projectLink: "https://example.com/health-track",
+    visibility: "private",
+    createdAt: "2025-05-20T14:12:00.000Z",
+  },
+  {
+    id: "p4",
+    title: "Ebook — UI Patterns",
+    shortDescription: "A practical guide to modern UI patterns and component libraries.",
+    cover: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+    tags: ["ebook", "ui"],
+    skills: ["Writing", "Design"],
+    projectLink: "https://example.com/ui-patterns",
+    visibility: "public",
+    createdAt: "2025-07-15T09:00:00.000Z",
+  },
+];
+const [projects, setProjects] = useState<Project[]>(MOCK_PROJECTS);
+
 
   return (
     <div
@@ -163,67 +201,21 @@ const UserProfile = () => {
         </div>
 
         <div className="p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="font-semibold">Activities</h2>
-            <div className="relative w-fit ">
-              <button
-                className="flex items-center w-full px-4 py-2 cursor-pointer focus:outline-none"
-                onClick={() => setOpen(prev => !prev)}
-              >
-                <span className="font-semibold">{selected}</span>
-                <FiChevronDown className="ml-2 text-[var(--color-brand-orange)]" />
-              </button>
-              {open && (
-                <div className="absolute left-0 w-full mt-1 bg-gray-900 rounded shadow-lg z-10">
-                  {categories.map(cat => (
-                    <div
-                      key={cat}
-                      className={`px-4 py-2 cursor-pointer hover:bg-gray-700 ${
-                        selected === cat ? "bg-gray-700" : ""
-                      }`}
-                      onClick={() => {
-                        setSelected(cat);
-                        setOpen(false);
-                      }}
-                    >
-                      {cat}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold">Portfolio</h2>
+            
           </div>
-          <div className="mt-6">
-            <Suspense
-              fallback={
-                <div className="text-center text-gray-400">
-                  Loading posts...
-                </div>
-              }
-            >
-              {loading ? (
-                <div className="text-center text-gray-400">
-                  Loading posts...
-                </div>
-              ) : posts && posts.length > 0 ? (
-                posts.map((post, index) => (
-                  <CommunityPost
-                    key={post.id}
-                    postId={post.id}
-                    author={post.author}
-                    postImage={post.postImage}
-                    likes={post.likes}
-                    commentsCount={post.comments.length}
-                    time={post.createdAt}
-                    index={index}
-                  >
-                    {renderPostWithLinks(post.post)}
-                  </CommunityPost>
-                ))
-              ) : (
-                <div className="text-center text-gray-400">No posts found.</div>
-              )}
-            </Suspense>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {MOCK_PROJECTS.map((p) => (
+              <ProjectCard
+                key={p.id}
+                project={p}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                onView={handleView}
+              />
+            ))}
+
           </div>
         </div>
       </div>

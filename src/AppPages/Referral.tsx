@@ -128,10 +128,9 @@ const Referral: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 1 * 0.1  }}
-        className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <StatCard label="Total Invites" value="37" />
-          <StatCard label="Total Earned" value="$225" accent />
-          <StatCard label="Pending Rewards" value="$50" />
+          <StatCard label="Total Points" value="225" accent />
         </motion.section>
 
         {/* How it works */}

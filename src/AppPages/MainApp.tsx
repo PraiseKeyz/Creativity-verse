@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import ChatBot from "../components/AppComponent/ChatBot";
 import { useAuthStore } from "../store/authStore";
 import { CookieStorage } from "../store/cookie/cookieStorage";
+import { FaComments, FaRobot } from "react-icons/fa";
 
 // Migrate token from localStorage to cookie (if an auth flow wrote it to localStorage)
 function migrateTokenFromLocalStorage() {
@@ -59,7 +60,14 @@ const MainApp = () => {
 
   return (
     <div className="bg-[var(--color-text-dark)] min-h-screen relative">
-      <ChatBot />
+      <div className="fixed bottom-26 right-6 z-50">
+        <button
+          onClick={() => navigate("/verse/creo-ai")}
+          className="p-4 rounded-full bg-[var(--color-brand-orange)] text-black shadow-lg hover:scale-105 transition-transform cursor-pointer"
+        >
+          <FaRobot size={22} />
+        </button>
+      </div>
       <VerseNav />
 
       <div className="lg:container h-[calc(100vh-73px)] bg-[#1f1e1e] grid md:grid-cols-[270px_1fr] grid-cols-1 mx-auto relative">

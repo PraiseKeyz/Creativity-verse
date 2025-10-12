@@ -14,6 +14,7 @@ import {
   FaChevronRight,
   FaChevronLeft,
   FaCompass,
+  FaRobot,
 } from "react-icons/fa";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSidebarOpen: (open: boolean) => void }) => {
@@ -66,26 +67,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
               </div>
             )}
           </motion.div>
-          
-          {/* Create Button */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-            <button
-              onClick={() => toggleDropdown("create")}
-              className="flex items-center justify-between w-full shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800"
-            >
-              <span className="flex items-center gap-3">
-                <FaPlusCircle className="text-xl" />
-                <span >Create</span>
-              </span>
-              {openDropdown === "create" ? <FaChevronDown /> : <FaChevronRight />}
-            </button>
-            {openDropdown === "create" && (
-              <div className="mt-2 space-y-1">
-                <DropdownItem to="create/post" label="Post Update" />
-                <DropdownItem to="create/project" label="Add Project" />
-              </div>
-            )}
-          </motion.div>
 
           {/* Notifications */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.1 }}>
@@ -126,44 +107,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
             </NavLink>
           </motion.div>
 
-          {/* Learn Dropdown */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.4 }}>
-            <button
-              onClick={() => toggleDropdown("learn")}
-              className="flex items-center justify-between w-full shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800"
-            >
-              <span className="flex items-center gap-3">
-                <FaGraduationCap className="text-xl" />
-                <span >Learn</span>
-              </span>
-              {openDropdown === "learn" ? <FaChevronDown /> : <FaChevronRight />}
-            </button>
-            {openDropdown === "learn" && (
-              <div className="mt-2 space-y-1">
-                <DropdownItem to="webinars" label="Webinars & Workshops" />
-                <DropdownItem to="creo-ai" label="Creo AI" />
-              </div>
-            )}
+          {/* Creo AI */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+            <NavLink to="creo-ai" className={({ isActive }) => (isActive ? "active" : "")}>
+              <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
+                <FaRobot className="text-xl" />
+                <span >Creo AI</span>
+              </li>
+            </NavLink>
           </motion.div>
 
-          {/* My Career Dropdown */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.5 }}>
-            <button
-              onClick={() => toggleDropdown("career")}
-              className="flex items-center justify-between w-full shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800"
-            >
-              <span className="flex items-center gap-3">
+          {/* My Applications */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+            <NavLink to="my-applications" className={({ isActive }) => (isActive ? "active" : "")}>
+              <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
                 <FaBriefcase className="text-xl" />
-                <span >My Career</span>
-              </span>
-              {openDropdown === "career" ? <FaChevronDown /> : <FaChevronRight />}
-            </button>
-            {openDropdown === "career" && (
-              <div className="mt-2 space-y-1">
-                <DropdownItem to="my-applications" label="My Applications" />
-                <DropdownItem to="portfolio" label="Portfolio" />
-              </div>
-            )}
+                <span >Applications</span>
+              </li>
+            </NavLink>
           </motion.div>
 
           {/* Saved items Dropdown */}

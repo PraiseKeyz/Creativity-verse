@@ -26,6 +26,8 @@ type Attachment = {
 
 type CreatePostProps = {
   user: User;
+  isVisible: boolean;
+  onClose?: () => void;
   onSubmit?: (payload: {
     text: string;
     audience: "public" | "friends" | "only-me";
@@ -34,7 +36,7 @@ type CreatePostProps = {
   }) => void;
 };
 
-const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
+const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit, isVisible, onClose }) => {
   const [text, setText] = useState("");
   const [audience, setAudience] = useState<"public" | "friends" | "only-me">(
     "friends"
@@ -121,153 +123,162 @@ const CreatePost: React.FC<CreatePostProps> = ({ user, onSubmit }) => {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-[#232323] border border-gray-700 rounded-xl shadow-lg p-4 text-white">
-      {/* Header */}
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <h3 className="text-lg font-semibold">Create post</h3>
-        <button
-          className="p-1 rounded-full hover:bg-white/5"
-          aria-label="Close create post"
-          onClick={() => {
-            /* hook for parent close */
-          }}
-        >
-          <FaTimes />
-        </button>
-      </div>
+    <div
+      className={`fixed inset-0 bg-black/80 z-50 ${isVisible ? "block" : "hidden"} flex items-center justify-center p-4`}
+      onClick={() => {
+        // close when clicking outside the modal
+        if (isVisible) onClose?.();
+      }}
+    >
+      <div
+        className="w-full max-w-3xl mx-auto bg-[#232323] border border-gray-700 rounded-xl shadow-lg p-4 text-white"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <h3 className="text-lg font-semibold">Create post</h3>
+          <button
+            className="p-1 rounded-full hover:bg-white/5"
+            aria-label="Close create post"
+            onClick={() => onClose?.()}
+          >
+            <FaTimes />
+          </button>
+        </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* user row */}
-        <div className="flex items-start gap-3">
-          <img
-            src={resolvedAvatar}
-            alt={resolvedFullName}
-            className="w-12 h-12 rounded-full object-cover border-2 border-gray-800"
-          />
-          <div className="flex-1">
-            <div className="flex items-center gap-3">
-              <div>
-                <div className="font-semibold">{resolvedFullName}</div>
-                <button
-                  type="button"
-                  className="mt-1 text-xs text-gray-300 inline-flex items-center gap-2 px-2 py-1 bg-[#1a1a1a] rounded-md"
-                  onClick={() => setShowAudience(s => !s)}
-                  aria-expanded={showAudience}
-                >
-                  <FaUserFriends />{" "}
-                  <span className="capitalize">
-                    {audience === "public"
-                      ? "Public"
-                      : audience === "friends"
-                      ? "Friends"
-                      : "Only me"}
-                  </span>
-                </button>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* user row */}
+          <div className="flex items-start gap-3">
+            <img
+              src={resolvedAvatar}
+              alt={resolvedFullName}
+              className="w-12 h-12 rounded-full object-cover border-2 border-gray-800"
+            />
+            <div className="flex-1">
+              <div className="flex items-center gap-3">
+                <div>
+                  <div className="font-semibold">{resolvedFullName}</div>
+                  <button
+                    type="button"
+                    className="mt-1 text-xs text-gray-300 inline-flex items-center gap-2 px-2 py-1 bg-[#1a1a1a] rounded-md"
+                    onClick={() => setShowAudience(s => !s)}
+                    aria-expanded={showAudience}
+                  >
+                    <FaUserFriends />{" "}
+                    <span className="capitalize">
+                      {audience === "public"
+                        ? "Public"
+                        : audience === "friends"
+                        ? "Friends"
+                        : "Only me"}
+                    </span>
+                  </button>
 
-                {/* audience dropdown */}
-                {showAudience && (
-                  <div className="mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md p-2 w-44 shadow-lg absolute z-30">
-                    {(["public", "friends", "only-me"] as const).map(opt => (
-                      <button
-                        key={opt}
-                        className={`w-full text-left px-2 py-1 rounded ${
-                          audience === opt
-                            ? "bg-[var(--color-brand-orange)] text-black"
-                            : "hover:bg-white/5"
-                        }`}
-                        onClick={() => {
-                          setAudience(opt);
-                          setShowAudience(false);
-                        }}
-                      >
-                        {opt === "public"
-                          ? "Public"
-                          : opt === "friends"
-                          ? "Friends"
-                          : "Only me"}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                  {/* audience dropdown */}
+                  {showAudience && (
+                    <div className="mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md p-2 w-44 shadow-lg absolute z-30">
+                      {(["public", "friends", "only-me"] as const).map(opt => (
+                        <button
+                          key={opt}
+                          className={`w-full text-left px-2 py-1 rounded ${
+                            audience === opt
+                              ? "bg-[var(--color-brand-orange)] text-black"
+                              : "hover:bg-white/5"
+                          }`}
+                          onClick={() => {
+                            setAudience(opt);
+                            setShowAudience(false);
+                          }}
+                        >
+                          {opt === "public"
+                            ? "Public"
+                            : opt === "friends"
+                            ? "Friends"
+                            : "Only me"}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
+
+              {/* textarea */}
+              <textarea
+                value={text}
+                onChange={e => setText(e.target.value)}
+                placeholder={`What's on your mind, ${user.firstname}?`}
+                rows={4}
+                className="mt-3 w-full resize-none bg-transparent border border-dashed border-gray-700 rounded-md px-4 py-3 placeholder-gray-400 outline-none focus:border-[var(--color-brand-orange)]"
+              />
+
+              {/* previews */}
+              {attachments.length > 0 && (
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  {attachments.map(a => (
+                    <div
+                      key={a.id}
+                      className="relative rounded-md overflow-hidden bg-[#111]"
+                    >
+                      <img
+                        src={a.url}
+                        alt="attachment preview"
+                        className="w-full h-28 object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeAttachment(a.id)}
+                        className="absolute top-1 right-1 bg-white/10 p-1 rounded-full hover:bg-white/20"
+                        aria-label="Remove attachment"
+                      >
+                        <FaTimes />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* actions row */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              {/* hidden file input */}
+              <input
+                ref={fileInputRef as any}
+                type="file"
+                multiple
+                accept="image/*,image/gif"
+                className="hidden"
+                onChange={e => handleFiles(e.target.files)}
+              />
+
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[#1a1a1a] border border-gray-700 hover:border-[var(--color-brand-orange)]"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <FaImage />{" "}
+                <span className="hidden md:inline text-sm">Photo</span>
+              </button>
             </div>
 
-            {/* textarea */}
-            <textarea
-              value={text}
-              onChange={e => setText(e.target.value)}
-              placeholder={`What's on your mind, ${user.firstname}?`}
-              rows={4}
-              className="mt-3 w-full resize-none bg-transparent border border-dashed border-gray-700 rounded-md px-4 py-3 placeholder-gray-400 outline-none focus:border-[var(--color-brand-orange)]"
-            />
-
-            {/* previews */}
-            {attachments.length > 0 && (
-              <div className="mt-3 grid grid-cols-3 gap-2">
-                {attachments.map(a => (
-                  <div
-                    key={a.id}
-                    className="relative rounded-md overflow-hidden bg-[#111]"
-                  >
-                    <img
-                      src={a.url}
-                      alt="attachment preview"
-                      className="w-full h-28 object-cover"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeAttachment(a.id)}
-                      className="absolute top-1 right-1 bg-white/10 p-1 rounded-full hover:bg-white/20"
-                      aria-label="Remove attachment"
-                    >
-                      <FaTimes />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="flex items-center gap-3">
+              <button
+                type="submit"
+                disabled={!canPost}
+                className={`px-6 py-2 rounded-md font-semibold transition ${
+                  canPost
+                    ? "bg-[var(--color-brand-orange)] text-black"
+                    : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                }`}
+              >
+                Post
+              </button>
+            </div>
           </div>
-        </div>
-
-        {/* actions row */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {/* hidden file input */}
-            <input
-              ref={fileInputRef as any}
-              type="file"
-              multiple
-              accept="image/*,image/gif"
-              className="hidden"
-              onChange={e => handleFiles(e.target.files)}
-            />
-
-            <button
-              type="button"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[#1a1a1a] border border-gray-700 hover:border-[var(--color-brand-orange)]"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <FaImage />{" "}
-              <span className="hidden md:inline text-sm">Photo</span>
-            </button>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              type="submit"
-              disabled={!canPost}
-              className={`px-6 py-2 rounded-md font-semibold transition ${
-                canPost
-                  ? "bg-[var(--color-brand-orange)] text-black"
-                  : "bg-gray-700 text-gray-400 cursor-not-allowed"
-              }`}
-            >
-              Post
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </div>  
   );
 };
 

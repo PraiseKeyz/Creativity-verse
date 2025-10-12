@@ -9,20 +9,24 @@ import logo from "../../assets/logo2.png";
 import UserMenu from "./UserMenu";
 import { useAuthStore } from "../../store/authStore";
 import { useEffect } from "react";
+import CreatePost from "../../AppPages/CreatePost";
+import { useState } from "react";
 
 const VerseNav = () => {
   const location = useLocation();
   const logoLink = location.pathname.startsWith("/verse") ? "community" : "/";
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const [showCreatePost, setShowCreatePost] = useState(false);
 
 
-  // // sample user data
-  // const user = {
-  //   name: "Edet John",
-  //   avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-  //   secondaryProfile: "Cyberohn",
-  // };
+  // sample user data
+  const sampleUser = {
+    id: "u1",
+    firstname: "Edet",
+    lastname: "John",
+    avatar: "https://i.pravatar.cc/150?img=32", // mock avatar image
+  };
 
   const handleLogout = () => {
     logout();
@@ -96,10 +100,17 @@ const VerseNav = () => {
           <button
             title="Create Post"
             className="text-xl hover:text-[var(--color-brand-orange)] transition-colors"
-            onClick={() => alert("Open Create Post Modal")}
+            onClick={() => setShowCreatePost(true)}
           >
             <FaPlusCircle />
           </button>
+
+          {/* CreatePost modal */}
+          <CreatePost
+            user = {sampleUser}
+            isVisible={showCreatePost}
+            onClose={() => setShowCreatePost(false)}
+          />
 
           {/* User Menu */}
           <UserMenu user={user} onLogout={handleLogout} />
