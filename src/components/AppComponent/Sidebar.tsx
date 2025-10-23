@@ -15,6 +15,8 @@ import {
   FaChevronLeft,
   FaCompass,
   FaRobot,
+  FaSave,
+  FaTools,
 } from "react-icons/fa";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSidebarOpen: (open: boolean) => void }) => {
@@ -88,21 +90,41 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
             </NavLink>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+          {/* <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
             <NavLink to="seller-center" className={({ isActive }) => (isActive ? "active" : "")}>
               <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
                 <FaLayerGroup className="text-xl" />
                 <span >Seller Center</span>
               </li>
             </NavLink>
-          </motion.div>
+          </motion.div> */}
           
           {/* Refferal */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+          {/* <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
             <NavLink to="referral" className={({ isActive }) => (isActive ? "active" : "")}>
               <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
                 <FaUsers className="text-xl" />
                 <span >Referral</span>
+              </li>
+            </NavLink>
+          </motion.div> */}
+
+          {/* Creative solution */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+            <NavLink to="pricing" className={({ isActive }) => (isActive ? "active" : "")}>
+              <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
+                <FaUsers className="text-xl" />
+                <span >Creative Solutions</span>
+              </li>
+            </NavLink>
+          </motion.div>
+
+          {/* Skill Assessment */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.2 }}>
+            <NavLink to="skill-lens" className={({ isActive }) => (isActive ? "active" : "")}>
+              <li className="flex items-center gap-3 shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800">
+                <FaTools className="text-xl" />
+                <span >Skill Assesment</span>
               </li>
             </NavLink>
           </motion.div>
@@ -134,7 +156,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean, setSid
               className="flex items-center justify-between w-full shadow-xl rounded-2xl p-3 hover:border-[var(--color-brand-orange)]/80 border border-gray-800"
             >
               <span className="flex items-center gap-3">
-                <FaBriefcase className="text-xl" />
+                <FaSave className="text-xl" />
                 <span >Saved</span>
               </span>
               {openDropdown === "saved" ? <FaChevronDown /> : <FaChevronRight />}

@@ -456,9 +456,14 @@ function Body() {
             path="product/:id"
             element={isLoggedIn ? <ProductPage /> : <Navigate to="/signin" />}
           />
-          <Route
+          {/* <Route
             path="referral"
             element={isLoggedIn ? <Referral /> : <Navigate to="/signin" />}
+          /> */}
+
+          <Route
+            path="pricing"
+            element={isLoggedIn ? <PricingPage /> : <Navigate to="/signin" />}
           />
           <Route
             path="feed"
@@ -490,7 +495,7 @@ function Body() {
             path="my-applications/:id"
             element={isLoggedIn ? <JobDetails /> : <Navigate to="/signin" />}
           />
-          <Route
+          {/* <Route
             path="seller-center"
             element={
               isLoggedIn ? <SellerDashboard /> : <Navigate to="/signin" />
@@ -527,7 +532,7 @@ function Body() {
             element={
               isLoggedIn ? <ProductListing /> : <Navigate to="/signin" />
             }
-          />
+          /> */}
           <Route
             path="skill-lens"
             element={isLoggedIn ? <SkillLensInfo /> : <Navigate to="/signin" />}
